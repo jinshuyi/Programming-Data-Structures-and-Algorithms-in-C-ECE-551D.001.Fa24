@@ -1,0 +1,14 @@
+In the loop with i = 0, a = 5
+In the loop with i = 1, a = 7
+a = 27
+x = 2
+In anotherFunction(2, 31)
+a is 2, b is 31
+a is 2, b is 31
+a is 2, b is 30
+a is 3, b is 28
+a is 4, b is 25
+a is 6, b is 21
+a is 8, b is 16
+b = 187
+x = 2
