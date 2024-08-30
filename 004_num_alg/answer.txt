@@ -1,0 +1,3 @@
+Count from 1 to 2*N+1(inclusive).
+For each number "i" that you count,
+write down 2*i+3*N
