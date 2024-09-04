@@ -1,0 +1,12 @@
+Grading at 09/04/2024:18:08:12.187958
+For commit ID f9b3a017ed559d21540fed23947869298ce5da0f
+Grading at Wed Sep  4 02:08:12 PM EDT 2024
+First doing 'make clean'
+rm -f vector *~
+Now trying to build your code with 'make'
+gcc -o vector -pedantic -std=gnu99 -Wall -Werror vector.c
+Next I will run your program to see its output
+Your file matched the expected output
+Good job!
+
+Overall Grade: PASSED
