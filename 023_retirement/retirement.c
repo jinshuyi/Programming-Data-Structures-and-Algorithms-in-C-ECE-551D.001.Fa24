@@ -26,13 +26,8 @@ void retirement(int startAge,           //in months
 
 int main() {
   retire_info working = {489, 1000, 0.045 / 12};
-  // 40 years working, contributing $1000 per month, 4.5% annual return
 
-  // Retirement phase information
   retire_info retired = {384, -4000, 0.01 / 12};
-  // 32 years retired, withdrawing $4000 per month, 1% annual return
-
-  // Starting conditions
   int startAge = 327;
   // Start at age 27 years and 3 months (327 months)
   double initialSavings = 21345;
