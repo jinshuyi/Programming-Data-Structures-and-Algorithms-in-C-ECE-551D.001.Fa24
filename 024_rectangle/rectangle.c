@@ -46,14 +46,16 @@ rectangle intersection(rectangle r1, rectangle r2) {
   int y_bottom = (r1.y > r2.y) ? r1.y : r2.y;
 
   int x_right =
-      ((r1.x + r1.width) < (r2.x + r2.width)) ? r1.x + r1.width : r2.x + r2.width;
-  int y_top = (r1.y + r1.height < r2.y + r2.height) ? r1.y + r1.height : r2.y + r2.height;
+      ((r1.x + r1.width) < (r2.x + r2.width)) ? (r1.x + r1.width) : (r2.x + r2.width);
+  int y_top =
+      ((r1.y + r1.height) < (r2.y + r2.height)) ? (r1.y + r1.height) : (r2.y + r2.height);
+
   int width = x_right - x_left;
   int height = y_top - y_bottom;
 
-  if (width <= 0 || height <= 0) {
-    r1.width = 0;
+  if (x_left > x_right || y_bottom > y_top) {
     r1.height = 0;
+    r1.width = 0;
   }
   else {
     r1.x = x_left;
