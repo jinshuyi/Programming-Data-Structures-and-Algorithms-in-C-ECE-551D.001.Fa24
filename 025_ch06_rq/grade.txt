@@ -1,11 +1,12 @@
-Grading at 09/09/2024:17:26:25.051170
-For commit ID 0381c37f2d2731d48cd40c88812a95271fa6a9f6
-Grading at Mon Sep  9 01:26:24 PM EDT 2024
+Grading at 09/09/2024:17:30:35.724764
+For commit ID dc0c1580a4cb38ae97d69de1d30c559e3c457f7e
+Grading at Mon Sep  9 01:30:35 PM EDT 2024
 Reading your quiz answers from answers.txt
-You got 1 questions incorrect.
+You got 2 questions incorrect.
 You might want to review these concepts:
 ------------
 Asserts in testing
+How to test a hypothesis
 ------------
 
 Overall Grade: FAILED
