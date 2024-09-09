@@ -1,0 +1,27 @@
+aaaaa bbbbb
+aaaaa bbbbc
+aaabb bbbbc
+
+12345 bbbbb
+12345 67890
+
+aaabbb bbbbc
+aaabb bbbbcc
+aaabbb bbbbcc
+
+aaAAA bbbbb
+aaaaa bbBBB
+aaAAA bbbbb
+
+aaaaa aaaaa
+aaaaa AAAAA
+aaaaa aaaaa aaaaa
+
+aaaaa /////
+aaaaa \n
+aaaaa *
+aaaaa
+a a
+a
+
+Cdfad dafdf
