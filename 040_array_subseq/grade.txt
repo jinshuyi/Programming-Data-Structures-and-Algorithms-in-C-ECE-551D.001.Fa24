@@ -1,0 +1,11 @@
+Grading at 09/23/2024:18:06:32.716334
+For commit ID c4d0a21d44a32abb0c44c2dd2eea2c4ce4ea18cb
+Grading at Mon Sep 23 02:06:32 PM EDT 2024
+Attempting to compile maxSeq.c 
+Linking your object file with our test main
+/usr/bin/ld: /tmp/ccqb9yGw.o: in function `doTest':
+temp2.c:(.text+0xe5): undefined reference to `maxSeq'
+collect2: error: ld returned 1 exit status
+Could not link with test main
+
+Overall Grade: F
