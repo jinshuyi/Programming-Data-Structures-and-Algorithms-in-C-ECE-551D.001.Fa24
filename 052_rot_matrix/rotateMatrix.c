@@ -29,18 +29,28 @@ int main(int argc, char * argv[]) {
   char rotated[MATRIX_SIZE][MATRIX_SIZE];
   char line[MATRIX_SIZE + 2];  // 10 characters + newline + null terminator
 
-  for (int i = 0; i < MATRIX_SIZE; i++) {
-    if (fgets(line, sizeof(line), file) == NULL) {
-      fprintf(stderr, "Error reading line %d\n", i + 1);
+  int lineCount = 0;
+  while (fgets(line, sizeof(line), file) != NULL) {
+    lineCount++;
+
+    // Check if the line has exactly 10 characters followed by a newline
+    if (strlen(line) != MATRIX_SIZE + 1 || line[MATRIX_SIZE] != '\n') {
+      fprintf(stderr,
+              "Invalid line format at line %d: Expected 10 characters followed by a "
+              "newline\n",
+              lineCount);
       fclose(file);
       return EXIT_FAILURE;
     }
-    if (strchr(line, '\n') == NULL || strlen(line) != MATRIX_SIZE + 1) {
-      fprintf(stderr, "Invalid line length at line %d\n", i + 1);
-      fclose(file);
-      return EXIT_FAILURE;
-    }
-    strncpy(matrix[i], line, MATRIX_SIZE);
+
+    // Copy the first 10 characters into the matrix
+    strncpy(matrix[lineCount - 1], line, MATRIX_SIZE);
+  }
+
+  if (lineCount != MATRIX_SIZE) {
+    fprintf(stderr, "Invalid number of lines: Expected 10, but got %d\n", lineCount);
+    fclose(file);
+    return EXIT_FAILURE;
   }
 
   fclose(file);
