@@ -6,3 +6,25 @@ input5.txt
 input6.txt
 123
 input1.txt input2.txt
+input7.txt
+input8.txt
+input9.txt
+input10.txt
+input11.txt
+input12.txt
+input13.txt
+input30.txt
+input31.txt
+input32.txt
+input33.txt
+input34.txt
+input35.txt
+input36.txt
+input37.txt
+input30.txt input31.txt
+input20.txt
+input21.txt
+
+
+input22.txt
+
