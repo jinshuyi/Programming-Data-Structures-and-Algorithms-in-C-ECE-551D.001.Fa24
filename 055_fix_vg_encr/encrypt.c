@@ -47,20 +47,37 @@ int main(int argc, char ** argv) {
     return EXIT_FAILURE;
   }
   //outfileNAme is argv[2] + ".txt", so add 4 to its length.
-  char * outFileName = malloc((strlen(argv[2]) + 4) * sizeof(*outFileName));
-
+  char * outFileName = malloc((strlen(argv[2]) + 5) * sizeof(*outFileName));
+  if (outFileName == NULL) {
+    perror("Memory allocation failed");
+    fclose(f);
+    return EXIT_FAILURE;
+  }
   strcpy(outFileName, argv[2]);
   strcat(outFileName, ".enc");
   FILE * outFile = fopen(outFileName, "w");
+  if (outFile == NULL) {
+    perror("Could not open output file");
+    free(outFileName);
+    fclose(f);
+    return EXIT_FAILURE;
+  }
+
   encrypt(f, key, outFile);
   if (fclose(outFile) != 0) {
     perror("Failed to close the input file!");
+    free(outFileName);
+    fclose(f);
     return EXIT_FAILURE;
   }
+
   if (fclose(f) != 0) {
     perror("Failed to close the input file!");
+    free(outFileName);
+
     return EXIT_FAILURE;
   }
+  free(outFileName);
 
   return EXIT_SUCCESS;
 }
