@@ -21,10 +21,12 @@ void parse_planet_info(planet_t * planet, char * line) {
   }
 
   // check it if exceeds 32
-  //strncpy(stp1_name, part, MAX_PLANET_NAME_LEN)?????char *strncpy(char *dest, const char *src, size_t n);
+  //strncpy(stp1_name, part, MAX_PLANET_NAME_LEN)char *strncpy(char *dest, const char *src, size_t n);
   //this is because when the number is 32-1=31, it excludes \0 and add one to it
   strncpy(stp1_name, part, MAX_PLANET_NAME_LEN - 1);
-  stp1_name[MAX_PLANET_NAME_LEN - 1] = '\0';  // Ensure the name is null-terminated
+  stp1_name[MAX_PLANET_NAME_LEN - 1] = '\0';
+
+  // Ensure the name is null-terminated
   if (strlen(part) >= MAX_PLANET_NAME_LEN) {
     fprintf(stderr, "errors, name characters exceed");
     exit(EXIT_FAILURE);
@@ -33,7 +35,7 @@ void parse_planet_info(planet_t * planet, char * line) {
   //load to the struct planet, finish
   strncpy(planet->name, stp1_name, MAX_PLANET_NAME_LEN);
 
-  // orbital_radius
+  //check orbital_radius
   part = strtok(NULL, ":");
   if (part == NULL) {
     fprintf(stderr, "Errors");
@@ -43,20 +45,24 @@ void parse_planet_info(planet_t * planet, char * line) {
   //atof function:Returns a floating-point number(double type）
   //double atof(const char *str);
 
+  //ensure it positive
   stp1_orbital_radius = atof(part);
   if (stp1_orbital_radius <= 0) {
     fprintf(stderr, "error, unvalid radius");
     exit(EXIT_FAILURE);
   }
 
+  //load to struct
   planet->orbital_radius = stp1_orbital_radius;
 
-  // year length
+  //check year length
   part = strtok(NULL, ":");
   if (part == NULL) {
     fprintf(stderr, "error: no year length");
     exit(EXIT_FAILURE);
   }
+
+  //ensure it positive
   stp1_year_len = atof(part);
   if (stp1_year_len <= 0) {
     fprintf(stderr, "error: unvalid year length");
@@ -64,12 +70,14 @@ void parse_planet_info(planet_t * planet, char * line) {
   }
   planet->year_len = stp1_year_len;
 
-  // initial position
+  // check initial position
   part = strtok(NULL, ":");
   if (part == NULL) {
     fprintf(stderr, "errors, no ins-position.");
     exit(EXIT_FAILURE);
   }
+
+  //ensure it non-negative(for degree, it is from 0->360)
   stp1_init_pos_degrees = atof(part);
   if (stp1_init_pos_degrees < 0 || stp1_init_pos_degrees >= 360) {
     fprintf(stderr, "erorr, exceed the initial degree from0 -360");
@@ -80,10 +88,12 @@ void parse_planet_info(planet_t * planet, char * line) {
   double stp1_init_pos_radians = (M_PI / 180.0) * stp1_init_pos_degrees;
 
   planet->init_pos = stp1_init_pos_radians;
-  //or we can jsut use sscanf,
-  //int number = sscanf(line, "%31[^:]:%lf:%lf:%lf", stp1_name,& stp1_orbital_radius, &stp1_year_length, &stp1_init_pos_radians);
-  //and compare number with4 ?
 
+  //or there is another way,  we can jsut use sscanf
+  //int number = sscanf(line, "%31[^:]:%lf:%lf:%lf", stp1_name,& stp1_orbital_radius, &stp1_year_length, &stp1_init_pos_radians);
+  //and compare number with4 ? but when I try there is something wrong about this , so I change
+
+  //check if there are more fields
   if (strtok(NULL, ":") != NULL) {
     fprintf(stderr, "Error，more fields");
     exit(EXIT_FAILURE);

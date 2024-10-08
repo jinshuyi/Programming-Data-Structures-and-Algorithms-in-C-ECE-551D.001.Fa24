@@ -4,72 +4,60 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 launch_result_t solve_launch(const launch_input_t * this_launch,
                              const planet_list_t * planets) {
-  //STEP 4: write this function
-  //search
+  //Write your code here
+
+  // use find_planet to find the source and destination planet
   planet_t * source = find_planet(planets, this_launch->src);
   planet_t * destination = find_planet(planets, this_launch->dest);
-
-  if (source == NULL) {
-    fprintf(stderr, "error");
-    EXIT_FAILURE;
-  }
-  if (destination == NULL) {
-    fprintf(stderr, "error");
-    EXIT_FAILURE;
-  }
-
-  double best_total_time = 99999999;
-  double best_wait_time = 0.0;
-
+  // one best, one current , use best to iterate with current
   launch_result_t best_result;
-  best_result = compute_launch_by_info(this_launch, planets);
+  launch_result_t current_result;
 
-  point_t src_pos = get_location_at(source, this_launch->time);
+  point_t source_pos, dest_pos;
 
-  //copy the current information
-  launch_input_t current_launch = *this_launch;
-  uint64_t i = 0;
-  while (i < current_launch.max_iterations) {
-    point_t dest_pos =
-        get_location_at(destination, current_launch.time + best_result.duration);
+  //firstly initialize the duration tto be big enough
+  best_result.duration = 9999999999;
 
-    double distance =
-        sqrt(pow(dest_pos.x - src_pos.x, 2) + pow(dest_pos.y - src_pos.y, 2));
-    //meet the final result to finish the iteration
-    if (distance <= current_launch.close_enough) {
-      break;
+  double current_time = this_launch->time;
+
+  //begin iterate , maximum number is max_iterations
+  for (uint64_t i = 0; i < this_launch->max_iterations;
+       i++) {  // use get_location_at toget the Planetary coordinates
+    source_pos = get_location_at(source, current_time);
+
+    dest_pos = get_location_at(destination, current_time);
+    //get the launch current result
+    current_result = compute_launch_by_info(this_launch, planets);
+
+    double arrival_time = current_time + current_result.duration;
+    double planet_return_time =
+        when_does_planet_return_to(destination, dest_pos, current_time);
+    //intialize the wait_time
+    double wait_time = 0;
+    if (arrival_time < planet_return_time) {
+      wait_time = planet_return_time - arrival_time;
     }
-    point_t projected_target =
-        get_location_at(destination, current_launch.time + best_result.duration);
-
-    launch_result_t current_result = compute_launch_by_info(&current_launch, planets);
-    // I think actually the wait time should be included in the duration, however it seems that the result show that it is now included???
-
-    double arrival_time = current_launch.time + current_result.duration;
-
-    double return_time = when_does_planet_return_to(
-        destination, projected_target, current_launch.time + arrival_time);
-    double wait_time = 0.0;
-    if (arrival_time < return_time) {
-      wait_time = return_time - arrival_time;
-    }
-
+    //total time includes waittime and duration
     double total_time = current_result.duration + wait_time;
-    if (total_time < best_total_time) {
-      best_total_time = total_time;
-      best_result = current_result;
-      //how to apply the best wait time because ? actually i am confused
-
-      best_wait_time = wait_time;
+    //check the distance if it is close enough
+    if (sqrt(pow(dest_pos.x - source_pos.x, 2)) + pow(dest_pos.y - source_pos.y, 2) <=
+        this_launch->close_enough) {
+      return current_result;
     }
-
-    current_launch.time += best_result.duration;
-
-    i++;
+    // compare current and best
+    if (current_result.duration < best_result.duration) {
+      return current_result;
+    }
+    //update best
+    if (total_time < best_result.duration) {
+      best_result = current_result;
+      best_result.duration = total_time;
+    }
+    // Update current time
+    current_time += current_result.duration;
   }
-
   return best_result;
 }
+//actually accodring to the result, the duration is not included in the waittime but I think it should include???
