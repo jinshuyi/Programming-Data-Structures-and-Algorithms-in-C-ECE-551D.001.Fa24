@@ -1,0 +1,18 @@
+Grading at 10/08/2024:00:34:25.457563
+For commit ID 574af53cb02ba5de91fd76b0758bd4b35b509a4a
+Grading at Mon Oct  7 08:34:21 PM EDT 2024
+Attempting to compile:
+#################################################
+testcase1:
+Your output is correct
+valgrind was clean
+#################################################
+testcase2:
+Your output is correct
+valgrind was clean
+#################################################
+testcase3:
+Your output is correct
+valgrind was clean
+
+Overall Grade: A
