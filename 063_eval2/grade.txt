@@ -1,0 +1,31 @@
+Grading at 10/23/2024:18:44:45.073630
+For commit ID fc6cb88782181e560f1198045d4f4429979d0287
+Grading at Wed Oct 23 02:44:44 PM EDT 2024
+Doing some basic checking for your submission
+
+Step 1
+Checking that story-step1 compiles
+rm -f *~ story-step1 story-step1.o rand_story.o
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
+gcc -o story-step1 story-step1.o rand_story.o provided.o
+rm story-step1.o
+The code compiled (good)
+Executable story-step1 exists (good)
+Checking with provided test case story.txt
+Line_1_did_not_match
+Line_2_did_not_match
+Your file did not match the expected output
+Now running YOUR tests for step 1
+
+1.1: Current test is story-step1 story.txt
+-----------------------------
+You considered this a failure case:
+Error, the file can not be opennedBut we did not.
+
+Step 2
+Checking that story-step2 compiles
+rm -f *~ story-step1 story-step1.o rand_story.o
+The code did not compile!
+
+Overall Grade: NO GRADE YET
