@@ -5,13 +5,10 @@
 
 #include "provided.h"
 
-// Function to parse and replace placeholders in the template with a word from categories
-void parseTemplate(FILE * f, catarray_t * cats, int allowReuse);
+void replace_category(char * line, catarray_t * cats, int allow_repeat);
 
-// Function to read categories and words from file and return a catarray_t
-catarray_t * readWords(FILE * f);
+void read_template(const char * filename, catarray_t * cats, int allow_repeat);
 
-// Function to free allocated memory for catarray_t
-void freeCatarray(catarray_t * catArr);
+catarray_t * read_word_file(const char * filename);
 
 #endif

@@ -5,17 +5,9 @@
 
 int main(int argc, char ** argv) {
   if (argc != 2) {
-    fprintf(stderr, "Usage: %s story_template.txt\n", argv[0]);
+    fprintf(stderr, "Usage: %s <story template>\n", argv[0]);
     return EXIT_FAILURE;
   }
-
-  FILE * f = fopen(argv[1], "r");
-  if (f == NULL) {
-    perror("Could not open file");
-    return EXIT_FAILURE;
-  }
-
-  parseTemplate(f, NULL, 1);
-  fclose(f);
+  read_template(argv[1], NULL, 0);  // No category handling yet
   return EXIT_SUCCESS;
 }
