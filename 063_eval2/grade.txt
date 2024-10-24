@@ -1,6 +1,6 @@
-Grading at 10/24/2024:22:37:30.603681
-For commit ID 2b035d99918a676a17b8dbb3b376f9e8b92cbfd5
-Grading at Thu Oct 24 06:37:29 PM EDT 2024
+Grading at 10/24/2024:22:56:38.538922
+For commit ID 4063f1da3b0eef1cbd799e252946cfb8bfcd66e0
+Grading at Thu Oct 24 06:56:37 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
@@ -23,8 +23,8 @@ Now running YOUR tests for step 1
 It looks like you got different output from us on that case.
 Here is the diff (yours on left, ours on right):
 
-catcatOnce upon a time, there was a _animal_ who lived in a v |	Once upon a time, there was a cat who lived in a very cat
-cat_place_. 						      |	cat. 
+Once upon a time, there was a _animal_ who lived in a very _a |	Once upon a time, there was a cat who lived in a very cat
+_place_. 						      |	cat. 
 Your file did not match the expected output
 
 
@@ -41,8 +41,20 @@ Now running YOUR tests for step 2
 
 2.1: Current test is story-step2 words.txt
 -----------------------------
-Your output looks good. Lets check valgrind
-Valgrind was clean
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+(null):							      |	animal:
+  animal						      |	  dragon
+  walrus							  walrus
+(null):							      |	place:
+  place							      |	  cave
+(null):							      |	adjective:
+  adjective						      |	  peculiar
+  scary								  scary
+  peaceful							  peaceful
+Your file did not match the expected output
+
 
 Step 3
 Checking that story-step3 compiles
@@ -58,7 +70,7 @@ Now running YOUR tests for step 3
 3.1: Current test is story-step3 words.txt story2.txt
 -----------------------------
 You considered this a failure case:
-Category 1 not found
+timeout: the monitored command dumped core
 But we did not.
 
 Step 4
@@ -75,13 +87,13 @@ Now running YOUR tests for step 4
 4.1: Current test is story-step4 words.txt story2.txt
 -----------------------------
 You considered this a failure case:
-Category 1 not found
+timeout: the monitored command dumped core
 But we did not.
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
 You considered this a failure case:
-Category 1 not found
+timeout: the monitored command dumped core
 But we did not.
 
 You have NOT passed your test cases!
