@@ -4,93 +4,118 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 读取文件中的类别和单词
-catarray_t read_categories(FILE * f) {
-  char * line = NULL;
-  size_t sz = 0;
-  ssize_t len;
-  catarray_t cats;
-  cats.n = 0;
-  cats.arr = NULL;
+#include "provided.h"
 
-  while ((len = getline(&line, &sz, f)) != -1) {
-    char * colon = strchr(line, ':');
-    if (colon == NULL) {
-      fprintf(stderr, "Error: Incorrect format in word file\n");
+// Helper function to replace underscores with words
+void replaceUnderscore(char * line,
+                       size_t * index,
+                       catarray_t * cats,
+                       int allowReuse,
+                       char ** usedWords,
+                       size_t * usedCount) {
+  size_t start = *index;
+  while (line[*index] != '_' && line[*index] != '\0') {
+    (*index)++;
+  }
+  if (line[*index] == '\0') {
+    fprintf(stderr, "Error: unmatched underscore in template.\n");
+    exit(EXIT_FAILURE);
+  }
+  line[*index] = '\0';
+  char * category = line + start + 1;
+
+  // Handle backreference case
+  if (category[0] >= '1' && category[0] <= '9') {
+    int backRef = atoi(category);
+    if (backRef > *usedCount) {
+      fprintf(stderr, "Error: backreference to an unused word.\n");
       exit(EXIT_FAILURE);
     }
-
-    *colon = '\0';  // 分割类别和单词
-    char * category = line;
-    char * word = colon + 1;
-    word[strcspn(word, "\n")] = '\0';  // 去掉换行符
-
-    // 查找是否已有该类别
-    size_t i;
-    for (i = 0; i < cats.n; i++) {
-      if (strcmp(cats.arr[i].name, category) == 0) {
-        break;
-      }
-    }
-
-    // 如果没有找到该类别，创建新的类别
-    if (i == cats.n) {
-      cats.arr = realloc(cats.arr, (cats.n + 1) * sizeof(*cats.arr));
-      cats.arr[cats.n].name = strdup(category);
-      cats.arr[cats.n].words = NULL;
-      cats.arr[cats.n].n_words = 0;
-      cats.n++;
-    }
-
-    // 将单词加入类别
-    cats.arr[i].words = realloc(cats.arr[i].words,
-                                (cats.arr[i].n_words + 1) * sizeof(*cats.arr[i].words));
-    cats.arr[i].words[cats.arr[i].n_words] = strdup(word);
-    cats.arr[i].n_words++;
+    printf("%s", usedWords[*usedCount - backRef]);
+  }
+  else {
+    const char * word = chooseWord(category, cats);
+    printf("%s", word);
+    usedWords[*usedCount] = strdup(word);
+    (*usedCount)++;
   }
 
-  free(line);
-  return cats;
+  (*index)++;
 }
 
-// 替换故事模板中的占位符
-void replace_blanks_with_words(FILE * f, catarray_t * cats, int noReuse) {
+// Function to parse and replace placeholders in the template with a word from categories
+void parseTemplate(FILE * f, catarray_t * cats, int allowReuse) {
   char * line = NULL;
-  size_t sz = 0;
-  ssize_t len;
-  char * usedWords[100];  // 假设最多用100个单词
+  size_t len = 0;
+  char * usedWords[100];
   size_t usedCount = 0;
 
-  while ((len = getline(&line, &sz, f)) != -1) {
-    char * pos = line;
-    while (*pos != '\0') {
-      if (*pos == '_') {
-        char * end = strchr(pos + 1, '_');
-        if (end == NULL) {
-          fprintf(stderr, "Error: Mismatched underscores\n");
-          exit(EXIT_FAILURE);
-        }
-
-        *end = '\0';  // 暂时将结尾的下划线置为字符串结尾
-
-        int ref = atoi(pos + 1);
-        if (ref > 0 && ref <= (int)usedCount) {
-          printf("%s", usedWords[usedCount - ref]);  // 引用之前的单词
-        }
-        else {
-          const char * word = chooseWord(pos + 1, cats);  // 调用provided.h中的chooseWord
-          usedWords[usedCount] = strdup(word);            // 记录使用过的单词
-          usedCount++;
-          printf("%s", word);
-        }
-
-        pos = end + 1;  // 跳过当前的占位符
+  while (getline(&line, &len, f) != -1) {
+    size_t i = 0;
+    while (line[i] != '\0') {
+      if (line[i] == '_') {
+        replaceUnderscore(line, &i, cats, allowReuse, usedWords, &usedCount);
       }
       else {
-        putchar(*pos);
-        pos++;
+        printf("%c", line[i]);
+        i++;
       }
     }
   }
   free(line);
+}
+
+// Function to read categories and words from file and return a catarray_t
+catarray_t * readWords(FILE * f) {
+  catarray_t * catArr = malloc(sizeof(*catArr));
+  catArr->arr = NULL;
+  catArr->n = 0;
+  char * line = NULL;
+  size_t len = 0;
+
+  while (getline(&line, &len, f) != -1) {
+    char * colon = strchr(line, ':');
+    if (colon == NULL) {
+      fprintf(stderr, "Error: invalid format in word file.\n");
+      free(line);
+      exit(EXIT_FAILURE);
+    }
+    *colon = '\0';
+    char * category = line;
+    char * word = colon + 1;
+    word[strlen(word) - 1] = '\0';  // remove newline
+
+    size_t catIdx = 0;
+    while (catIdx < catArr->n && strcmp(catArr->arr[catIdx].name, category) != 0) {
+      catIdx++;
+    }
+
+    if (catIdx == catArr->n) {
+      catArr->arr = realloc(catArr->arr, (catArr->n + 1) * sizeof(*catArr->arr));
+      catArr->arr[catArr->n].name = strdup(category);
+      catArr->arr[catArr->n].words = NULL;
+      catArr->arr[catArr->n].n_words = 0;
+      catArr->n++;
+    }
+
+    category_t * cat = &catArr->arr[catIdx];
+    cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
+    cat->words[cat->n_words] = strdup(word);
+    cat->n_words++;
+  }
+  free(line);
+  return catArr;
+}
+
+// Function to free allocated memory for catarray_t
+void freeCatarray(catarray_t * catArr) {
+  for (size_t i = 0; i < catArr->n; i++) {
+    for (size_t j = 0; j < catArr->arr[i].n_words; j++) {
+      free(catArr->arr[i].words[j]);
+    }
+    free(catArr->arr[i].words);
+    free(catArr->arr[i].name);
+  }
+  free(catArr->arr);
+  free(catArr);
 }

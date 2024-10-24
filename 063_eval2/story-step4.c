@@ -5,49 +5,44 @@
 #include "rand_story.h"
 
 int main(int argc, char ** argv) {
-  if (argc != 3 && argc != 4) {
-    fprintf(stderr, "Usage: %s [-n] <word_file> <story_template_file>\n", argv[0]);
+  int allowReuse = 1;
+  if (argc < 3 || argc > 4) {
+    fprintf(stderr, "Usage: %s [-n] words.txt story_template.txt\n", argv[0]);
     return EXIT_FAILURE;
   }
 
-  int noReuse = 0;
-  char * wordFileName;
-  char * storyFileName;
-
+  int wordFileIndex = 1;
+  int storyFileIndex = 2;
   if (argc == 4) {
     if (strcmp(argv[1], "-n") == 0) {
-      noReuse = 1;
-      wordFileName = argv[2];
-      storyFileName = argv[3];
+      allowReuse = 0;
+      wordFileIndex = 2;
+      storyFileIndex = 3;
     }
     else {
-      fprintf(stderr, "Usage: %s [-n] <word_file> <story_template_file>\n", argv[0]);
+      fprintf(stderr, "Error: unknown option '%s'\n", argv[1]);
       return EXIT_FAILURE;
     }
   }
-  else {
-    wordFileName = argv[1];
-    storyFileName = argv[2];
-  }
 
-  FILE * wordFile = fopen(wordFileName, "r");
-  if (wordFile == NULL) {
-    perror("Error opening word file");
+  FILE * wordsFile = fopen(argv[wordFileIndex], "r");
+  if (wordsFile == NULL) {
+    perror("Could not open words file");
     return EXIT_FAILURE;
   }
 
-  FILE * storyFile = fopen(storyFileName, "r");
+  FILE * storyFile = fopen(argv[storyFileIndex], "r");
   if (storyFile == NULL) {
-    perror("Error opening story file");
-    fclose(wordFile);
+    perror("Could not open story template file");
+    fclose(wordsFile);
     return EXIT_FAILURE;
   }
 
-  catarray_t cats = read_categories(wordFile);
-  fclose(wordFile);
+  catarray_t * cats = readWords(wordsFile);
+  parseTemplate(storyFile, cats, allowReuse);
+  freeCatarray(cats);
 
-  replace_blanks_with_words(storyFile, &cats, noReuse);
-
+  fclose(wordsFile);
   fclose(storyFile);
   return EXIT_SUCCESS;
 }

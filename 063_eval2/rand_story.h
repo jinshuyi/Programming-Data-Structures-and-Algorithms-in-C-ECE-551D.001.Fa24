@@ -1,11 +1,17 @@
 #ifndef __RAND_STORY_H__
 #define __RAND_STORY_H__
+
+#include <stdio.h>
+
 #include "provided.h"
-#include "stdio.h"
 
-//any functions you want your main to use
+// Function to parse and replace placeholders in the template with a word from categories
+void parseTemplate(FILE * f, catarray_t * cats, int allowReuse);
 
-catarray_t read_categories(FILE * f);
+// Function to read categories and words from file and return a catarray_t
+catarray_t * readWords(FILE * f);
 
-void replace_blanks_with_words(FILE * f, catarray_t * cats, int noReuse);
+// Function to free allocated memory for catarray_t
+void freeCatarray(catarray_t * catArr);
+
 #endif
