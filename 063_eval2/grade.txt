@@ -1,11 +1,11 @@
-Grading at 10/24/2024:22:56:38.538922
-For commit ID 4063f1da3b0eef1cbd799e252946cfb8bfcd66e0
-Grading at Thu Oct 24 06:56:37 PM EDT 2024
+Grading at 10/24/2024:23:13:59.691692
+For commit ID 5f366fc9d60d8749db801a511d3b65cd77c18c91
+Grading at Thu Oct 24 07:13:58 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step1.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -13,91 +13,19 @@ rm story-step1.o
 The code compiled (good)
 Executable story-step1 exists (good)
 Checking with provided test case story.txt
-Line_1_did_not_match
-Line_2_did_not_match
-Your file did not match the expected output
+Your file matched the expected output
 Now running YOUR tests for step 1
 
 1.1: Current test is story-step1 story.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-Once upon a time, there was a _animal_ who lived in a very _a |	Once upon a time, there was a cat who lived in a very cat
-_place_. 						      |	cat. 
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step1.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
-gcc -o story-step2 story-step2.o rand_story.o provided.o
-rm story-step2.o
-The code compiled (good)
-Executable story-step2 exists (good)
-Now running YOUR tests for step 2
-
-2.1: Current test is story-step2 words.txt
------------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-(null):							      |	animal:
-  animal						      |	  dragon
-  walrus							  walrus
-(null):							      |	place:
-  place							      |	  cave
-(null):							      |	adjective:
-  adjective						      |	  peculiar
-  scary								  scary
-  peaceful							  peaceful
-Your file did not match the expected output
-
-
-Step 3
-Checking that story-step3 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
-gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
-gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
-gcc -o story-step3 story-step3.o rand_story.o provided.o
-rm story-step3.o
-The code compiled (good)
-Executable story-step3 exists (good)
-Now running YOUR tests for step 3
-
-3.1: Current test is story-step3 words.txt story2.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-Step 4
-Checking that story-step4 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
-gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
-gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
-gcc -o story-step4 story-step4.o rand_story.o provided.o
-rm story-step4.o
-The code compiled (good)
-Executable story-step4 exists (good)
-Now running YOUR tests for step 4
-
-4.1: Current test is story-step4 words.txt story2.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-4.2: Current test is story-step4 -n words.txt story2.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-You have NOT passed your test cases!
-You should go and figure out/understand where thing went wrong
-And fix the problem(s) before the deadline
+The code did not compile!
 
 Overall Grade: NO GRADE YET
