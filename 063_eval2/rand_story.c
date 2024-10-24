@@ -6,7 +6,75 @@
 
 #include "provided.h"
 
-// Helper function to replace blanks with words
+// 读取文件并构建词汇数组
+catarray_t * readWords(const char * filename) {
+  FILE * f = fopen(filename, "r");
+  if (f == NULL) {
+    fprintf(stderr, "Cannot open file %s\n", filename);
+    exit(EXIT_FAILURE);
+  }
+
+  catarray_t * cats = malloc(sizeof(*cats));
+  cats->arr = NULL;
+  cats->n = 0;
+
+  char * line = NULL;
+  size_t sz = 0;
+  while (getline(&line, &sz, f) >= 0) {
+    char * colon = strchr(line, ':');
+    if (colon == NULL) {
+      fprintf(stderr, "Invalid format in file %s\n", filename);
+      exit(EXIT_FAILURE);
+    }
+
+    *colon = '\0';
+    char * category = line;
+    char * word = colon + 1;
+    char * newline = strchr(word, '\n');
+    if (newline != NULL) {
+      *newline = '\0';
+    }
+
+    // 查找是否已有此类别
+    int found = 0;
+    for (size_t i = 0; i < cats->n; i++) {
+      if (strcmp(cats->arr[i].words[0], category) == 0) {
+        cats->arr[i].words = realloc(
+            cats->arr[i].words, (cats->arr[i].n_words + 1) * sizeof(*cats->arr[i].words));
+        cats->arr[i].words[cats->arr[i].n_words] = strdup(word);
+        cats->arr[i].n_words++;
+        found = 1;
+        break;
+      }
+    }
+
+    // 新类别
+    if (!found) {
+      cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(*cats->arr));
+      cats->arr[cats->n].words = malloc(sizeof(*cats->arr[cats->n].words));
+      cats->arr[cats->n].words[0] = strdup(category);
+      cats->arr[cats->n].n_words = 1;
+      cats->n++;
+    }
+  }
+
+  free(line);
+  fclose(f);
+  return cats;
+}
+
+// 释放词汇数组的内存
+void freeCatarray(catarray_t * cats) {
+  for (size_t i = 0; i < cats->n; i++) {
+    for (size_t j = 0; j < cats->arr[i].n_words; j++) {
+      free(cats->arr[i].words[j]);
+    }
+    free(cats->arr[i].words);
+  }
+  free(cats->arr);
+  free(cats);
+}
+// 替换模板中的空白项
 void replaceBlanks(char * line,
                    catarray_t * cats,
                    int noReuse,
@@ -20,90 +88,20 @@ void replaceBlanks(char * line,
       exit(EXIT_FAILURE);
     }
 
+    *start = '\0';
+    printf("%s", line);
+    *start = '_';
+
     *end = '\0';
     const char * word = chooseWord(start + 1, cats);
     printf("%s", word);
     *end = '_';
-    start = end + 1;
+
+    // 更新usedWords列表
+    usedWords[*usedCount] = strdup(word);
+    (*usedCount)++;
+
+    line = end + 1;
   }
-}
-
-// Process the story template and replace the blanks
-void processStory(const char * filename, catarray_t * cats, int noReuse) {
-  FILE * f = fopen(filename, "r");
-  if (f == NULL) {
-    perror("Error opening file");
-    exit(EXIT_FAILURE);
-  }
-
-  char * line = NULL;
-  size_t size = 0;
-  while (getline(&line, &size, f) != -1) {
-    replaceBlanks(line, cats, noReuse, NULL, NULL);
-    printf("%s", line);
-  }
-  free(line);
-  fclose(f);
-}
-
-// Read categories and words from a file
-catarray_t * readCategories(const char * filename) {
-  FILE * f = fopen(filename, "r");
-  if (f == NULL) {
-    perror("Error opening file");
-    exit(EXIT_FAILURE);
-  }
-
-  catarray_t * cats = malloc(sizeof(*cats));
-  cats->arr = NULL;
-  cats->n = 0;
-
-  char * line = NULL;
-  size_t size = 0;
-  while (getline(&line, &size, f) != -1) {
-    char * colon = strchr(line, ':');
-    if (colon == NULL) {
-      fprintf(stderr, "Invalid format: no colon found.\n");
-      exit(EXIT_FAILURE);
-    }
-
-    *colon = '\0';
-    category_t * cat = NULL;
-    for (size_t i = 0; i < cats->n; i++) {
-      if (strcmp(cats->arr[i].name, line) == 0) {
-        cat = &cats->arr[i];
-        break;
-      }
-    }
-
-    if (cat == NULL) {
-      cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(*cats->arr));
-      cat = &cats->arr[cats->n++];
-      cat->name = strdup(line);
-      cat->words = NULL;
-      cat->n_words = 0;
-    }
-
-    char * word = colon + 1;
-    word[strcspn(word, "\n")] = '\0';
-    cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
-    cat->words[cat->n_words++] = strdup(word);
-  }
-
-  free(line);
-  fclose(f);
-  return cats;
-}
-
-// Free memory for catarray_t
-void freeCatarray(catarray_t * cats) {
-  for (size_t i = 0; i < cats->n; i++) {
-    for (size_t j = 0; j < cats->arr[i].n_words; j++) {
-      free(cats->arr[i].words[j]);
-    }
-    free(cats->arr[i].words);
-    free(cats->arr[i].name);
-  }
-  free(cats->arr);
-  free(cats);
+  printf("%s", line);
 }
