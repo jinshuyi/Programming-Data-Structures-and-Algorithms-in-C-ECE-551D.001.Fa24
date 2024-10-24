@@ -21,16 +21,16 @@ void replace_category(char * line, catarray_t * cats, int allow_repeat) {
     strncpy(category, start + 1, cat_len);
     category[cat_len] = '\0';
 
-    const char * word = chooseWord(category, cats);
+    // Choose a word from the category
+    const char * word = chooseWord(category, cats);  // 修正选择单词逻辑
 
-    // Print everything up to the category and replace with the word
-    *start = '\0';
-    printf("%s%s", line, word);
+    // Replace category with the chosen word
+    *start = '\0';               // 结束当前字符串
+    printf("%s%s", line, word);  // 打印到单词
     start = end + 1;
     line = start;
   }
-  // Print remaining part of the line
-  printf("%s", line);
+  printf("%s", line);  // 打印剩余部分
 }
 
 void read_template(const char * filename, catarray_t * cats, int allow_repeat) {
