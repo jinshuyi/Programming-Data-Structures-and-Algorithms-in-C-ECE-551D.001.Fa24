@@ -6,81 +6,88 @@
 
 #include "provided.h"
 
-// Function to replace categories in a line with words from cats
-void replace_category(char * line, catarray_t * cats) {
+// Helper function to replace blanks with words
+void replaceBlanks(char * line,
+                   catarray_t * cats,
+                   int noReuse,
+                   char ** usedWords,
+                   size_t * usedCount) {
   char * start = line;
   while ((start = strchr(start, '_')) != NULL) {
     char * end = strchr(start + 1, '_');
     if (end == NULL) {
-      fprintf(stderr, "Unmatched underscore in story template\n");
+      fprintf(stderr, "Invalid template: unmatched underscore.\n");
       exit(EXIT_FAILURE);
     }
 
-    // Extract the category name
-    size_t cat_len = end - start - 1;
-    char category[cat_len + 1];
-    strncpy(category, start + 1, cat_len);
-    category[cat_len] = '\0';
-
-    // Choose a word from the category, passing the cats struct (NOT NULL)
-    const char * word = chooseWord(category, cats);
-
-    // Replace the category with the chosen word
-    *start = '\0';               // Terminate the current string before the category
-    printf("%s%s", line, word);  // Print the line with the replaced word
+    *end = '\0';
+    const char * word = chooseWord(start + 1, cats);
+    printf("%s", word);
+    *end = '_';
     start = end + 1;
-    line = start;
   }
-  printf("%s", line);  // Print the remaining part of the line
 }
 
-// Function to read the word list from a file into a catarray_t structure
-catarray_t * read_word_file(const char * filename) {
+// Process the story template and replace the blanks
+void processStory(const char * filename, catarray_t * cats, int noReuse) {
   FILE * f = fopen(filename, "r");
   if (f == NULL) {
-    perror("Could not open word file");
+    perror("Error opening file");
     exit(EXIT_FAILURE);
   }
 
-  // Initialize the cats structure
+  char * line = NULL;
+  size_t size = 0;
+  while (getline(&line, &size, f) != -1) {
+    replaceBlanks(line, cats, noReuse, NULL, NULL);
+    printf("%s", line);
+  }
+  free(line);
+  fclose(f);
+}
+
+// Read categories and words from a file
+catarray_t * readCategories(const char * filename) {
+  FILE * f = fopen(filename, "r");
+  if (f == NULL) {
+    perror("Error opening file");
+    exit(EXIT_FAILURE);
+  }
+
   catarray_t * cats = malloc(sizeof(*cats));
-  cats->n = 0;
   cats->arr = NULL;
+  cats->n = 0;
 
   char * line = NULL;
-  size_t sz = 0;
-  while (getline(&line, &sz, f) != -1) {
-    // Parse the line into category and word
+  size_t size = 0;
+  while (getline(&line, &size, f) != -1) {
     char * colon = strchr(line, ':');
     if (colon == NULL) {
-      fprintf(stderr, "Malformed line in word file: %s", line);
+      fprintf(stderr, "Invalid format: no colon found.\n");
       exit(EXIT_FAILURE);
     }
-    *colon = '\0';
-    char * category = line;
-    char * word = colon + 1;
-    word[strcspn(word, "\n")] = '\0';  // Remove newline
 
-    // Add the word to the category in cats
-    int found = 0;
+    *colon = '\0';
+    category_t * cat = NULL;
     for (size_t i = 0; i < cats->n; i++) {
-      if (strcmp(cats->arr[i].name, category) == 0) {
-        cats->arr[i].words = realloc(
-            cats->arr[i].words, (cats->arr[i].n_words + 1) * sizeof(*cats->arr[i].words));
-        cats->arr[i].words[cats->arr[i].n_words] = strdup(word);
-        cats->arr[i].n_words++;
-        found = 1;
+      if (strcmp(cats->arr[i].name, line) == 0) {
+        cat = &cats->arr[i];
         break;
       }
     }
-    if (!found) {
+
+    if (cat == NULL) {
       cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(*cats->arr));
-      cats->arr[cats->n].name = strdup(category);
-      cats->arr[cats->n].words = malloc(sizeof(*cats->arr[cats->n].words));
-      cats->arr[cats->n].words[0] = strdup(word);
-      cats->arr[cats->n].n_words = 1;
-      cats->n++;
+      cat = &cats->arr[cats->n++];
+      cat->name = strdup(line);
+      cat->words = NULL;
+      cat->n_words = 0;
     }
+
+    char * word = colon + 1;
+    word[strcspn(word, "\n")] = '\0';
+    cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
+    cat->words[cat->n_words++] = strdup(word);
   }
 
   free(line);
@@ -88,7 +95,7 @@ catarray_t * read_word_file(const char * filename) {
   return cats;
 }
 
-// Function to free memory allocated for catarray_t
+// Free memory for catarray_t
 void freeCatarray(catarray_t * cats) {
   for (size_t i = 0; i < cats->n; i++) {
     for (size_t j = 0; j < cats->arr[i].n_words; j++) {

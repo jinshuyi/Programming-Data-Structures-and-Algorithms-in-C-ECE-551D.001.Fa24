@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "rand_story.h"
 
-int main(void) {
-  char * line = NULL;
-  size_t sz = 0;
-  while (getline(&line, &sz, stdin) != -1) {
-    replace_category(line, NULL);  // cats is NULL in step 1
+int main(int argc, char ** argv) {
+  if (argc != 2) {
+    fprintf(stderr, "Usage: %s <story file>\n", argv[0]);
+    return EXIT_FAILURE;
   }
-  free(line);
-  return 0;
+  processStory(argv[1], NULL, 0);
+  return EXIT_SUCCESS;
 }
