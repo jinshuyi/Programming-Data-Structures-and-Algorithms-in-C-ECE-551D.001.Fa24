@@ -5,10 +5,9 @@
 
 #include "provided.h"
 
-void replace_category(char * line, catarray_t * cats, int allow_repeat);
-
-void read_template(const char * filename, catarray_t * cats, int allow_repeat);
-
+// Function declarations
+void replace_category(char * line, catarray_t * cats);
 catarray_t * read_word_file(const char * filename);
+void freeCatarray(catarray_t * cats);
 
 #endif
