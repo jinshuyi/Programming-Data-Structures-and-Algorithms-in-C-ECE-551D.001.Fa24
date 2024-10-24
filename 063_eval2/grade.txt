@@ -1,6 +1,6 @@
-Grading at 10/24/2024:15:39:48.764065
-For commit ID ac983c87ed58d254352c95e325be1fa24c65e722
-Grading at Thu Oct 24 11:39:47 AM EDT 2024
+Grading at 10/24/2024:22:01:14.829632
+For commit ID 60a77b87da3aef42221327df2b745249f72eddc8
+Grading at Thu Oct 24 06:01:13 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
@@ -13,20 +13,13 @@ rm story-step1.o
 The code compiled (good)
 Executable story-step1 exists (good)
 Checking with provided test case story.txt
-Line_1_did_not_match
-Line_2_did_not_match
-Your file did not match the expected output
+Your file matched the expected output
 Now running YOUR tests for step 1
 
 1.1: Current test is story-step1 story.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-Once upon a time, there was a catanimalcat who lived in a ver |	Once upon a time, there was a cat who lived in a very cat
-catplacecat. 						      |	cat. 
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
@@ -41,8 +34,9 @@ Now running YOUR tests for step 2
 
 2.1: Current test is story-step2 words.txt
 -----------------------------
-Your output looks good. Lets check valgrind
-Valgrind was clean
+You considered this a failure case:
+timeout: the monitored command dumped core
+But we did not.
 
 Step 3
 Checking that story-step3 compiles
@@ -57,10 +51,13 @@ Now running YOUR tests for step 3
 
 3.1: Current test is story-step3 words.txt story2.txt
 -----------------------------
-You considered this a failure case:
-Category animal_. This _1_ lived in a very
- not found
-But we did not.
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a cat. This cat lived in a very   |	Once upon a time, there was a walrus. This walrus lived in a 
+cat cat. One day, it left its cat cat and met a cat.	      |	peculiar cave. One day, it left its peculiar cave and met a w
+Your file did not match the expected output
+
 
 Step 4
 Checking that story-step4 compiles
@@ -75,17 +72,23 @@ Now running YOUR tests for step 4
 
 4.1: Current test is story-step4 words.txt story2.txt
 -----------------------------
-You considered this a failure case:
-Category animal_. This _1_ lived in a very
- not found
-But we did not.
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a cat. This cat lived in a very   |	Once upon a time, there was a walrus. This walrus lived in a 
+cat cat. One day, it left its cat cat and met a cat.	      |	peculiar cave. One day, it left its peculiar cave and met a w
+Your file did not match the expected output
+
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
-You considered this a failure case:
-Category animal_. This _1_ lived in a very
- not found
-But we did not.
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a cat. This cat lived in a very   |	Once upon a time, there was a walrus. This walrus lived in a 
+cat cat. One day, it left its cat cat and met a cat.	      |	peculiar cave. One day, it left its peculiar cave and met a d
+Your file did not match the expected output
+
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
