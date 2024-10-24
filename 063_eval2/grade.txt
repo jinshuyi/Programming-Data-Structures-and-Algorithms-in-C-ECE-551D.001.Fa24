@@ -1,6 +1,6 @@
-Grading at 10/24/2024:22:27:49.014788
-For commit ID b5c87ecec753ba7d4b41ac0750515ca9866a34c2
-Grading at Thu Oct 24 06:27:48 PM EDT 2024
+Grading at 10/24/2024:22:37:30.603681
+For commit ID 2b035d99918a676a17b8dbb3b376f9e8b92cbfd5
+Grading at Thu Oct 24 06:37:29 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
@@ -23,8 +23,8 @@ Now running YOUR tests for step 1
 It looks like you got different output from us on that case.
 Here is the diff (yours on left, ours on right):
 
-							      >	Once upon a time, there was a cat who lived in a very cat
-							      >	cat. 
+catcatOnce upon a time, there was a _animal_ who lived in a v |	Once upon a time, there was a cat who lived in a very cat
+cat_place_. 						      |	cat. 
 Your file did not match the expected output
 
 
@@ -41,20 +41,8 @@ Now running YOUR tests for step 2
 
 2.1: Current test is story-step2 words.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-							      >	animal:
-							      >	  dragon
-							      >	  walrus
-							      >	place:
-							      >	  cave
-							      >	adjective:
-							      >	  peculiar
-							      >	  scary
-							      >	  peaceful
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
@@ -78,6 +66,26 @@ Checking that story-step4 compiles
 rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
-The code did not compile!
+gcc -o story-step4 story-step4.o rand_story.o provided.o
+rm story-step4.o
+The code compiled (good)
+Executable story-step4 exists (good)
+Now running YOUR tests for step 4
+
+4.1: Current test is story-step4 words.txt story2.txt
+-----------------------------
+You considered this a failure case:
+Category 1 not found
+But we did not.
+
+4.2: Current test is story-step4 -n words.txt story2.txt
+-----------------------------
+You considered this a failure case:
+Category 1 not found
+But we did not.
+
+You have NOT passed your test cases!
+You should go and figure out/understand where thing went wrong
+And fix the problem(s) before the deadline
 
 Overall Grade: NO GRADE YET
