@@ -1,6 +1,6 @@
-Grading at 10/25/2024:00:12:23.277366
-For commit ID 1e4e2492b2f1cc763c064a188d62dc296eef8574
-Grading at Thu Oct 24 08:12:22 PM EDT 2024
+Grading at 10/25/2024:19:17:36.241142
+For commit ID dc9e08977fbe8fc1ef5f70ff82cfaa2b7fa0333e
+Grading at Fri Oct 25 03:17:34 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
@@ -34,29 +34,8 @@ Now running YOUR tests for step 2
 
 2.1: Current test is story-step2 words.txt
 -----------------------------
-It looks like you got different output from us on that case.
-Here is the diff (yours on left, ours on right):
-
-animal:								animal:
-  dragon							  dragon
-							      <
-animal:							      <
-  walrus							  walrus
-								place:
-place:								  cave
-  cave								adjective:
-								  peculiar
-adjective:						      (
-  peculiar						      (
-							      <
-adjective:						      <
-  scary								  scary
-							      <
-adjective:						      <
-  peaceful							  peaceful
-							      (
-Your file did not match the expected output
-
+Your output looks good. Lets check valgrind
+Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
