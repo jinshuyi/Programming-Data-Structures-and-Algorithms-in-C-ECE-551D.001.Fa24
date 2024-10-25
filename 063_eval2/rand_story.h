@@ -13,13 +13,7 @@ catarray_t * readWords2(FILE * f);
 void freeCatarray2(catarray_t * catArr);
 
 //step3,4
-void parse_template(FILE * file,
-                    catarray_t * cats,
-                    category_t * used_words,
-                    int no_reuse);
-void add_used_word(catarray_t * cats, const char * category, const char * word);
-catarray_t * read_words(FILE * file);
-void free_catarray(catarray_t * cats);
-void free_category(category_t * used_words);
+catarray_t * readWords(FILE * f);
+void freeCatarray(catarray_t * cats);
 
 #endif

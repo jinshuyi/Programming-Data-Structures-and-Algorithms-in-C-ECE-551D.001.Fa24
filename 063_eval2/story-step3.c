@@ -1,36 +1,104 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
+#include "provided.h"
 #include "rand_story.h"
+
+// 用于存储已使用单词的结构
+typedef struct usedWords_t {
+  char ** words;
+  size_t n_words;
+} usedWords_t;
+
+// 将单词添加到已使用单词列表
+void addUsedWord(usedWords_t * usedWords, const char * word) {
+  usedWords->words =
+      realloc(usedWords->words, (usedWords->n_words + 1) * sizeof(*usedWords->words));
+  usedWords->words[usedWords->n_words] = strdup(word);
+  usedWords->n_words++;
+}
+
+// 根据索引获取已使用的单词
+const char * getUsedWord(usedWords_t * usedWords, int index) {
+  if (index > 0 && index <= usedWords->n_words) {
+    return usedWords->words[usedWords->n_words - index];
+  }
+  fprintf(stderr, "Invalid backreference\n");
+  exit(EXIT_FAILURE);
+}
+
+// 处理模板文件并替换占位符
+void processTemplate(FILE * templateFile, catarray_t * catArray) {
+  usedWords_t usedWords = {NULL, 0};  // 初始化已使用的单词
+  char * line = NULL;
+  size_t sz = 0;
+
+  while (getline(&line, &sz, templateFile) >= 0) {
+    char * ptr = line;
+    while (*ptr != '\0') {
+      if (*ptr == '_') {
+        ptr++;
+        char * end = strchr(ptr, '_');
+        if (end == NULL) {
+          fprintf(stderr, "Invalid template format\n");
+          exit(EXIT_FAILURE);
+        }
+        *end = '\0';
+
+        const char * replacement = NULL;
+        if (isdigit(*ptr)) {  // 数字 -> 引用
+          int refIndex = atoi(ptr);
+          replacement = getUsedWord(&usedWords, refIndex);
+        }
+        else {  // 类别 -> 随机选择
+          replacement = chooseWord(ptr, catArray);
+          addUsedWord(&usedWords, replacement);
+        }
+
+        printf("%s", replacement);
+        ptr = end + 1;
+      }
+      else {
+        putchar(*ptr);
+        ptr++;
+      }
+    }
+  }
+
+  free(line);
+  for (size_t i = 0; i < usedWords.n_words; i++) {
+    free(usedWords.words[i]);
+  }
+  free(usedWords.words);
+}
 
 int main(int argc, char ** argv) {
   if (argc != 3) {
-    fprintf(stderr, "Usage: %s <words file> <story template file>\n", argv[0]);
-    exit(EXIT_FAILURE);
+    fprintf(stderr, "Usage: %s <words file> <template file>\n", argv[0]);
+    return EXIT_FAILURE;
   }
 
-  FILE * words_file = fopen(argv[1], "r");
-  if (words_file == NULL) {
+  FILE * wordsFile = fopen(argv[1], "r");
+  if (wordsFile == NULL) {
     perror("Could not open words file");
-    exit(EXIT_FAILURE);
+    return EXIT_FAILURE;
   }
 
-  catarray_t * cats = read_words(words_file);
-  fclose(words_file);
-
-  FILE * story_file = fopen(argv[2], "r");
-  if (story_file == NULL) {
-    perror("Could not open story template file");
-    free_catarray(cats);
-    exit(EXIT_FAILURE);
+  FILE * templateFile = fopen(argv[2], "r");
+  if (templateFile == NULL) {
+    perror("Could not open template file");
+    fclose(wordsFile);
+    return EXIT_FAILURE;
   }
 
-  category_t used_words = {.words = NULL, .n_words = 0};
-  parse_template(story_file, cats, &used_words, 0);
-  fclose(story_file);
+  catarray_t * catArray = readWords(wordsFile);
+  fclose(wordsFile);
 
-  free_category(&used_words);
-  free_catarray(cats);
+  processTemplate(templateFile, catArray);
+  fclose(templateFile);
 
+  freeCatarray(catArray);
   return EXIT_SUCCESS;
 }
