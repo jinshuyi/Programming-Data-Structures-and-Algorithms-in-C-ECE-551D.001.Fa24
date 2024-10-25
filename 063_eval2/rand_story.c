@@ -54,12 +54,59 @@ catarray_t * read_word_file(const char * filename) {
     perror("Could not open word file");
     exit(EXIT_FAILURE);
   }
-  // Logic to read and store categories and words
-  // This will store words in catarray_t structure
 
-  // Allocate memory for catarray_t, and populate it by reading file lines
-  // Implementation left for story-step2
+  catarray_t * cats = malloc(sizeof(catarray_t));
+  cats->arr = NULL;
+  cats->n = 0;
 
+  char * line = NULL;
+  size_t sz = 0;
+
+  while (getline(&line, &sz, f) != -1) {
+    // Check for colon
+    char * colon = strchr(line, ':');
+    if (colon == NULL) {
+      fprintf(stderr, "Invalid line format: %s", line);
+      exit(EXIT_FAILURE);
+    }
+
+    // Extract category name
+    size_t cat_len = colon - line;
+    line[cat_len] = '\0';  // Null-terminate category name
+    char * category_name = strdup(line);
+
+    // Count words in this category
+    char ** words = NULL;
+    size_t n_words = 0;
+
+    // Read words
+    char * word = colon + 1;  // Skip the colon
+    while (word && *word != '\0' && *word != '\n') {
+      // Trim whitespace
+      while (*word == ' ')
+        word++;
+      if (*word != '\0' && *word != '\n') {
+        words = realloc(words, (n_words + 1) * sizeof(char *));
+        words[n_words] = strdup(word);
+        n_words++;
+      }
+      // Find the next word
+      word = strchr(word, ' ');
+      if (word) {
+        *word = '\0';  // Null-terminate the word
+        word++;
+      }
+    }
+
+    // Add to the categories array
+    cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(category_t));
+    cats->arr[cats->n].name = category_name;
+    cats->arr[cats->n].words = words;
+    cats->arr[cats->n].n_words = n_words;
+    cats->n++;
+  }
+
+  free(line);
   fclose(f);
-  return NULL;
+  return cats;
 }
