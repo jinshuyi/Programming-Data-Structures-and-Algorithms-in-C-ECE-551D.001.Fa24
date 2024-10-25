@@ -5,50 +5,40 @@
 #include "rand_story.h"
 
 int main(int argc, char ** argv) {
-  if (argc != 3 && (argc != 4 || strcmp(argv[1], "-n") != 0)) {
-    fprintf(stderr, "Usage: %s [-n] <words_file> <story_file>\n", argv[0]);
-    return EXIT_FAILURE;
+  if (argc < 3 || argc > 4) {
+    fprintf(stderr, "Usage: %s [-n] <words file> <story template file>\n", argv[0]);
+    exit(EXIT_FAILURE);
   }
 
-  int noReuse = 0;
-  const char * wordsFile;
-  const char * storyFile;
-
-  if (argc == 4) {
-    noReuse = 1;
-    wordsFile = argv[2];
-    storyFile = argv[3];
-  }
-  else {
-    wordsFile = argv[1];
-    storyFile = argv[2];
+  int no_reuse = 0;
+  int arg_idx = 1;
+  if (strcmp(argv[arg_idx], "-n") == 0) {
+    no_reuse = 1;
+    arg_idx++;
   }
 
-  catarray_t * cats = readWords(wordsFile);
-
-  FILE * f = fopen(storyFile, "r");
-  if (f == NULL) {
-    fprintf(stderr, "Cannot open file %s\n", storyFile);
-    return EXIT_FAILURE;
+  FILE * words_file = fopen(argv[arg_idx], "r");
+  if (words_file == NULL) {
+    perror("Could not open words file");
+    exit(EXIT_FAILURE);
   }
 
-  char ** usedWords = NULL;
-  size_t usedCount = 0;
+  catarray_t * cats = read_words(words_file);
+  fclose(words_file);
 
-  char * line = NULL;
-  size_t sz = 0;
-  while (getline(&line, &sz, f) >= 0) {
-    replaceBlanks(line, cats, noReuse, usedWords, &usedCount);
+  FILE * story_file = fopen(argv[arg_idx + 1], "r");
+  if (story_file == NULL) {
+    perror("Could not open story template file");
+    free_catarray(cats);
+    exit(EXIT_FAILURE);
   }
 
-  free(line);
-  fclose(f);
-  freeCatarray(cats);
+  category_t used_words = {.words = NULL, .n_words = 0};
+  parse_template(story_file, cats, &used_words, no_reuse);
+  fclose(story_file);
 
-  for (size_t i = 0; i < usedCount; i++) {
-    free(usedWords[i]);
-  }
-  free(usedWords);
+  free_category(&used_words);
+  free_catarray(cats);
 
   return EXIT_SUCCESS;
 }
