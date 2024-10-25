@@ -1,11 +1,11 @@
-Grading at 10/25/2024:19:17:36.241142
-For commit ID dc9e08977fbe8fc1ef5f70ff82cfaa2b7fa0333e
-Grading at Fri Oct 25 03:17:34 PM EDT 2024
+Grading at 10/25/2024:20:06:51.248047
+For commit ID 7232edbb5543f50645e37768aa34cd0d96e80bb9
+Grading at Fri Oct 25 04:06:48 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step1.o story-step2.o story-step3.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -23,7 +23,7 @@ Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step1.o story-step2.o story-step3.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
 gcc -o story-step2 story-step2.o rand_story.o provided.o
@@ -39,9 +39,46 @@ Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
-rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step1.o story-step2.o story-step3.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
-The code did not compile!
+gcc -o story-step3 story-step3.o rand_story.o provided.o
+rm story-step3.o
+The code compiled (good)
+Executable story-step3 exists (good)
+Now running YOUR tests for step 3
+
+3.1: Current test is story-step3 words.txt story2.txt
+-----------------------------
+You considered this a failure case:
+timeout: the monitored command dumped core
+But we did not.
+
+Step 4
+Checking that story-step4 compiles
+rm -f *~ story-step1 story-step2 story-step3 story-step1.o story-step2.o story-step3.o rand_story.o
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
+gcc -o story-step4 story-step4.o rand_story.o provided.o
+rm story-step4.o
+The code compiled (good)
+Executable story-step4 exists (good)
+Now running YOUR tests for step 4
+
+4.1: Current test is story-step4 words.txt story2.txt
+-----------------------------
+You considered this a failure case:
+timeout: the monitored command dumped core
+But we did not.
+
+4.2: Current test is story-step4 -n words.txt story2.txt
+-----------------------------
+You considered this a failure case:
+timeout: the monitored command dumped core
+But we did not.
+
+You have NOT passed your test cases!
+You should go and figure out/understand where thing went wrong
+And fix the problem(s) before the deadline
 
 Overall Grade: NO GRADE YET
