@@ -48,65 +48,57 @@ void read_template(const char * filename, catarray_t * cats, int allow_repeat) {
   fclose(f);
 }
 
-catarray_t * read_word_file(const char * filename) {
-  FILE * f = fopen(filename, "r");
-  if (f == NULL) {
-    perror("Could not open word file");
-    exit(EXIT_FAILURE);
-  }
-
-  catarray_t * cats = malloc(sizeof(catarray_t));
-  cats->arr = NULL;
-  cats->n = 0;
-
+//step2
+catarray_t * readWords2(FILE * f) {
+  catarray_t * catArr = malloc(sizeof(*catArr));
+  catArr->arr = NULL;
+  catArr->n = 0;
   char * line = NULL;
-  size_t sz = 0;
+  size_t len = 0;
 
-  while (getline(&line, &sz, f) != -1) {
-    // Check for colon
+  while (getline(&line, &len, f) != -1) {
     char * colon = strchr(line, ':');
     if (colon == NULL) {
-      fprintf(stderr, "Invalid line format: %s", line);
+      fprintf(stderr, "Error: invalid format in word file.\n");
+      free(line);
       exit(EXIT_FAILURE);
     }
+    *colon = '\0';
+    char * category = line;
+    char * word = colon + 1;
+    word[strlen(word) - 1] = '\0';  // remove newline
 
-    // Extract category name
-    size_t cat_len = colon - line;
-    line[cat_len] = '\0';  // Null-terminate category name
-    char * category_name = strdup(line);
-
-    // Count words in this category
-    char ** words = NULL;
-    size_t n_words = 0;
-
-    // Read words
-    char * word = colon + 1;  // Skip the colon
-    while (word && *word != '\0' && *word != '\n') {
-      // Trim whitespace
-      while (*word == ' ')
-        word++;
-      if (*word != '\0' && *word != '\n') {
-        words = realloc(words, (n_words + 1) * sizeof(char *));
-        words[n_words] = strdup(word);
-        n_words++;
-      }
-      // Find the next word
-      word = strchr(word, ' ');
-      if (word) {
-        *word = '\0';  // Null-terminate the word
-        word++;
-      }
+    size_t catIdx = 0;
+    while (catIdx < catArr->n && strcmp(catArr->arr[catIdx].name, category) != 0) {
+      catIdx++;
     }
 
-    // Add to the categories array
-    cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(category_t));
-    cats->arr[cats->n].name = category_name;
-    cats->arr[cats->n].words = words;
-    cats->arr[cats->n].n_words = n_words;
-    cats->n++;
-  }
+    if (catIdx == catArr->n) {
+      catArr->arr = realloc(catArr->arr, (catArr->n + 1) * sizeof(*catArr->arr));
+      catArr->arr[catArr->n].name = strdup(category);
+      catArr->arr[catArr->n].words = NULL;
+      catArr->arr[catArr->n].n_words = 0;
+      catArr->n++;
+    }
 
+    category_t * cat = &catArr->arr[catIdx];
+    cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
+    cat->words[cat->n_words] = strdup(word);
+    cat->n_words++;
+  }
   free(line);
-  fclose(f);
-  return cats;
+  return catArr;
+}
+
+// Function to free allocated memory for catarray_t
+void freeCatarray2(catarray_t * catArr) {
+  for (size_t i = 0; i < catArr->n; i++) {
+    for (size_t j = 0; j < catArr->arr[i].n_words; j++) {
+      free(catArr->arr[i].words[j]);
+    }
+    free(catArr->arr[i].words);
+    free(catArr->arr[i].name);
+  }
+  free(catArr->arr);
+  free(catArr);
 }

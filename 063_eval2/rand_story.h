@@ -9,6 +9,6 @@ void replace_category(char * line, catarray_t * cats, int allow_repeat);
 void read_template(const char * filename, catarray_t * cats, int allow_repeat);
 
 //step2
-catarray_t * read_word_file(const char * filename);
-
+catarray_t * readWords2(FILE * f);
+void freeCatarray2(catarray_t * catArr);
 #endif
