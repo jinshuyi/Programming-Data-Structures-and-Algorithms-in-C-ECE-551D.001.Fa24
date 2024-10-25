@@ -1,11 +1,11 @@
-Grading at 10/24/2024:23:13:59.691692
-For commit ID 5f366fc9d60d8749db801a511d3b65cd77c18c91
-Grading at Thu Oct 24 07:13:58 PM EDT 2024
+Grading at 10/25/2024:00:12:23.277366
+For commit ID 1e4e2492b2f1cc763c064a188d62dc296eef8574
+Grading at Thu Oct 24 08:12:22 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step1 story-step1.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -23,9 +23,46 @@ Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step1 story-step1.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
+gcc -o story-step2 story-step2.o rand_story.o provided.o
+rm story-step2.o
+The code compiled (good)
+Executable story-step2 exists (good)
+Now running YOUR tests for step 2
+
+2.1: Current test is story-step2 words.txt
+-----------------------------
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+animal:								animal:
+  dragon							  dragon
+							      <
+animal:							      <
+  walrus							  walrus
+								place:
+place:								  cave
+  cave								adjective:
+								  peculiar
+adjective:						      (
+  peculiar						      (
+							      <
+adjective:						      <
+  scary								  scary
+							      <
+adjective:						      <
+  peaceful							  peaceful
+							      (
+Your file did not match the expected output
+
+
+Step 3
+Checking that story-step3 compiles
+rm -f *~ story-step1 story-step2 story-step1.o story-step2.o rand_story.o
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
+gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
 The code did not compile!
 
 Overall Grade: NO GRADE YET
