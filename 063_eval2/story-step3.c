@@ -58,13 +58,14 @@ void processTemplate(FILE * templateFile, catarray_t * catArray) {
         }
 
         printf("%s", replacement);
-        ptr = end + 1;
+        ptr = end + 1;  // 移动指针到下一个字符
       }
       else {
         putchar(*ptr);
         ptr++;
       }
     }
+    putchar('\n');  // 确保每行结束后换行
   }
 
   free(line);
