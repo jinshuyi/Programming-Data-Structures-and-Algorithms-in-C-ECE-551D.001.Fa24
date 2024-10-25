@@ -1,6 +1,6 @@
-Grading at 10/25/2024:20:06:51.248047
-For commit ID 7232edbb5543f50645e37768aa34cd0d96e80bb9
-Grading at Fri Oct 25 04:06:48 PM EDT 2024
+Grading at 10/25/2024:20:20:27.901117
+For commit ID 8b10f193f1573839290627b08d5b2493e3520257
+Grading at Fri Oct 25 04:20:26 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
@@ -50,35 +50,19 @@ Now running YOUR tests for step 3
 
 3.1: Current test is story-step3 words.txt story2.txt
 -----------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a walrus. This walrus lived in a 	Once upon a time, there was a walrus. This walrus lived in a 
+peculiar cave. One day, it left its peculiar peculiar and met |	peculiar cave. One day, it left its peculiar cave and met a w
+Your file did not match the expected output
+
 
 Step 4
 Checking that story-step4 compiles
 rm -f *~ story-step1 story-step2 story-step3 story-step1.o story-step2.o story-step3.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
-gcc -o story-step4 story-step4.o rand_story.o provided.o
-rm story-step4.o
-The code compiled (good)
-Executable story-step4 exists (good)
-Now running YOUR tests for step 4
-
-4.1: Current test is story-step4 words.txt story2.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-4.2: Current test is story-step4 -n words.txt story2.txt
------------------------------
-You considered this a failure case:
-timeout: the monitored command dumped core
-But we did not.
-
-You have NOT passed your test cases!
-You should go and figure out/understand where thing went wrong
-And fix the problem(s) before the deadline
+The code did not compile!
 
 Overall Grade: NO GRADE YET
