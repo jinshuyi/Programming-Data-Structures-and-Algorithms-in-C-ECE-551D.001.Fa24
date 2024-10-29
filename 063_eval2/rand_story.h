@@ -14,14 +14,10 @@ catarray_t * readWords2(FILE * f);
 void freeCatarray2(catarray_t * catArr);
 
 //step3,4
-typedef struct {
-  char ** used_words;
-  size_t count;
-} used_words_t;
-void replace_category_with_backreference(char * line,
-                                         catarray_t * cats,
-                                         int allow_repeat);
 void read_template_with_backreference(const char * filename,
                                       catarray_t * cats,
                                       int allow_repeat);
+void replace_category_with_backreference(char * line,
+                                         catarray_t * cats,
+                                         int allow_repeat);
 #endif

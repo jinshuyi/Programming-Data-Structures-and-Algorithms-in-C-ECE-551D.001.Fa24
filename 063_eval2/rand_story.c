@@ -105,9 +105,14 @@ void freeCatarray2(catarray_t * catArr) {
 }
 
 //step3,4 final function
+
 #define MAX_CATEGORIES 10     // 假设最多有10个类别
 #define MAX_REPLACEMENTS 100  // 假设最多有100个占位符
+#define MAX_USED_WORDS 100    // 假设最多存储100个已使用的单词
+char * used_words[MAX_USED_WORDS];
+int used_count = 0;
 
+// 修改 replace_category_with_backreference 函数以支持不重复使用单词
 void replace_category_with_backreference(char * line,
                                          catarray_t * cats,
                                          int allow_repeat) {
@@ -143,9 +148,11 @@ void replace_category_with_backreference(char * line,
     }
     else {
       // 检查类别是否已经被使用
+      int found = 0;
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
           word = replacements[i];
+          found = 1;
           break;
         }
       }
@@ -153,8 +160,27 @@ void replace_category_with_backreference(char * line,
       // 如果没有找到，则随机选择
       if (word == NULL) {
         word = chooseWord(category, cats);
-        if (word != NULL) {
-          replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
+
+        // 检查是否已使用过
+        while (word != NULL) {
+          int already_used = 0;
+          for (int i = 0; i < used_count; i++) {
+            if (strcmp(used_words[i], word) == 0) {
+              already_used = 1;
+              break;
+            }
+          }
+
+          // 如果未使用过，记录已使用单词
+          if (!already_used) {
+            replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
+            used_words[used_count++] = strdup(word);        // 记录已使用的单词
+            break;  // 找到未使用的单词，退出循环
+          }
+          else {
+            // 重新选择单词
+            word = chooseWord(category, cats);
+          }
         }
       }
     }
@@ -181,7 +207,7 @@ void read_template_with_backreference(const char * filename,
   char * line = NULL;
   size_t sz = 0;
   while (getline(&line, &sz, f) != -1) {
-    replace_category_with_backreference(line, cats, allow_repeat);
+    replace_category_with_backreference(line, cats, allow_repeat);  // 传入允许重复参数
   }
   free(line);
   fclose(f);
