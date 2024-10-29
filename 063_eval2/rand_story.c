@@ -133,7 +133,6 @@ void replace_category_with_backreference(char * line,
       fprintf(stderr, "Unmatched underscore in story template\n");
       exit(EXIT_FAILURE);
     }
-
     // 提取类别名称
     size_t cat_len = end - start - 1;
     char category[cat_len + 1];
@@ -208,6 +207,10 @@ void replace_category_with_backreference(char * line,
   for (int i = 0; i < category_count; i++) {
     free(replacements[i]);
   }
+  for (int i = 0; i < used_count; i++) {
+    free(used_words[i]);
+  }
+  used_count = 0;
 }
 
 // 读取模板文件并处理回溯引用
