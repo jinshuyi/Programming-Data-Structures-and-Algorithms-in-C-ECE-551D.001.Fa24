@@ -14,6 +14,8 @@ catarray_t * readWords2(FILE * f);
 void freeCatarray2(catarray_t * catArr);
 
 //step3,4
+//change the function in step1 (replace_category --> replace_category_with_backreference;
+//read_template --->read_template_with_backreference)
 void read_template_with_backreference(const char * filename,
                                       catarray_t * cats,
                                       int allow_repeat);

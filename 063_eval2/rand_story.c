@@ -7,42 +7,44 @@
 
 #include "provided.h"
 
+//step1
 void replace_category(char * line, catarray_t * cats, int allow_repeat) {
   char * start = line;
   while ((start = strchr(start, '_')) != NULL) {
     char * end = strchr(start + 1, '_');
     if (end == NULL) {
-      fprintf(stderr, "Unmatched underscore in story template\n");
+      fprintf(stderr, "erorr\n");
       exit(EXIT_FAILURE);
     }
-
-    // Extract the category
+    // Determine the category
     size_t cat_len = end - start - 1;
     char category[cat_len + 1];
     strncpy(category, start + 1, cat_len);
     category[cat_len] = '\0';
-
+    //use given function chooseWord int he provided.h
     const char * word = chooseWord(category, cats);
 
-    // Print everything up to the category and replace with the word
+    // replace the word with "cat" and print
     *start = '\0';
     printf("%s%s", line, word);
     start = end + 1;
     line = start;
   }
-  // Print remaining part of the line
+  // print the other content of the reamining
   printf("%s", line);
 }
 
+//utlize the function replace_category, add the function open file and read words
 void read_template(const char * filename, catarray_t * cats, int allow_repeat) {
   FILE * f = fopen(filename, "r");
   if (f == NULL) {
-    perror("Could not open template file");
+    perror("can not open file");
     exit(EXIT_FAILURE);
   }
   char * line = NULL;
   size_t sz = 0;
-  while (getline(&line, &sz, f) != -1) {
+  //use getline function
+  while (getline(&line, &sz, f) >= 0) {
     replace_category(line, cats, allow_repeat);
   }
   free(line);
@@ -50,6 +52,8 @@ void read_template(const char * filename, catarray_t * cats, int allow_repeat) {
 }
 
 //step2
+
+//function readWords2 to read the file
 catarray_t * readWords2(FILE * f) {
   catarray_t * catArr = malloc(sizeof(*catArr));
   catArr->arr = NULL;
@@ -57,23 +61,26 @@ catarray_t * readWords2(FILE * f) {
   char * line = NULL;
   size_t len = 0;
 
-  while (getline(&line, &len, f) != -1) {
+  while (getline(&line, &len, f) >= 0) {
     char * colon = strchr(line, ':');
     if (colon == NULL) {
       fprintf(stderr, "Error: invalid format in word file.\n");
       free(line);
       exit(EXIT_FAILURE);
     }
-    *colon = '\0';
+    *colon = '\0';  // end symbol
     char * category = line;
     char * word = colon + 1;
-    word[strlen(word) - 1] = '\0';  // remove newline
+    word[strlen(word) - 1] = '\0';  //remove the newline generated
 
+    //
+    //
+    //Check if the category already exists in catArr
     size_t catIdx = 0;
     while (catIdx < catArr->n && strcmp(catArr->arr[catIdx].name, category) != 0) {
       catIdx++;
     }
-
+    //If the category does not exist, create a new category
     if (catIdx == catArr->n) {
       catArr->arr = realloc(catArr->arr, (catArr->n + 1) * sizeof(*catArr->arr));
       catArr->arr[catArr->n].name = strdup(category);
@@ -81,7 +88,7 @@ catarray_t * readWords2(FILE * f) {
       catArr->arr[catArr->n].n_words = 0;
       catArr->n++;
     }
-
+    //Get the current category
     category_t * cat = &catArr->arr[catIdx];
     cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
     cat->words[cat->n_words] = strdup(word);
@@ -91,7 +98,7 @@ catarray_t * readWords2(FILE * f) {
   return catArr;
 }
 
-// Function to free allocated memory for catarray_t
+// free alllocated memory for catarray_t
 void freeCatarray2(catarray_t * catArr) {
   for (size_t i = 0; i < catArr->n; i++) {
     for (size_t j = 0; j < catArr->arr[i].n_words; j++) {
@@ -148,11 +155,9 @@ void replace_category_with_backreference(char * line,
     }
     else {
       // 检查类别是否已经被使用
-      int found = 0;
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
           word = replacements[i];
-          found = 1;
           break;
         }
       }
@@ -164,15 +169,19 @@ void replace_category_with_backreference(char * line,
         // 检查是否已使用过
         while (word != NULL) {
           int already_used = 0;
-          for (int i = 0; i < used_count; i++) {
-            if (strcmp(used_words[i], word) == 0) {
-              already_used = 1;
-              break;
+
+          // 仅当不允许重复时，检查已使用的单词
+          if (!allow_repeat) {
+            for (int i = 0; i < used_count; i++) {
+              if (strcmp(used_words[i], word) == 0) {
+                already_used = 1;
+                break;
+              }
             }
           }
 
           // 如果未使用过，记录已使用单词
-          if (!already_used) {
+          if (allow_repeat || !already_used) {
             replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
             used_words[used_count++] = strdup(word);        // 记录已使用的单词
             break;  // 找到未使用的单词，退出循环

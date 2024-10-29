@@ -6,7 +6,7 @@
 
 int main(int argc, char ** argv) {
   if (argc != 2) {
-    fprintf(stderr, "Usage: %s words.txt\n", argv[0]);
+    fprintf(stderr, "Error");
     return EXIT_FAILURE;
   }
 
@@ -16,8 +16,12 @@ int main(int argc, char ** argv) {
     return EXIT_FAILURE;
   }
 
+  //use readWords2
   catarray_t * cats = readWords2(f);
+
+  //use printWords (given in provided.h to print)
   printWords(cats);
+  //free to avoid memory leak
   freeCatarray2(cats);
 
   fclose(f);
