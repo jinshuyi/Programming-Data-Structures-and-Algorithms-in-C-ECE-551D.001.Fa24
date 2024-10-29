@@ -20,6 +20,5 @@ int main(int argc, char ** argv) {
   fclose(f);
 
   read_template_with_backreference(argv[2], cats, 1);  // allow_repeat is 1 for step 3
-
   return EXIT_SUCCESS;
 }
