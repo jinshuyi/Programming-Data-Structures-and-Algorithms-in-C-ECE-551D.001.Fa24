@@ -1,11 +1,11 @@
-Grading at 10/29/2024:14:07:29.316402
-For commit ID 6d7ed9e81371a23282458f847afd22dc2bcf2591
-Grading at Tue Oct 29 10:07:27 AM EDT 2024
+Grading at 10/29/2024:14:12:23.292854
+For commit ID 2c422e2e0e3076b5a7da7d24b7cd09c741b3060e
+Grading at Tue Oct 29 10:12:21 AM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step4 story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -23,7 +23,7 @@ Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step4 story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
 gcc -o story-step2 story-step2.o rand_story.o provided.o
@@ -39,7 +39,7 @@ Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
-rm -f *~ story-step4 story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
 gcc -o story-step3 story-step3.o rand_story.o provided.o
@@ -57,7 +57,7 @@ But we did not.
 
 Step 4
 Checking that story-step4 compiles
-rm -f *~ story-step4 story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
 gcc -o story-step4 story-step4.o rand_story.o provided.o
