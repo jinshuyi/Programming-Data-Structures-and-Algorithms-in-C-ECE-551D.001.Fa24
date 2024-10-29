@@ -1,11 +1,11 @@
-Grading at 10/29/2024:13:45:24.583088
-For commit ID 49e4261ed40e11cc679009f5ef9bceec190f2213
-Grading at Tue Oct 29 09:45:20 AM EDT 2024
+Grading at 10/29/2024:13:58:37.839331
+For commit ID 60cac61e0a140cde808816c3d3195985bcf84d54
+Grading at Tue Oct 29 09:58:34 AM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -23,7 +23,7 @@ Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
 gcc -o story-step2 story-step2.o rand_story.o provided.o
@@ -39,7 +39,7 @@ Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
 gcc -o story-step3 story-step3.o rand_story.o provided.o
@@ -51,40 +51,11 @@ Now running YOUR tests for step 3
 3.1: Current test is story-step3 words.txt story2.txt
 -----------------------------
 Your output looks good. Lets check valgrind
-Valgrind reported errors or memory leaks:
-==2833177== Memcheck, a memory error detector
-==2833177== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2833177== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2833177== Command: ./story-step3 words.txt story2.txt
-==2833177== Parent PID: 2833176
-==2833177== 
-==2833177== 
-==2833177== HEAP SUMMARY:
-==2833177==     in use at exit: 56 bytes in 8 blocks
-==2833177==   total heap usage: 38 allocs, 30 frees, 13,898 bytes allocated
-==2833177== 
-==2833177== 28 bytes in 4 blocks are definitely lost in loss record 2 of 2
-==2833177==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2833177==    by 0x490B58E: strdup (strdup.c:42)
-==2833177==    by 0x109F88: replace_category_with_backreference (rand_story.c:185)
-==2833177==    by 0x10A145: read_template_with_backreference (rand_story.c:219)
-==2833177==    by 0x1094A9: main (story-step3.c:22)
-==2833177== 
-==2833177== LEAK SUMMARY:
-==2833177==    definitely lost: 28 bytes in 4 blocks
-==2833177==    indirectly lost: 0 bytes in 0 blocks
-==2833177==      possibly lost: 0 bytes in 0 blocks
-==2833177==    still reachable: 28 bytes in 4 blocks
-==2833177==         suppressed: 0 bytes in 0 blocks
-==2833177== Reachable blocks (those to which a pointer was found) are not shown.
-==2833177== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2833177== 
-==2833177== For lists of detected and suppressed errors, rerun with: -s
-==2833177== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+Valgrind was clean
 
 Step 4
 Checking that story-step4 compiles
-rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
 gcc -o story-step4 story-step4.o rand_story.o provided.o
@@ -96,70 +67,17 @@ Now running YOUR tests for step 4
 4.1: Current test is story-step4 words.txt story2.txt
 -----------------------------
 Your output looks good. Lets check valgrind
-Valgrind reported errors or memory leaks:
-==2833250== Memcheck, a memory error detector
-==2833250== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2833250== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2833250== Command: ./story-step4 words.txt story2.txt
-==2833250== Parent PID: 2833249
-==2833250== 
-==2833250== 
-==2833250== HEAP SUMMARY:
-==2833250==     in use at exit: 56 bytes in 8 blocks
-==2833250==   total heap usage: 38 allocs, 30 frees, 13,898 bytes allocated
-==2833250== 
-==2833250== 28 bytes in 4 blocks are definitely lost in loss record 2 of 2
-==2833250==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2833250==    by 0x490B58E: strdup (strdup.c:42)
-==2833250==    by 0x109FC0: replace_category_with_backreference (rand_story.c:185)
-==2833250==    by 0x10A17D: read_template_with_backreference (rand_story.c:219)
-==2833250==    by 0x1094E1: main (story-step4.c:33)
-==2833250== 
-==2833250== LEAK SUMMARY:
-==2833250==    definitely lost: 28 bytes in 4 blocks
-==2833250==    indirectly lost: 0 bytes in 0 blocks
-==2833250==      possibly lost: 0 bytes in 0 blocks
-==2833250==    still reachable: 28 bytes in 4 blocks
-==2833250==         suppressed: 0 bytes in 0 blocks
-==2833250== Reachable blocks (those to which a pointer was found) are not shown.
-==2833250== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2833250== 
-==2833250== For lists of detected and suppressed errors, rerun with: -s
-==2833250== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+Valgrind was clean
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
-Your output looks good. Lets check valgrind
-Valgrind reported errors or memory leaks:
-==2833291== Memcheck, a memory error detector
-==2833291== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2833291== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2833291== Command: ./story-step4 -n words.txt story2.txt
-==2833291== Parent PID: 2833290
-==2833291== 
-==2833291== 
-==2833291== HEAP SUMMARY:
-==2833291==     in use at exit: 56 bytes in 8 blocks
-==2833291==   total heap usage: 41 allocs, 33 frees, 13,946 bytes allocated
-==2833291== 
-==2833291== 28 bytes in 4 blocks are definitely lost in loss record 2 of 2
-==2833291==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2833291==    by 0x490B58E: strdup (strdup.c:42)
-==2833291==    by 0x109FC0: replace_category_with_backreference (rand_story.c:185)
-==2833291==    by 0x10A17D: read_template_with_backreference (rand_story.c:219)
-==2833291==    by 0x1094E1: main (story-step4.c:33)
-==2833291== 
-==2833291== LEAK SUMMARY:
-==2833291==    definitely lost: 28 bytes in 4 blocks
-==2833291==    indirectly lost: 0 bytes in 0 blocks
-==2833291==      possibly lost: 0 bytes in 0 blocks
-==2833291==    still reachable: 28 bytes in 4 blocks
-==2833291==         suppressed: 0 bytes in 0 blocks
-==2833291== Reachable blocks (those to which a pointer was found) are not shown.
-==2833291== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==2833291== 
-==2833291== For lists of detected and suppressed errors, rerun with: -s
-==2833291== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+It looks like you got different output from us on that case.
+Here is the diff (yours on left, ours on right):
+
+Once upon a time, there was a walrus. This walrus lived in a 	Once upon a time, there was a walrus. This walrus lived in a 
+peculiar cave. One day, it left its peculiar cave and met a w |	peculiar cave. One day, it left its peculiar cave and met a d
+Your file did not match the expected output
+
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
