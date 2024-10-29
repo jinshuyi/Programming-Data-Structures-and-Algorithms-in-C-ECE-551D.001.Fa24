@@ -112,7 +112,6 @@ void freeCatarray2(catarray_t * catArr) {
 }
 
 //step3,4 final function
-
 #define MAX_CATEGORIES 10     // 假设最多有10个类别
 #define MAX_REPLACEMENTS 100  // 假设最多有100个占位符
 #define MAX_USED_WORDS 100    // 假设最多存储100个已使用的单词
@@ -201,13 +200,17 @@ void replace_category_with_backreference(char * line,
     line = start;
     count++;
   }
+
   // 打印剩余部分
   printf("%s", line);
+
+  // 释放 replacements 中的 strdup 产生的内存
   for (int i = 0; i < category_count; i++) {
-    free(replacements[i]);  // 释放 replacements 中的 strdup 产生的内存
+    free(replacements[i]);
   }
 }
 
+// 读取模板文件并处理回溯引用
 void read_template_with_backreference(const char * filename,
                                       catarray_t * cats,
                                       int allow_repeat) {
