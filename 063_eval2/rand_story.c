@@ -127,6 +127,8 @@ void replace_category_with_backreference(char * line,
   size_t count = 0;                              // 用于记录占位符数量
   char * replacements[MAX_CATEGORIES] = {NULL};  // 存储每个类别最后使用的词
   int category_count = 0;                        // 类别计数
+  char * used_words[MAX_CATEGORIES] = {NULL};
+  int used_count = 0;
 
   while ((start = strchr(start, '_')) != NULL) {
     char * end = strchr(start + 1, '_');
@@ -203,6 +205,14 @@ void replace_category_with_backreference(char * line,
   }
   // 打印剩余部分
   printf("%s", line);
+
+  // 释放replacements和used_words中的分配的内存
+  for (int i = 0; i < category_count; i++) {
+    free(replacements[i]);
+  }
+  for (int i = 0; i < used_count; i++) {
+    free(used_words[i]);
+  }
 }
 
 void read_template_with_backreference(const char * filename,
