@@ -203,6 +203,9 @@ void replace_category_with_backreference(char * line,
   }
   // 打印剩余部分
   printf("%s", line);
+  for (int i = 0; i < category_count; i++) {
+    free(replacements[i]);  // 释放 replacements 中的 strdup 产生的内存
+  }
 }
 
 void read_template_with_backreference(const char * filename,
