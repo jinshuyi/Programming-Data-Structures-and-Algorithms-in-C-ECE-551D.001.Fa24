@@ -31,7 +31,6 @@ int main(int argc, char ** argv) {
   fclose(f);
 
   read_template_with_backreference(argv[2], cats, allow_repeat);  // 使用允许重复参数
-  freeCatarray2(cats);
 
   return EXIT_SUCCESS;
 }
