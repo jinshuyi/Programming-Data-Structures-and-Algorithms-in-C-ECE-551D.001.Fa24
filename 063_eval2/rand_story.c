@@ -105,60 +105,84 @@ void freeCatarray2(catarray_t * catArr) {
 }
 
 //step3,4 final function
-// 读取 words 文件并解析成 catarray_t 结构
-catarray_t * readWords(FILE * f) {
-  catarray_t * cats = malloc(sizeof(*cats));
-  cats->arr = NULL;
-  cats->n = 0;
+#define MAX_CATEGORIES 10     // 假设最多有10个类别
+#define MAX_REPLACEMENTS 100  // 假设最多有100个占位符
 
-  char * line = NULL;
-  size_t sz = 0;
-  while (getline(&line, &sz, f) >= 0) {
-    // 查找 ':' 符号以分离类别名和单词
-    char * colon = strchr(line, ':');
-    if (colon == NULL) {
-      fprintf(stderr, "Invalid line format\n");
+void replace_category_with_backreference(char * line,
+                                         catarray_t * cats,
+                                         int allow_repeat) {
+  char * start = line;
+  size_t count = 0;                              // 用于记录占位符数量
+  char * replacements[MAX_CATEGORIES] = {NULL};  // 存储每个类别最后使用的词
+  int category_count = 0;                        // 类别计数
+
+  while ((start = strchr(start, '_')) != NULL) {
+    char * end = strchr(start + 1, '_');
+    if (end == NULL) {
+      fprintf(stderr, "Unmatched underscore in story template\n");
       exit(EXIT_FAILURE);
     }
-    *colon = '\0';
-    char * category = line;
-    char * word = colon + 1;
-    word[strcspn(word, "\n")] = '\0';  // 移除换行符
 
-    // 查找或创建类别
-    size_t i;
-    for (i = 0; i < cats->n; i++) {
-      if (strcmp(cats->arr[i].name, category) == 0) {
-        break;
+    // 提取类别名称
+    size_t cat_len = end - start - 1;
+    char category[cat_len + 1];
+    strncpy(category, start + 1, cat_len);
+    category[cat_len] = '\0';
+
+    const char * word = NULL;
+
+    // 检查是否为回溯引用
+    if (isdigit(category[0])) {
+      int backref_index = atoi(category);
+      if (backref_index < 1 || backref_index > count) {
+        fprintf(stderr, "Invalid back reference: %s\n", category);
+        exit(EXIT_FAILURE);
+      }
+      // 用已存储的词替换
+      word = replacements[count - backref_index];
+    }
+    else {
+      // 检查类别是否已经被使用
+      for (int i = 0; i < category_count; i++) {
+        if (strcmp(replacements[i], category) == 0) {
+          word = replacements[i];
+          break;
+        }
+      }
+
+      // 如果没有找到，则随机选择
+      if (word == NULL) {
+        word = chooseWord(category, cats);
+        if (word != NULL) {
+          replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
+        }
       }
     }
-    if (i == cats->n) {  // 新类别
-      cats->arr = realloc(cats->arr, (cats->n + 1) * sizeof(*cats->arr));
-      cats->arr[i].name = strdup(category);
-      cats->arr[i].words = NULL;
-      cats->arr[i].n_words = 0;
-      cats->n++;
-    }
 
-    // 添加单词到该类别
-    category_t * cat = &cats->arr[i];
-    cat->words = realloc(cat->words, (cat->n_words + 1) * sizeof(*cat->words));
-    cat->words[cat->n_words] = strdup(word);
-    cat->n_words++;
+    // 打印一切到类别并替换为词
+    *start = '\0';
+    printf("%s%s", line, word);
+    start = end + 1;
+    line = start;
+    count++;
   }
-  free(line);
-  return cats;
+  // 打印剩余部分
+  printf("%s", line);
 }
 
-// 释放 catarray_t 结构的内存
-void freeCatarray(catarray_t * cats) {
-  for (size_t i = 0; i < cats->n; i++) {
-    free(cats->arr[i].name);
-    for (size_t j = 0; j < cats->arr[i].n_words; j++) {
-      free(cats->arr[i].words[j]);
-    }
-    free(cats->arr[i].words);
+void read_template_with_backreference(const char * filename,
+                                      catarray_t * cats,
+                                      int allow_repeat) {
+  FILE * f = fopen(filename, "r");
+  if (f == NULL) {
+    perror("Could not open template file");
+    exit(EXIT_FAILURE);
   }
-  free(cats->arr);
-  free(cats);
+  char * line = NULL;
+  size_t sz = 0;
+  while (getline(&line, &sz, f) != -1) {
+    replace_category_with_backreference(line, cats, allow_repeat);
+  }
+  free(line);
+  fclose(f);
 }
