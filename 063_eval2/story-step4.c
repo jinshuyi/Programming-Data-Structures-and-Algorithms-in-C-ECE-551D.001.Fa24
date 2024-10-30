@@ -27,7 +27,7 @@ int main(int argc, char ** argv) {
   catarray_t * cats = readWords2(f);
   fclose(f);
   //use allow_repeat to detect
-  read_template_with_backreference(argv[2], cats, allow_repeat);
+  read_template_with_backreference_4(argv[2], cats, allow_repeat);
 
   freeCatarray2(cats);
   return EXIT_SUCCESS;

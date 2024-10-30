@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -18,7 +19,7 @@ int main(int argc, char ** argv) {
   catarray_t * cats = readWords2(f);
   fclose(f);
   // allow_repeat is 1 for step 3
-  read_template_with_backreference(argv[2], cats, 1);
+  read_template_with_backreference_3(argv[2], cats, 1);
   //free to make valgridn clean
   freeCatarray2(cats);
   return EXIT_SUCCESS;
