@@ -166,7 +166,7 @@ void replace_category_with_backreference(char * line,
           }
         }
 
-        // 记录单词并存储在 used_words 和 replacements 中
+        // Record the words and store in used_words and replacements
         replacements[category_count++] = strdup(word);
         if (used_count < MAX_USED_WORDS) {
           used_words[used_count++] = strdup(word);
@@ -250,8 +250,9 @@ void read_template_with_backreference(const char * filename,
   size_t sz = 0;
   while (getline(&line, &sz, f) >= 0) {
     replace_category_with_backreference(line, cats, allow_repeat);
+    free(line);
   }
-  free(line);
+  line = NULL;
   fclose(f);
 }
 
