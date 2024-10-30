@@ -231,6 +231,10 @@ void replace_category_with_backreference(char * line,
   for (int i = 0; i < category_count; i++) {
     free(replacements[i]);
   }
+  for (int i = 0; i < used_count; i++) {
+    free(used_words[i]);
+  }
+  used_count = 0;
 }
 
 //Reading template files and handling backreferences
