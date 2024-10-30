@@ -118,9 +118,9 @@ char * used_words[MAX_USED_WORDS];
 int used_count = 0;
 
 // new replace_category_with_backreference function
-void replace_category_with_backreference(char * line,
-                                         catarray_t * cats,
-                                         int allow_repeat) {
+void replace_category_with_backreference_3(char * line,
+                                           catarray_t * cats,
+                                           int allow_repeat) {
   char * start = line;
   size_t count = 0;
   char * replacements[MAX_CATEGORIES] = {NULL};
@@ -150,33 +150,7 @@ void replace_category_with_backreference(char * line,
       word = replacements[count - backref_index];
     }
     else {
-      while (1) {
-        word = chooseWord(category, cats);
-        // When duplication is not allowed, check whether the selected word is already used in the same categoryr.
-        if (!allow_repeat) {
-          int already_used = 0;
-          for (int i = 0; i < category_count; i++) {
-            if (strcmp(replacements[i], word) == 0) {
-              already_used = 1;
-              break;
-            }
-          }
-          if (already_used) {
-            continue;  // if used, repeatly
-          }
-        }
-
-        // Record the words and store in used_words and replacements
-        replacements[category_count++] = strdup(word);
-        if (used_count < MAX_USED_WORDS) {
-          used_words[used_count++] = strdup(word);
-        }
-        break;
-      }
-    }
-
-    /*
-      // 
+      //
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
           word = replacements[i];
@@ -192,7 +166,7 @@ void replace_category_with_backreference(char * line,
         while (word != NULL) {
           int already_used = 0;
 
-          // 
+          //
           if (!allow_repeat) {
             for (int i = 0; i < used_count; i++) {
               if (strcmp(used_words[i], word) == 0) {
@@ -204,18 +178,17 @@ void replace_category_with_backreference(char * line,
 
           //
           if (allow_repeat || !already_used) {
-            replacements[category_count++] = strdup(word);  
-            used_words[used_count++] = strdup(word);        
-            break;  
+            replacements[category_count++] = strdup(word);
+            used_words[used_count++] = strdup(word);
+            break;
           }
           else {
-            // 
+            //
             word = chooseWord(category, cats);
           }
         }
       }
     }
-	*/
 
     *start = '\0';
     printf("%s%s", line, word);
@@ -238,9 +211,9 @@ void replace_category_with_backreference(char * line,
 }
 
 //Reading template files and handling backreferences
-void read_template_with_backreference(const char * filename,
-                                      catarray_t * cats,
-                                      int allow_repeat) {
+void read_template_with_backreference_3(const char * filename,
+                                        catarray_t * cats,
+                                        int allow_repeat) {
   FILE * f = fopen(filename, "r");
   if (f == NULL) {
     perror("can'topen template file");
@@ -249,11 +222,117 @@ void read_template_with_backreference(const char * filename,
   char * line = NULL;
   size_t sz = 0;
   while (getline(&line, &sz, f) >= 0) {
-    replace_category_with_backreference(line, cats, allow_repeat);
-    free(line);
+    replace_category_with_backreference_3(line, cats, allow_repeat);
   }
-  line = NULL;
+  free(line);
   fclose(f);
 }
 
 //Important comment:Because when I add the "free(used_words[i]);"comment
+
+//the same as read_template_with_backreference_3
+void read_template_with_backreference_4(const char * filename,
+                                        catarray_t * cats,
+                                        int allow_repeat) {
+  FILE * f = fopen(filename, "r");
+  if (f == NULL) {
+    perror("can'topen template file");
+    exit(EXIT_FAILURE);
+  }
+  char * line = NULL;
+  size_t sz = 0;
+  while (getline(&line, &sz, f) >= 0) {
+    replace_category_with_backreference_4(line, cats, allow_repeat);
+  }
+  free(line);
+  fclose(f);
+}
+
+void replace_category_with_backreference_4(char * line,
+                                           catarray_t * cats,
+                                           int allow_repeat) {
+  char * start = line;
+  size_t count = 0;                              // 用于记录占位符数量
+  char * replacements[MAX_CATEGORIES] = {NULL};  // 存储每个类别最后使用的词
+  int category_count = 0;                        // 类别计数
+
+  while ((start = strchr(start, '_')) != NULL) {
+    char * end = strchr(start + 1, '_');
+    if (end == NULL) {
+      fprintf(stderr, "Unmatched underscore in story template\n");
+      exit(EXIT_FAILURE);
+    }
+
+    // 提取类别名称
+    size_t cat_len = end - start - 1;
+    char category[cat_len + 1];
+    strncpy(category, start + 1, cat_len);
+    category[cat_len] = '\0';
+
+    const char * word = NULL;
+
+    // 检查是否为回溯引用
+    if (isdigit(category[0])) {
+      int backref_index = atoi(category);
+      if (backref_index < 1 || backref_index > count) {
+        fprintf(stderr, "Invalid back reference: %s\n", category);
+        exit(EXIT_FAILURE);
+      }
+      // 用已存储的词替换
+      word = replacements[count - backref_index];
+    }
+    else {
+      // 检查类别是否已经被使用
+      for (int i = 0; i < category_count; i++) {
+        if (strcmp(replacements[i], category) == 0) {
+          word = replacements[i];
+          break;
+        }
+      }
+
+      // 如果没有找到，则随机选择
+      if (word == NULL) {
+        word = chooseWord(category, cats);
+
+        // 检查是否已使用过
+        while (word != NULL) {
+          int already_used = 0;
+
+          // 仅当不允许重复时，检查已使用的单词
+          if (!allow_repeat) {
+            for (int i = 0; i < used_count; i++) {
+              if (strcmp(used_words[i], word) == 0) {
+                already_used = 1;
+                break;
+              }
+            }
+          }
+
+          // 如果未使用过，记录已使用单词
+          if (allow_repeat || !already_used) {
+            replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
+            used_words[used_count++] = strdup(word);        // 记录已使用的单词
+            break;  // 找到未使用的单词，退出循环
+          }
+          else {
+            // 重新选择单词
+            word = chooseWord(category, cats);
+          }
+        }
+      }
+    }
+
+    // 打印一切到类别并替换为词
+    *start = '\0';
+    printf("%s%s", line, word);
+    start = end + 1;
+    line = start;
+    count++;
+  }
+  // 打印剩余部分
+  printf("%s", line);
+
+  for (int i = 0; i < category_count; i++) {
+    free(replacements[i]);
+  }
+}
