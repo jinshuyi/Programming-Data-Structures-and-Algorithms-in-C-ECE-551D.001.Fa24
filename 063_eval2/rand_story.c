@@ -152,6 +152,33 @@ void replace_category_with_backreference(char * line,
       word = replacements[count - backref_index];
     }
     else {
+      while (1) {
+        word = chooseWord(category, cats);
+
+        // 当不允许重复时，检查选择的单词是否在相同类别中已使用
+        if (!allow_repeat) {
+          int already_used = 0;
+          for (int i = 0; i < category_count; i++) {
+            if (strcmp(replacements[i], word) == 0) {
+              already_used = 1;
+              break;
+            }
+          }
+          if (already_used) {
+            continue;  // 若已使用过，重新选择单词
+          }
+        }
+
+        // 记录单词并存储在 used_words 和 replacements 中
+        replacements[category_count++] = strdup(word);  // 存储用于该类别的单词
+        if (used_count < MAX_USED_WORDS) {
+          used_words[used_count++] = strdup(word);  // 存储全局已使用单词
+        }
+        break;
+      }
+    }
+
+    /*
       // 检查类别是否已经被使用
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
@@ -191,6 +218,7 @@ void replace_category_with_backreference(char * line,
         }
       }
     }
+	*/
 
     // 打印一切到类别并替换为词
     *start = '\0';
