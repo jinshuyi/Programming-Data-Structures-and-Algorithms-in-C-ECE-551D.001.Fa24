@@ -1,11 +1,11 @@
-Grading at 10/30/2024:01:08:13.992526
-For commit ID 91d4c1ca169439f50baa9f79c2a97001a05baa46
-Grading at Tue Oct 29 09:08:10 PM EDT 2024
+Grading at 10/30/2024:01:25:58.867634
+For commit ID faf49ffbf7fdf49033b2ec8ca667e6ba21e7b563
+Grading at Tue Oct 29 09:25:55 PM EDT 2024
 Doing some basic checking for your submission
 
 Step 1
 Checking that story-step1 compiles
-rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step1.c
 gcc -o story-step1 story-step1.o rand_story.o provided.o
@@ -23,7 +23,7 @@ Valgrind was clean
 
 Step 2
 Checking that story-step2 compiles
-rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step2.c
 gcc -o story-step2 story-step2.o rand_story.o provided.o
@@ -39,7 +39,7 @@ Valgrind was clean
 
 Step 3
 Checking that story-step3 compiles
-rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step3.c
 gcc -o story-step3 story-step3.o rand_story.o provided.o
@@ -55,7 +55,7 @@ Valgrind was clean
 
 Step 4
 Checking that story-step4 compiles
-rm -f *~ story-step3 story-step4 story-step3.o story-step4.o rand_story.o
+rm -f *~ story-step1 story-step2 story-step3 story-step4 story-step1.o story-step2.o story-step3.o story-step4.o rand_story.o
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c rand_story.c
 gcc -std=gnu99 -pedantic -Wall -Werror -ggdb3 -c story-step4.c
 gcc -o story-step4 story-step4.o rand_story.o provided.o
@@ -68,55 +68,55 @@ Now running YOUR tests for step 4
 -----------------------------
 Your output looks good. Lets check valgrind
 Valgrind reported errors or memory leaks:
-==128374== Memcheck, a memory error detector
-==128374== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==128374== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==128374== Command: ./story-step4 words.txt story2.txt
-==128374== Parent PID: 128373
-==128374== 
-==128374== 
-==128374== HEAP SUMMARY:
-==128374==     in use at exit: 28 bytes in 4 blocks
-==128374==   total heap usage: 38 allocs, 34 frees, 13,898 bytes allocated
-==128374== 
-==128374== LEAK SUMMARY:
-==128374==    definitely lost: 0 bytes in 0 blocks
-==128374==    indirectly lost: 0 bytes in 0 blocks
-==128374==      possibly lost: 0 bytes in 0 blocks
-==128374==    still reachable: 28 bytes in 4 blocks
-==128374==         suppressed: 0 bytes in 0 blocks
-==128374== Reachable blocks (those to which a pointer was found) are not shown.
-==128374== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==128374== 
-==128374== For lists of detected and suppressed errors, rerun with: -s
-==128374== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==173098== Memcheck, a memory error detector
+==173098== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==173098== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==173098== Command: ./story-step4 words.txt story2.txt
+==173098== Parent PID: 173097
+==173098== 
+==173098== 
+==173098== HEAP SUMMARY:
+==173098==     in use at exit: 28 bytes in 4 blocks
+==173098==   total heap usage: 38 allocs, 34 frees, 13,898 bytes allocated
+==173098== 
+==173098== LEAK SUMMARY:
+==173098==    definitely lost: 0 bytes in 0 blocks
+==173098==    indirectly lost: 0 bytes in 0 blocks
+==173098==      possibly lost: 0 bytes in 0 blocks
+==173098==    still reachable: 28 bytes in 4 blocks
+==173098==         suppressed: 0 bytes in 0 blocks
+==173098== Reachable blocks (those to which a pointer was found) are not shown.
+==173098== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==173098== 
+==173098== For lists of detected and suppressed errors, rerun with: -s
+==173098== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 4.2: Current test is story-step4 -n words.txt story2.txt
 -----------------------------
 Your output looks good. Lets check valgrind
 Valgrind reported errors or memory leaks:
-==128426== Memcheck, a memory error detector
-==128426== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==128426== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==128426== Command: ./story-step4 -n words.txt story2.txt
-==128426== Parent PID: 128425
-==128426== 
-==128426== 
-==128426== HEAP SUMMARY:
-==128426==     in use at exit: 28 bytes in 4 blocks
-==128426==   total heap usage: 41 allocs, 37 frees, 13,946 bytes allocated
-==128426== 
-==128426== LEAK SUMMARY:
-==128426==    definitely lost: 0 bytes in 0 blocks
-==128426==    indirectly lost: 0 bytes in 0 blocks
-==128426==      possibly lost: 0 bytes in 0 blocks
-==128426==    still reachable: 28 bytes in 4 blocks
-==128426==         suppressed: 0 bytes in 0 blocks
-==128426== Reachable blocks (those to which a pointer was found) are not shown.
-==128426== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==128426== 
-==128426== For lists of detected and suppressed errors, rerun with: -s
-==128426== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==173150== Memcheck, a memory error detector
+==173150== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==173150== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==173150== Command: ./story-step4 -n words.txt story2.txt
+==173150== Parent PID: 173149
+==173150== 
+==173150== 
+==173150== HEAP SUMMARY:
+==173150==     in use at exit: 28 bytes in 4 blocks
+==173150==   total heap usage: 41 allocs, 37 frees, 13,946 bytes allocated
+==173150== 
+==173150== LEAK SUMMARY:
+==173150==    definitely lost: 0 bytes in 0 blocks
+==173150==    indirectly lost: 0 bytes in 0 blocks
+==173150==      possibly lost: 0 bytes in 0 blocks
+==173150==    still reachable: 28 bytes in 4 blocks
+==173150==         suppressed: 0 bytes in 0 blocks
+==173150== Reachable blocks (those to which a pointer was found) are not shown.
+==173150== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==173150== 
+==173150== For lists of detected and suppressed errors, rerun with: -s
+==173150== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
 You have NOT passed your test cases!
 You should go and figure out/understand where thing went wrong
