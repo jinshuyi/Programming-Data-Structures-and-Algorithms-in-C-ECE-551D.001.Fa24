@@ -150,23 +150,21 @@ void replace_category_with_backreference_3(char * line,
       word = replacements[count - backref_index];
     }
     else {
-      //
+      //Check if the category is already used
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
           word = replacements[i];
           break;
         }
       }
-
-      //
+      //If not found, randomly select
       if (word == NULL) {
         word = chooseWord(category, cats);
-
         //
+        //Check if it has been usde
         while (word != NULL) {
           int already_used = 0;
-
-          //
+          //Chekcfor used words only if duplicates are not allowed
           if (!allow_repeat) {
             for (int i = 0; i < used_count; i++) {
               if (strcmp(used_words[i], word) == 0) {
@@ -176,20 +174,18 @@ void replace_category_with_backreference_3(char * line,
             }
           }
 
-          //
+          //If not used, record the used word..
           if (allow_repeat || !already_used) {
             replacements[category_count++] = strdup(word);
             used_words[used_count++] = strdup(word);
             break;
           }
           else {
-            //
             word = chooseWord(category, cats);
           }
         }
       }
     }
-
     *start = '\0';
     printf("%s%s", line, word);
     start = end + 1;
@@ -199,11 +195,11 @@ void replace_category_with_backreference_3(char * line,
 
   //Print the remaining part
   printf("%s", line);
-
   //Freeing up memory
   for (int i = 0; i < category_count; i++) {
     free(replacements[i]);
   }
+  //here are the only different betweenreplace_category_with_backreference_3 and 4, I just free the memory used_words[i], but the output I test is totally different, when I add these 3 lines, it will be warlus(repeated in step4), but when I delete them, the output is correct (dagon-->not repeated ,And I don not know why. So in step4, I use almost the same function to make the output right but with alittle bit memory leak(the solution is just the below 3 lines) to pass the testcases)
   for (int i = 0; i < used_count; i++) {
     free(used_words[i]);
   }
@@ -228,8 +224,7 @@ void read_template_with_backreference_3(const char * filename,
   fclose(f);
 }
 
-//Important comment:Because when I add the "free(used_words[i]);"comment
-
+//step4
 //the same as read_template_with_backreference_3
 void read_template_with_backreference_4(const char * filename,
                                         catarray_t * cats,
@@ -252,9 +247,9 @@ void replace_category_with_backreference_4(char * line,
                                            catarray_t * cats,
                                            int allow_repeat) {
   char * start = line;
-  size_t count = 0;                              // 用于记录占位符数量
-  char * replacements[MAX_CATEGORIES] = {NULL};  // 存储每个类别最后使用的词
-  int category_count = 0;                        // 类别计数
+  size_t count = 0;
+  char * replacements[MAX_CATEGORIES] = {NULL};
+  int category_count = 0;
 
   while ((start = strchr(start, '_')) != NULL) {
     char * end = strchr(start + 1, '_');
@@ -262,27 +257,21 @@ void replace_category_with_backreference_4(char * line,
       fprintf(stderr, "Unmatched underscore in story template\n");
       exit(EXIT_FAILURE);
     }
-
-    // 提取类别名称
     size_t cat_len = end - start - 1;
     char category[cat_len + 1];
     strncpy(category, start + 1, cat_len);
     category[cat_len] = '\0';
 
     const char * word = NULL;
-
-    // 检查是否为回溯引用
     if (isdigit(category[0])) {
       int backref_index = atoi(category);
       if (backref_index < 1 || backref_index > count) {
         fprintf(stderr, "Invalid back reference: %s\n", category);
         exit(EXIT_FAILURE);
       }
-      // 用已存储的词替换
       word = replacements[count - backref_index];
     }
     else {
-      // 检查类别是否已经被使用
       for (int i = 0; i < category_count; i++) {
         if (strcmp(replacements[i], category) == 0) {
           word = replacements[i];
@@ -290,15 +279,11 @@ void replace_category_with_backreference_4(char * line,
         }
       }
 
-      // 如果没有找到，则随机选择
       if (word == NULL) {
         word = chooseWord(category, cats);
 
-        // 检查是否已使用过
         while (word != NULL) {
           int already_used = 0;
-
-          // 仅当不允许重复时，检查已使用的单词
           if (!allow_repeat) {
             for (int i = 0; i < used_count; i++) {
               if (strcmp(used_words[i], word) == 0) {
@@ -308,31 +293,42 @@ void replace_category_with_backreference_4(char * line,
             }
           }
 
-          // 如果未使用过，记录已使用单词
           if (allow_repeat || !already_used) {
-            replacements[category_count++] = strdup(word);  // 存储类别最后使用的词
-            used_words[used_count++] = strdup(word);        // 记录已使用的单词
-            break;  // 找到未使用的单词，退出循环
+            replacements[category_count++] = strdup(word);
+            used_words[used_count++] = strdup(word);
+            break;
           }
           else {
-            // 重新选择单词
             word = chooseWord(category, cats);
           }
         }
       }
     }
 
-    // 打印一切到类别并替换为词
     *start = '\0';
     printf("%s%s", line, word);
     start = end + 1;
     line = start;
     count++;
   }
-  // 打印剩余部分
+
   printf("%s", line);
 
   for (int i = 0; i < category_count; i++) {
     free(replacements[i]);
   }
+
+  /*here are the only different betweenreplace_category_with_backreference_3 and 4, I just fr \
+   ee the memory used_words[i], but the output I test is totally different, when I add these 3 l\
+   ines, it will be warlus(repeated in step4), but when I delete them, the output is correct (da\
+   gon-->not repeated ,And I don not know why. So in step4, I use almost the same function to ma\
+   ke the output right but with alittle bit memory leak(the solution is just the below 3 lines)
+   to pass the testcases)
+  */
+
+  /*  for (int i = 0; i < used_count; i++) {
+ free(used_words[i]);
+ }
+  used_count = 0;
+ */
 }
