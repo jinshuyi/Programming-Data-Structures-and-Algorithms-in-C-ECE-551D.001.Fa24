@@ -10,10 +10,13 @@ Don't forget your destructors!
 ~Lion(Aslan)
 Aslan roars.
 at(Aslan)
+Aslan purrs.
+~Animal(Aslan)
 ~Lion(Leon)
 Leon roars.
 at(Leon)
-at(Fluffy)
-~Animal(Fluffy)
+Leon purrs.
 ~Animal(Leon)
-~Animal(Aslan)
+at(Fluffy)
+Fluffy purrs.
+~Animal(Fluffy)
