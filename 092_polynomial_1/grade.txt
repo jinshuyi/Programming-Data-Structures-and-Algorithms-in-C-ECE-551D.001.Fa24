@@ -1,110 +1,161 @@
-Grading at 11/08/2024:06:17:55.826981
-For commit ID 240ad881ff0626152ace146dfa64ddf1e89c8645
-Grading at Fri Nov  8 01:17:55 AM EST 2024
+Grading at 11/08/2024:06:23:46.279564
+For commit ID b4676171362cffff7be2442d6be1f64de7b15f89
+Grading at Fri Nov  8 01:23:46 AM EST 2024
 Compiling your code with our test main
 In file included from testmain.cpp:4:
 poly.hpp: In member function ‘Polynomial<NumT> Polynomial<NumT>::operator+(const Polynomial<NumT>&) const’:
-poly.hpp:30:16: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-   30 |     for (const auto & term : rhs.terms) {
-      |                ^~~~
-      |                ----
-poly.hpp:30:23: error: ISO C++ forbids declaration of ‘term’ with no type [-fpermissive]
-   30 |     for (const auto & term : rhs.terms) {
-      |                       ^~~~
-poly.hpp:30:30: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
-   30 |     for (const auto & term : rhs.terms) {
-      |                              ^~~
-poly.hpp:31:27: error: request for member ‘second’ in ‘term’, which is of non-class type ‘const int’
-   31 |       result.addTerm(term.second, term.first);
-      |                           ^~~~~~
-poly.hpp:31:40: error: request for member ‘first’ in ‘term’, which is of non-class type ‘const int’
-   31 |       result.addTerm(term.second, term.first);
-      |                                        ^~~~~
+poly.hpp:26:57: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   26 |     for (const std::pair<const unsigned, NumT> & term : rhs.terms) {
+      |                                                         ^~~
 poly.hpp: In member function ‘Polynomial<NumT> Polynomial<NumT>::operator-() const’:
-poly.hpp:39:16: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-   39 |     for (const auto & term : terms) {
-      |                ^~~~
-      |                ----
-poly.hpp:39:23: error: ISO C++ forbids declaration of ‘term’ with no type [-fpermissive]
-   39 |     for (const auto & term : terms) {
-      |                       ^~~~
-poly.hpp:39:30: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
-   39 |     for (const auto & term : terms) {
-      |                              ^~~~~
-poly.hpp:40:25: error: request for member ‘first’ in ‘term’, which is of non-class type ‘const int’
-   40 |       result.terms[term.first] = -term.second;
-      |                         ^~~~~
-poly.hpp:40:40: error: request for member ‘second’ in ‘term’, which is of non-class type ‘const int’
-   40 |       result.terms[term.first] = -term.second;
-      |                                        ^~~~~~
+poly.hpp:35:57: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   35 |     for (const std::pair<const unsigned, NumT> & term : terms) {
+      |                                                         ^~~~~
 poly.hpp: In member function ‘Polynomial<NumT> Polynomial<NumT>::operator*(const NumT&) const’:
-poly.hpp:51:16: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-   51 |     for (const auto & term : terms) {
-      |                ^~~~
-      |                ----
-poly.hpp:51:23: error: ISO C++ forbids declaration of ‘term’ with no type [-fpermissive]
-   51 |     for (const auto & term : terms) {
-      |                       ^~~~
-poly.hpp:51:30: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
-   51 |     for (const auto & term : terms) {
-      |                              ^~~~~
-poly.hpp:52:25: error: request for member ‘first’ in ‘term’, which is of non-class type ‘const int’
-   52 |       result.terms[term.first] = term.second * n;
-      |                         ^~~~~
-poly.hpp:52:39: error: request for member ‘second’ in ‘term’, which is of non-class type ‘const int’
-   52 |       result.terms[term.first] = term.second * n;
-      |                                       ^~~~~~
+poly.hpp:44:57: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   44 |     for (const std::pair<const unsigned, NumT> & term : terms) {
+      |                                                         ^~~~~
 poly.hpp: In member function ‘Polynomial<NumT> Polynomial<NumT>::operator*(const Polynomial<NumT>&) const’:
-poly.hpp:60:16: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-   60 |     for (const auto & term1 : terms) {
-      |                ^~~~
-      |                ----
-poly.hpp:60:23: error: ISO C++ forbids declaration of ‘term1’ with no type [-fpermissive]
-   60 |     for (const auto & term1 : terms) {
-      |                       ^~~~~
-poly.hpp:60:31: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
-   60 |     for (const auto & term1 : terms) {
-      |                               ^~~~~
-poly.hpp:61:18: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-   61 |       for (const auto & term2 : rhs.terms) {
-      |                  ^~~~
-      |                  ----
-poly.hpp:61:25: error: ISO C++ forbids declaration of ‘term2’ with no type [-fpermissive]
-   61 |       for (const auto & term2 : rhs.terms) {
-      |                         ^~~~~
-poly.hpp:61:33: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
-   61 |       for (const auto & term2 : rhs.terms) {
-      |                                 ^~~
-poly.hpp:62:30: error: request for member ‘second’ in ‘term1’, which is of non-class type ‘const int’
-   62 |         result.addTerm(term1.second * term2.second, term1.first + term2.first);
-      |                              ^~~~~~
-poly.hpp:62:45: error: request for member ‘second’ in ‘term2’, which is of non-class type ‘const int’
-   62 |         result.addTerm(term1.second * term2.second, term1.first + term2.first);
-      |                                             ^~~~~~
-poly.hpp:62:59: error: request for member ‘first’ in ‘term1’, which is of non-class type ‘const int’
-   62 |         result.addTerm(term1.second * term2.second, term1.first + term2.first);
-      |                                                           ^~~~~
-poly.hpp:62:73: error: request for member ‘first’ in ‘term2’, which is of non-class type ‘const int’
-   62 |         result.addTerm(term1.second * term2.second, term1.first + term2.first);
-      |                                                                         ^~~~~
-poly.hpp: In function ‘std::ostream& operator<<(std::ostream&, const Polynomial<T>&)’:
-poly.hpp:104:8: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
-  104 |   for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-      |        ^~~~
-      |        ----
-poly.hpp:104:13: error: ‘it’ does not name a type; did you mean ‘int’?
-  104 |   for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-      |             ^~
-      |             int
-poly.hpp:104:35: error: expected ‘;’ before ‘it’
-  104 |   for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-      |                                   ^~~
-      |                                   ;
-poly.hpp:104:36: error: ‘it’ was not declared in this scope; did you mean ‘int’?
-  104 |   for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-      |                                    ^~
-      |                                    int
+poly.hpp:53:58: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   53 |     for (const std::pair<const unsigned, NumT> & term1 : terms) {
+      |                                                          ^~~~~
+poly.hpp:54:60: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   54 |       for (const std::pair<const unsigned, NumT> & term2 : rhs.terms) {
+      |                                                            ^~~
+poly.hpp: In member function ‘Polynomial<NumT>& Polynomial<NumT>::operator*=(const NumT&)’:
+poly.hpp:63:51: error: range-based ‘for’ loops only available with ‘-std=c++11’ or ‘-std=gnu++11’ [-Werror]
+   63 |     for (std::pair<const unsigned, NumT> & term : terms) {
+      |                                                   ^~~~~
+poly.hpp: In function ‘std::ostream& operator<<(std::ostream&, const Polynomial<NumT>&)’:
+poly.hpp:72:10: error: ‘auto’ changes meaning in C++11; please remove it [-Werror=c++11-compat]
+   72 |     for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+      |          ^~~~
+      |          ----
+poly.hpp:72:15: error: ‘it’ does not name a type; did you mean ‘int’?
+   72 |     for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+      |               ^~
+      |               int
+poly.hpp:72:38: error: expected ‘;’ before ‘it’
+   72 |     for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+      |                                      ^~
+poly.hpp:72:38: error: ‘it’ was not declared in this scope; did you mean ‘int’?
+   72 |     for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+      |                                      ^~
+      |                                      int
 testmain.cpp: In function ‘int main()’:
+testmain.cpp:8:8: error: ‘cout’ is not a member of ‘std’
+    8 |   std::cout << "default poly (p0): " << p0 << "\n";
+      |        ^~~~
+testmain.cpp:5:1: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+    4 | #include "poly.hpp"
+  +++ |+#include <iostream>
+    5 | 
+testmain.cpp:14:8: error: ‘cout’ is not a member of ‘std’
+   14 |   std::cout << "p1: " << p1 << "\n";
+      |        ^~~~
+testmain.cpp:14:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:15:8: error: ‘cout’ is not a member of ‘std’
+   15 |   std::cout << "-p1: " << -p1 << "\n";
+      |        ^~~~
+testmain.cpp:15:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:20:8: error: ‘cout’ is not a member of ‘std’
+   20 |   std::cout << "p2: " << p2 << "\n";
+      |        ^~~~
+testmain.cpp:20:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:21:8: error: ‘cout’ is not a member of ‘std’
+   21 |   std::cout << "p1 + p2: " << p1 + p2 << "\n";
+      |        ^~~~
+testmain.cpp:21:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:22:8: error: ‘cout’ is not a member of ‘std’
+   22 |   std::cout << "p1 * p2: " << p1 * p2 << "\n";
+      |        ^~~~
+testmain.cpp:22:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:23:8: error: ‘cout’ is not a member of ‘std’
+   23 |   std::cout << "p1 - p2: " << p1 - p2 << "\n";
+      |        ^~~~
+testmain.cpp:23:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:23:34: error: no match for ‘operator-’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   23 |   std::cout << "p1 - p2: " << p1 - p2 << "\n";
+      |                               ~~ ^ ~~
+      |                               |    |
+      |                               |    Polynomial<[...]>
+      |                               Polynomial<[...]>
+In file included from testmain.cpp:4:
+poly.hpp:33:14: note: candidate: ‘Polynomial<NumT> Polynomial<NumT>::operator-() const [with NumT = int]’
+   33 |   Polynomial operator-() const {
+      |              ^~~~~~~~
+poly.hpp:33:14: note:   candidate expects 0 arguments, 1 provided
+testmain.cpp:27:8: error: ‘cout’ is not a member of ‘std’
+   27 |   std::cout << "p3: " << p3 << "\n";
+      |        ^~~~
+testmain.cpp:27:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:29:8: error: ‘cout’ is not a member of ‘std’
+   29 |   std::cout << "temp is " << temp << "\n";
+      |        ^~~~
+testmain.cpp:29:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:31:8: error: ‘cout’ is not a member of ‘std’
+   31 |   std::cout << "after assignment, temp is " << temp << "\n";
+      |        ^~~~
+testmain.cpp:31:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:35:8: error: ‘cout’ is not a member of ‘std’
+   35 |   std::cout << "p4: " << p4 << "\n";
+      |        ^~~~
+testmain.cpp:35:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:36:8: error: ‘cout’ is not a member of ‘std’
+   36 |   std::cout << "p3 * p4: " << p3 * p4 << "\n";
+      |        ^~~~
+testmain.cpp:36:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:37:6: error: no match for ‘operator+=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   37 |   p3 += p4;
+      |   ~~~^~~~~
+testmain.cpp:38:8: error: ‘cout’ is not a member of ‘std’
+   38 |   std::cout << "p3v2: " << p3 << "\n";
+      |        ^~~~
+testmain.cpp:38:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:39:6: error: no match for ‘operator*=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   39 |   p3 *= p4;
+      |   ~~~^~~~~
+In file included from testmain.cpp:4:
+poly.hpp:62:16: note: candidate: ‘Polynomial<NumT>& Polynomial<NumT>::operator*=(const NumT&) [with NumT = int]’
+   62 |   Polynomial & operator*=(const NumT & n) {
+      |                ^~~~~~~~
+poly.hpp:62:40: note:   no known conversion for argument 1 from ‘Polynomial<int>’ to ‘const int&’
+   62 |   Polynomial & operator*=(const NumT & n) {
+      |                           ~~~~~~~~~~~~~^
+testmain.cpp:40:8: error: ‘cout’ is not a member of ‘std’
+   40 |   std::cout << "p3v3: " << p3 << "\n";
+      |        ^~~~
+testmain.cpp:40:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:41:6: error: no match for ‘operator-=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   41 |   p3 -= p4;
+      |   ~~~^~~~~
+testmain.cpp:42:8: error: ‘cout’ is not a member of ‘std’
+   42 |   std::cout << "p3v4: " << p3 << "\n";
+      |        ^~~~
+testmain.cpp:42:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:44:8: error: ‘cout’ is not a member of ‘std’
+   44 |   std::cout << "p4v2: " << p4 << "\n";
+      |        ^~~~
+testmain.cpp:44:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:48:8: error: ‘cout’ is not a member of ‘std’
+   48 |   std::cout << "p5: " << p5 << "\n";
+      |        ^~~~
+testmain.cpp:48:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:49:8: error: ‘cout’ is not a member of ‘std’
+   49 |   std::cout << "(p5-p4) * (p3+p2) + p1 = " << (p5 - p4) * (p3 + p2) + p1 << "\n";
+      |        ^~~~
+testmain.cpp:49:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:49:51: error: no match for ‘operator-’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   49 |   std::cout << "(p5-p4) * (p3+p2) + p1 = " << (p5 - p4) * (p3 + p2) + p1 << "\n";
+      |                                                ~~ ^ ~~
+      |                                                |    |
+      |                                                |    Polynomial<[...]>
+      |                                                Polynomial<[...]>
+In file included from testmain.cpp:4:
+poly.hpp:33:14: note: candidate: ‘Polynomial<NumT> Polynomial<NumT>::operator-() const [with NumT = int]’
+   33 |   Polynomial operator-() const {
+      |              ^~~~~~~~
+poly.hpp:33:14: note:   candidate expects 0 arguments, 1 provided
 testmain.cpp:50:8: error: ‘vector’ is not a member of ‘std’
    50 |   std::vector<Polynomial<int> > polys;
       |        ^~~~~~
@@ -118,60 +169,251 @@ testmain.cpp:50:31: error: expected primary-expression before ‘>’ token
 testmain.cpp:50:33: error: ‘polys’ was not declared in this scope
    50 |   std::vector<Polynomial<int> > polys;
       |                                 ^~~~~
+testmain.cpp:60:8: error: ‘cout’ is not a member of ‘std’
+   60 |   std::cout << "polys[6] = " << polys[6] << "\n";
+      |        ^~~~
+testmain.cpp:60:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:64:12: error: ‘cout’ is not a member of ‘std’
+   64 |       std::cout << "polys[" << i << "] == polys[" << j << "] ? " << (polys[i] == polys[j])
+      |            ^~~~
+testmain.cpp:64:12: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:66:12: error: ‘cout’ is not a member of ‘std’
+   66 |       std::cout << "polys[" << i << "] != polys[" << j << "] ? " << (polys[i] != polys[j])
+      |            ^~~~
+testmain.cpp:66:12: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:69:10: error: ‘cout’ is not a member of ‘std’
+   69 |     std::cout << "polys[" << i << "] - polys[" << i << "] == p0 ? "
+      |          ^~~~
+testmain.cpp:69:10: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:71:10: error: ‘cout’ is not a member of ‘std’
+   71 |     std::cout << "polys[" << i << "] - polys[" << i << "] != p0 ? "
+      |          ^~~~
+testmain.cpp:71:10: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:78:8: error: ‘cout’ is not a member of ‘std’
+   78 |   std::cout << "pd1 is " << pd1 << "\n";
+      |        ^~~~
+testmain.cpp:78:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:80:8: error: ‘cout’ is not a member of ‘std’
+   80 |   std::cout << "pd1 is now " << pd1 << "\n";
+      |        ^~~~
+testmain.cpp:80:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:81:8: error: ‘cout’ is not a member of ‘std’
+   81 |   std::cout << "pd1 * 3.1 is " << pd1 * -1.2 << "\n";
+      |        ^~~~
+testmain.cpp:81:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+testmain.cpp:84:8: error: ‘cout’ is not a member of ‘std’
+   84 |   std::cout << "pc1 is " << pc1 << "\n";
+      |        ^~~~
+testmain.cpp:84:8: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
 In file included from testmain.cpp:4:
-poly.hpp: In instantiation of ‘Polynomial<NumT> Polynomial<NumT>::operator-() const [with NumT = int]’:
-testmain.cpp:15:28:   required from here
-poly.hpp:39:5: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, int>’
-   39 |     for (const auto & term : terms) {
-      |     ^~~
-poly.hpp:39:23: error: loop variable ‘term’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, int>’ [-Werror=range-loop-construct]
-   39 |     for (const auto & term : terms) {
-      |                       ^~~~
-poly.hpp:39:23: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, int>&’ to prevent copying
-poly.hpp: In instantiation of ‘Polynomial<NumT> Polynomial<NumT>::operator+(const Polynomial<NumT>&) const [with NumT = int]’:
-testmain.cpp:21:36:   required from here
-poly.hpp:30:5: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, int>’
-   30 |     for (const auto & term : rhs.terms) {
-      |     ^~~
-poly.hpp:30:23: error: loop variable ‘term’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, int>’ [-Werror=range-loop-construct]
-   30 |     for (const auto & term : rhs.terms) {
-      |                       ^~~~
-poly.hpp:30:23: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, int>&’ to prevent copying
-poly.hpp: In instantiation of ‘Polynomial<NumT> Polynomial<NumT>::operator*(const Polynomial<NumT>&) const [with NumT = int]’:
-testmain.cpp:22:36:   required from here
-poly.hpp:60:5: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, int>’
-   60 |     for (const auto & term1 : terms) {
-      |     ^~~
-poly.hpp:60:23: error: loop variable ‘term1’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, int>’ [-Werror=range-loop-construct]
-   60 |     for (const auto & term1 : terms) {
-      |                       ^~~~~
-poly.hpp:60:23: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, int>&’ to prevent copying
-poly.hpp:61:7: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, int>’
-   61 |       for (const auto & term2 : rhs.terms) {
-      |       ^~~
-poly.hpp:61:25: error: loop variable ‘term2’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, int>’ [-Werror=range-loop-construct]
-   61 |       for (const auto & term2 : rhs.terms) {
-      |                         ^~~~~
-poly.hpp:61:25: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, int>&’ to prevent copying
-poly.hpp: In instantiation of ‘Polynomial<NumT> Polynomial<NumT>::operator*(const NumT&) const [with NumT = double]’:
-testmain.cpp:81:42:   required from here
-poly.hpp:51:5: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, double>’
-   51 |     for (const auto & term : terms) {
-      |     ^~~
-poly.hpp:51:23: error: loop variable ‘term’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, double>’ [-Werror=range-loop-construct]
-   51 |     for (const auto & term : terms) {
-      |                       ^~~~
-poly.hpp:51:23: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, double>&’ to prevent copying
-poly.hpp: In instantiation of ‘Polynomial<NumT> Polynomial<NumT>::operator*(const NumT&) const [with NumT = int]’:
-poly.hpp:91:19:   required from ‘Polynomial<NumT>& Polynomial<NumT>::operator*=(const NumT&) [with NumT = int]’
-testmain.cpp:43:9:   required from here
-poly.hpp:51:5: error: invalid initialization of reference of type ‘const int&’ from expression of type ‘const std::pair<const unsigned int, int>’
-   51 |     for (const auto & term : terms) {
-      |     ^~~
-poly.hpp:51:23: error: loop variable ‘term’ of type ‘const int&’ binds to a temporary constructed from type ‘const std::pair<const unsigned int, int>’ [-Werror=range-loop-construct]
-   51 |     for (const auto & term : terms) {
-      |                       ^~~~
-poly.hpp:51:23: note: use non-reference type ‘const int’ to make the copy explicit or ‘const std::pair<const unsigned int, int>&’ to prevent copying
+poly.hpp: In instantiation of ‘void Polynomial<NumT>::addTerm(NumT, unsigned int) [with NumT = std::complex<double>]’:
+testmain.cpp:83:14:   required from here
+poly.hpp:18:25: error: no match for ‘operator==’ (operand types are ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} and ‘int’)
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/iosfwd:40,
+                 from /usr/include/c++/11/ios:38,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/postypes.h:222:5: note: candidate: ‘template<class _StateT> bool std::operator==(const std::fpos<_StateT>&, const std::fpos<_StateT>&)’
+  222 |     operator==(const fpos<_StateT>& __lhs, const fpos<_StateT>& __rhs)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/postypes.h:222:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::fpos<_StateT>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:64,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_pair.h:466:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator==(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)’
+  466 |     operator==(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_pair.h:466:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::pair<_T1, _T2>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:420:5: note: candidate: ‘template<class _Iterator> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)’
+  420 |     operator==(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:420:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::reverse_iterator<_Iterator>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:459:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> bool std::operator==(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  459 |     operator==(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:459:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::reverse_iterator<_Iterator>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/string:41,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/allocator.h:218:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator==(const std::allocator<_CharT>&, const std::allocator<_T2>&)’
+  218 |     operator==(const allocator<_T1>&, const allocator<_T2>&)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/allocator.h:218:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::allocator<_CharT>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6226:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6226 |     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6226:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6234:5: note: candidate: ‘template<class _CharT> typename __gnu_cxx::__enable_if<std::__is_char<_Tp>::__value, bool>::__type std::operator==(const std::__cxx11::basic_string<_CharT>&, const std::__cxx11::basic_string<_CharT>&)’
+ 6234 |     operator==(const basic_string<_CharT>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6234:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::__cxx11::basic_string<_CharT>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6248:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)’
+ 6248 |     operator==(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6248:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6289:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator==(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6289 |     operator==(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6289:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/bits/locale_facets.h:48,
+                 from /usr/include/c++/11/bits/basic_ios.h:37,
+                 from /usr/include/c++/11/ios:44,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/streambuf_iterator.h:226:5: note: candidate: ‘template<class _CharT, class _Traits> bool std::operator==(const std::istreambuf_iterator<_CharT, _Traits>&, const std::istreambuf_iterator<_CharT, _Traits>&)’
+  226 |     operator==(const istreambuf_iterator<_CharT, _Traits>& __a,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/streambuf_iterator.h:226:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::istreambuf_iterator<_CharT, _Traits>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from testmain.cpp:1:
+/usr/include/c++/11/complex:464:5: note: candidate: ‘template<class _Tp> bool std::operator==(const std::complex<_Tp>&, const std::complex<_Tp>&)’
+  464 |     operator==(const complex<_Tp>& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/complex:464:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from testmain.cpp:1:
+/usr/include/c++/11/complex:469:5: note: candidate: ‘template<class _Tp> bool std::operator==(const std::complex<_Tp>&, const _Tp&)’
+  469 |     operator==(const complex<_Tp>& __x, const _Tp& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/complex:469:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   deduced conflicting types for parameter ‘const _Tp’ (‘double’ and ‘int’)
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from testmain.cpp:1:
+/usr/include/c++/11/complex:475:5: note: candidate: ‘template<class _Tp> bool std::operator==(const _Tp&, const std::complex<_Tp>&)’
+  475 |     operator==(const _Tp& __x, const complex<_Tp>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/complex:475:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   mismatched types ‘const std::complex<_Tp>’ and ‘int’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/map:61,
+                 from poly.hpp:3,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_map.h:1463:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator==(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)’
+ 1463 |     operator==(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_map.h:1463:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
+In file included from /usr/include/c++/11/map:62,
+                 from poly.hpp:3,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_multimap.h:1128:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator==(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)’
+ 1128 |     operator==(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_multimap.h:1128:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:18:25: note:   ‘std::map<unsigned int, std::complex<double>, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, std::complex<double> > > >::mapped_type’ {aka ‘std::complex<double>’} is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+   18 |     if (terms[exponent] == 0) {
+      |         ~~~~~~~~~~~~~~~~^~~~
 cc1plus: all warnings being treated as errors
 g++ failed
 
