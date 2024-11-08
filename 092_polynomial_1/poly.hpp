@@ -1,86 +1,77 @@
+#ifndef POLY_HPP
+#define POLY_HPP
+
+#include <cmath>
+#include <complex>
 #include <iostream>
-#include <vector>
+#include <map>
+#include <stdexcept>
 
 template<typename NumT>
 class Polynomial {
  private:
-  std::vector<NumT> coefficients;  // coefficients[i] is the coefficient for x^i
+  std::map<unsigned, NumT> terms;  // 存储多项式的项，键是指数，值是系数
 
  public:
-  // 1. Default Constructor: Initialize to "0"
-  Polynomial() : coefficients(1, NumT()) {}
+  // 默认构造函数，初始化为 0
+  Polynomial() { terms[0] = NumT(); }
 
-  // 2. Add another Polynomial
+  // 添加项：c * x^p
+  void addTerm(const NumT & c, unsigned p) {
+    terms[p] += c;
+    if (terms[p] == NumT()) {
+      terms.erase(p);
+    }
+  }
+
+  // 加法运算符
   Polynomial operator+(const Polynomial & rhs) const {
-    Polynomial result;
-    size_t maxDegree = std::max(coefficients.size(), rhs.coefficients.size());
-    result.coefficients.resize(maxDegree, NumT());
-
-    for (size_t i = 0; i < maxDegree; ++i) {
-      if (i < coefficients.size())
-        result.coefficients[i] += coefficients[i];
-      if (i < rhs.coefficients.size())
-        result.coefficients[i] += rhs.coefficients[i];
+    Polynomial result = *this;
+    for (const auto & term : rhs.terms) {
+      result.addTerm(term.second, term.first);
     }
     return result;
   }
 
-  // 3. Negation
+  // 负号运算符
   Polynomial operator-() const {
     Polynomial result;
-    result.coefficients.resize(coefficients.size());
-    for (size_t i = 0; i < coefficients.size(); ++i) {
-      result.coefficients[i] = -coefficients[i];
+    for (const auto & term : terms) {
+      result.terms[term.first] = -term.second;
     }
     return result;
   }
 
-  // 4. Subtraction
+  // 减法运算符
   Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
 
-  // 5. Scalar multiplication
+  // 乘以常数
   Polynomial operator*(const NumT & n) const {
     Polynomial result;
-    result.coefficients.resize(coefficients.size());
-    for (size_t i = 0; i < coefficients.size(); ++i) {
-      result.coefficients[i] = coefficients[i] * n;
+    for (const auto & term : terms) {
+      result.terms[term.first] = term.second * n;
     }
     return result;
   }
 
-  // 6. Polynomial multiplication
+  // 多项式相乘
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial result;
-    result.coefficients.resize(coefficients.size() + rhs.coefficients.size() - 1, NumT());
-    for (size_t i = 0; i < coefficients.size(); ++i) {
-      for (size_t j = 0; j < rhs.coefficients.size(); ++j) {
-        result.coefficients[i + j] += coefficients[i] * rhs.coefficients[j];
+    for (const auto & term1 : terms) {
+      for (const auto & term2 : rhs.terms) {
+        result.addTerm(term1.second * term2.second, term1.first + term2.first);
       }
     }
     return result;
   }
 
-  // 7. Inequality and equality operators
+  // 判断相等
+  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
+
+  // 判断不等
   bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
-  bool operator==(const Polynomial & rhs) const {
-    size_t maxDegree = std::max(coefficients.size(), rhs.coefficients.size());
-    for (size_t i = 0; i < maxDegree; ++i) {
-      NumT thisCoeff = i < coefficients.size() ? coefficients[i] : NumT();
-      NumT rhsCoeff = i < rhs.coefficients.size() ? rhs.coefficients[i] : NumT();
-      if (thisCoeff != rhsCoeff)
-        return false;
-    }
-    return true;
-  }
 
-  // 8. Adding a term to the Polynomial
-  void addTerm(const NumT & c, unsigned p) {
-    if (p >= coefficients.size())
-      coefficients.resize(p + 1, NumT());
-    coefficients[p] += c;
-  }
-
-  // Compound operators
+  // 复合赋值操作符
   Polynomial & operator+=(const Polynomial & rhs) {
     *this = *this + rhs;
     return *this;
@@ -101,20 +92,26 @@ class Polynomial {
     return *this;
   }
 
-  // Friend output operator
-  template<typename N>
-  friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
-    bool isFirstTerm = true;
-    for (size_t i = p.coefficients.size(); i-- > 0;) {
-      if (p.coefficients[i] != NumT()) {
-        if (!isFirstTerm)
-          os << " + ";
-        os << p.coefficients[i] << "*x^" << i;
-        isFirstTerm = false;
-      }
-    }
-    if (isFirstTerm)
-      os << NumT();  // If Polynomial is 0
-    return os;
-  }
+  // 输出运算符
+  template<typename T>
+  friend std::ostream & operator<<(std::ostream & os, const Polynomial<T> & p);
 };
+
+// 输出多项式到输出流
+template<typename T>
+std::ostream & operator<<(std::ostream & os, const Polynomial<T> & p) {
+  bool first = true;
+  for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+    if (!first) {
+      os << " + ";
+    }
+    os << it->second << "*x^" << it->first;
+    first = false;
+  }
+  if (first) {
+    os << T();
+  }
+  return os;
+}
+
+#endif  // POLY_HPP
