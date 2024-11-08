@@ -1,117 +1,92 @@
-#ifndef POLY_HPP
-#define POLY_HPP
+// poly.hpp
 
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <map>
-#include <stdexcept>
+#include <map>      // 包含 map 以使用 terms
+#include <ostream>  // 包含 ostream 以支持输出操作符
 
 template<typename NumT>
 class Polynomial {
  private:
-  std::map<unsigned, NumT> terms;  // 存储多项式的项，键是指数，值是系数
+  std::map<unsigned, NumT> terms;
 
  public:
-  // 默认构造函数，初始化为 0
-  Polynomial() { terms[0] = NumT(); }
+  // 默认构造函数
+  Polynomial() : terms() {}
 
-  // 添加项：c * x^p
-  void addTerm(const NumT & c, unsigned p) {
-    terms[p] += c;
-    if (terms[p] == NumT()) {
-      terms.erase(p);
+  // 添加一个项
+  void addTerm(NumT coefficient, unsigned exponent) {
+    terms[exponent] += coefficient;
+    if (terms[exponent] == 0) {
+      terms.erase(exponent);
     }
   }
 
-  // 加法运算符
+  // 操作符重载：加法
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial result = *this;
-    for (const auto & term : rhs.terms) {
+    for (const std::pair<const unsigned, NumT> & term : rhs.terms) {
       result.addTerm(term.second, term.first);
     }
     return result;
   }
 
-  // 负号运算符
+  // 操作符重载：取负
   Polynomial operator-() const {
     Polynomial result;
-    for (const auto & term : terms) {
+    for (const std::pair<const unsigned, NumT> & term : terms) {
       result.terms[term.first] = -term.second;
     }
     return result;
   }
 
-  // 减法运算符
-  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
-
-  // 乘以常数
+  // 操作符重载：乘以标量
   Polynomial operator*(const NumT & n) const {
     Polynomial result;
-    for (const auto & term : terms) {
+    for (const std::pair<const unsigned, NumT> & term : terms) {
       result.terms[term.first] = term.second * n;
     }
     return result;
   }
 
-  // 多项式相乘
+  // 操作符重载：多项式乘法
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial result;
-    for (const auto & term1 : terms) {
-      for (const auto & term2 : rhs.terms) {
+    for (const std::pair<const unsigned, NumT> & term1 : terms) {
+      for (const std::pair<const unsigned, NumT> & term2 : rhs.terms) {
         result.addTerm(term1.second * term2.second, term1.first + term2.first);
       }
     }
     return result;
   }
 
-  // 判断相等
-  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
-
-  // 判断不等
-  bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
-
-  // 复合赋值操作符
-  Polynomial & operator+=(const Polynomial & rhs) {
-    *this = *this + rhs;
-    return *this;
-  }
-
-  Polynomial & operator-=(const Polynomial & rhs) {
-    *this = *this - rhs;
-    return *this;
-  }
-
-  Polynomial & operator*=(const Polynomial & rhs) {
-    *this = *this * rhs;
-    return *this;
-  }
-
-  Polynomial & operator*=(const NumT & rhs) {
-    *this = *this * rhs;
-    return *this;
-  }
-
-  // 输出运算符
-  template<typename T>
-  friend std::ostream & operator<<(std::ostream & os, const Polynomial<T> & p);
-};
-
-// 输出多项式到输出流
-template<typename T>
-std::ostream & operator<<(std::ostream & os, const Polynomial<T> & p) {
-  bool first = true;
-  for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-    if (!first) {
-      os << " + ";
+  // 操作符重载：累乘赋值
+  Polynomial & operator*=(const NumT & n) {
+    for (std::pair<const unsigned, NumT> & term : terms) {
+      term.second *= n;
     }
-    os << it->second << "*x^" << it->first;
-    first = false;
+    return *this;
   }
-  if (first) {
-    os << T();
-  }
-  return os;
-}
 
-#endif  // POLY_HPP
+  // 输出操作符重载
+  friend std::ostream & operator<<(std::ostream & os, const Polynomial & p) {
+    bool first = true;
+    for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
+      if (!first && it->second > 0) {
+        os << " + ";
+      }
+      if (it->second < 0) {
+        os << " - ";
+      }
+      if (std::abs(it->second) != 1 || it->first == 0) {
+        os << std::abs(it->second);
+      }
+      if (it->first > 0) {
+        os << "x";
+        if (it->first > 1) {
+          os << "^" << it->first;
+        }
+      }
+      first = false;
+    }
+    return os;
+  }
+};
