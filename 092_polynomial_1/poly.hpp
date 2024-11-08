@@ -1,7 +1,6 @@
-// poly.hpp
-
-#include <map>      // 包含 map 以使用 terms
-#include <ostream>  // 包含 ostream 以支持输出操作符
+#include <iostream>
+#include <map>
+#include <stdexcept>
 
 template<typename NumT>
 class Polynomial {
@@ -9,83 +8,76 @@ class Polynomial {
   std::map<unsigned, NumT> terms;
 
  public:
-  // 默认构造函数
-  Polynomial() : terms() {}
+  // 默认构造函数，初始化为 0
+  Polynomial() : terms{{0, NumT()}} {}
 
-  // 添加一个项
-  void addTerm(NumT coefficient, unsigned exponent) {
-    terms[exponent] += coefficient;
-    if (terms[exponent] == 0) {
-      terms.erase(exponent);
-    }
-  }
-
-  // 操作符重载：加法
+  // 加法运算符重载
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial result = *this;
-    for (const std::pair<const unsigned, NumT> & term : rhs.terms) {
-      result.addTerm(term.second, term.first);
+    for (const auto & [exp, coef] : rhs.terms) {
+      result.addTerm(coef, exp);
     }
     return result;
   }
 
-  // 操作符重载：取负
+  // 负号运算符重载
   Polynomial operator-() const {
     Polynomial result;
-    for (const std::pair<const unsigned, NumT> & term : terms) {
-      result.terms[term.first] = -term.second;
+    for (const auto & [exp, coef] : terms) {
+      result.terms[exp] = -coef;
     }
     return result;
   }
 
-  // 操作符重载：乘以标量
+  // 减法运算符重载
+  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
+
+  // 乘以标量的运算符重载
   Polynomial operator*(const NumT & n) const {
     Polynomial result;
-    for (const std::pair<const unsigned, NumT> & term : terms) {
-      result.terms[term.first] = term.second * n;
+    for (const auto & [exp, coef] : terms) {
+      result.terms[exp] = coef * n;
     }
     return result;
   }
 
-  // 操作符重载：多项式乘法
+  // 乘以多项式的运算符重载
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial result;
-    for (const std::pair<const unsigned, NumT> & term1 : terms) {
-      for (const std::pair<const unsigned, NumT> & term2 : rhs.terms) {
-        result.addTerm(term1.second * term2.second, term1.first + term2.first);
+    for (const auto & [exp1, coef1] : terms) {
+      for (const auto & [exp2, coef2] : rhs.terms) {
+        result.addTerm(coef1 * coef2, exp1 + exp2);
       }
     }
     return result;
   }
 
-  // 操作符重载：累乘赋值
-  Polynomial & operator*=(const NumT & n) {
-    for (std::pair<const unsigned, NumT> & term : terms) {
-      term.second *= n;
+  // 添加项
+  void addTerm(const NumT & c, unsigned p) {
+    if (terms.count(p)) {
+      terms[p] += c;
     }
-    return *this;
+    else {
+      terms[p] = c;
+    }
+    if (terms[p] == NumT()) {  // 如果系数为0，则移除该项
+      terms.erase(p);
+    }
   }
 
-  // 输出操作符重载
-  friend std::ostream & operator<<(std::ostream & os, const Polynomial & p) {
+  // 输出运算符重载
+  template<typename N>
+  friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p) {
     bool first = true;
     for (auto it = p.terms.rbegin(); it != p.terms.rend(); ++it) {
-      if (!first && it->second > 0) {
+      if (!first) {
         os << " + ";
       }
-      if (it->second < 0) {
-        os << " - ";
-      }
-      if (std::abs(it->second) != 1 || it->first == 0) {
-        os << std::abs(it->second);
-      }
-      if (it->first > 0) {
-        os << "x";
-        if (it->first > 1) {
-          os << "^" << it->first;
-        }
-      }
+      os << it->second << "*x^" << it->first;
       first = false;
+    }
+    if (p.terms.empty()) {
+      os << "0";
     }
     return os;
   }
