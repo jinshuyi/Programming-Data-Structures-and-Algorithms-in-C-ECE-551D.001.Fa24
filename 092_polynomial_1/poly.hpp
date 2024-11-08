@@ -132,7 +132,7 @@ class Polynomial {
     }
     else {
       bool first = true;
-      for (size_t i = 0; i < p.terms.size(); ++i) {
+      for (size_t i = p.terms.size(); i-- > 0;) {
         if (!first)
           os << " + ";
         os << p.terms[i].first << "*x^" << p.terms[i].second;
