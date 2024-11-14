@@ -1,6 +1,6 @@
-Grading at 11/14/2024:02:52:54.323231
-For commit ID e43d2ece8b771a1473e24029f90460a594851e8c
-Grading at Wed Nov 13 09:52:53 PM EST 2024
+Grading at 11/14/2024:03:00:15.236104
+For commit ID 8c2a2ac7813577f9617518948af446e4ca2ef5c8
+Grading at Wed Nov 13 10:00:14 PM EST 2024
 Compiling your code with our test main
 Your output differed from ours.  here are the difference
 yours on the left, ours on the right
@@ -135,10 +135,10 @@ polys[6] == polys[6] ? 1  [16*x^2 + 36*x^1 +  |	polys[6] == polys[6] ? 1  [16*x^
 polys[6] != polys[6] ? 0  [16*x^2 + 36*x^1 +  |	polys[6] != polys[6] ? 0  [16*x^2 + 36*x^1 + 
 polys[6] - polys[6] == p0 ? 0		      |	polys[6] - polys[6] == p0 ? 1
 polys[6] - polys[6] != p0 ? 1		      |	polys[6] - polys[6] != p0 ? 0
-pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1		pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1
-pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1	pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1
-pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512	pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512
-pc1 is (1.2,1.1)*x^3				pc1 is (1.2,1.1)*x^3
+pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1 + 0	      |	pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1
+pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1 |	pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1
+pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512 |	pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512
+pc1 is (1.2,1.1)*x^3 + (0,0)		      |	pc1 is (1.2,1.1)*x^3
 Your file did not match the expected output
 
 Overall Grade: FAILED
