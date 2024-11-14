@@ -1,13 +1,13 @@
-Grading at 11/14/2024:18:18:54.332446
-For commit ID 91a04977dd0dee5dfc85ffdb38866d6f1967dab9
-Grading at Thu Nov 14 01:18:54 PM EST 2024
+Grading at 11/14/2024:18:22:04.812564
+For commit ID a11750071f317920e1803483c4be2b06bff931da
+Grading at Thu Nov 14 01:22:04 PM EST 2024
 Compiling your code with our test main
 In file included from testmain.cpp:4:
 poly.hpp: In instantiation of ‘void Polynomial<NumT>::cleanUp() [with NumT = int]’:
-poly.hpp:109:37:   required from ‘bool Polynomial<NumT>::operator==(const Polynomial<NumT>&) const [with NumT = int]’
+poly.hpp:113:13:   required from ‘bool Polynomial<NumT>::operator==(const Polynomial<NumT>&) const [with NumT = int]’
 testmain.cpp:64:89:   required from here
-poly.hpp:127:12: error: no match for ‘operator=’ (operand types are ‘std::map<unsigned int, int, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’ {aka ‘std::_Rb_tree<unsigned int, std::pair<const unsigned int, int>, std::_Select1st<std::pair<const unsigned int, int> >, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’} and ‘void’)
-  127 |         it = terms.erase(it);
+poly.hpp:132:12: error: no match for ‘operator=’ (operand types are ‘std::map<unsigned int, int, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’ {aka ‘std::_Rb_tree<unsigned int, std::pair<const unsigned int, int>, std::_Select1st<std::pair<const unsigned int, int> >, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’} and ‘void’)
+  132 |         it = terms.erase(it);
       |         ~~~^~~~~~~~~~~~~~~~~
 In file included from /usr/include/c++/11/map:60,
                  from poly.hpp:7,
