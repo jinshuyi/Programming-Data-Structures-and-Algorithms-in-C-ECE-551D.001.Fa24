@@ -1,152 +1,115 @@
-#ifndef POLY_HPP
-#define POLY_HPP
-
-#include <cmath>
-#include <complex>
+#ifndef __POLY_H__
+#define __POLY_H__
+#include <cstdlib>
 #include <iostream>
-#include <map>
-#include <stdexcept>
+#include <sstream>
+#include <string>
 #include <vector>
-
+using namespace std;
 template<typename NumT>
 class Polynomial {
  private:
-  std::map<unsigned, NumT> terms;
+  vector<NumT> coefficient;
 
  public:
-  // Default constructor
-  Polynomial() { terms[0] = NumT(); }
-
-  // Add a term with coefficient c and exponent p
-  void addTerm(const NumT & c, unsigned p) {
-    if (terms.count(p) == 0) {
-      terms[p] = c;
-    }
-    else {
-      terms[p] += c;
-      if (terms[p] == NumT()) {
-        terms.erase(p);  // Remove term if coefficient becomes zero
-      }
-    }
-  }
-
-  // Negation operator
-  Polynomial operator-() const {
-    Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
-         it != terms.end();
-         ++it) {
-      result.addTerm(-it->second, it->first);
-    }
-    return result;
-  }
-
-  // Addition operator
+  Polynomial() : coefficient(1, NumT()) {}
   Polynomial operator+(const Polynomial & rhs) const {
-    Polynomial result = *this;
-    for (typename std::map<unsigned, NumT>::const_iterator it = rhs.terms.begin();
-         it != rhs.terms.end();
-         ++it) {
-      result.addTerm(it->second, it->first);
-    }
-    return result;
-  }
-
-  // Subtraction operator
-  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
-
-  // Scalar multiplication operator
-  Polynomial operator*(const NumT & n) const {
     Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
-         it != terms.end();
-         ++it) {
-      result.addTerm(it->second * n, it->first);
+
+    size_t maxSize = std::max(coefficient.size(), rhs.coefficient.size());
+    result.coefficient.resize(maxSize, NumT());
+
+    for (size_t i = 0; i < maxSize; ++i) {
+      if (i < coefficient.size())
+        result.coefficient[i] += coefficient[i];
+      if (i < rhs.coefficient.size())
+        result.coefficient[i] += rhs.coefficient[i];
     }
     return result;
   }
 
-  // Polynomial multiplication operator
+  Polynomial operator-() const {
+    Polynomial result = *this;
+    for (size_t i = 0; i < result.coefficient.size(); ++i) {
+      result.coefficient[i] = -result.coefficient[i];
+    }
+    return result;
+  }
+
+  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
+  Polynomial operator*(const NumT & n) const {
+    Polynomial result = *this;
+    for (size_t i = 0; i < result.coefficient.size(); ++i) {
+      result.coefficient[i] *= n;
+    }
+    return result;
+  }
+
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it1 = terms.begin();
-         it1 != terms.end();
-         ++it1) {
-      for (typename std::map<unsigned, NumT>::const_iterator it2 = rhs.terms.begin();
-           it2 != rhs.terms.end();
-           ++it2) {
-        result.addTerm(it1->second * it2->second, it1->first + it2->first);
+    result.coefficient.resize(coefficient.size() + rhs.coefficient.size() - 1, NumT());
+    for (size_t i = 0; i < coefficient.size(); ++i) {
+      for (size_t j = 0; j < rhs.coefficient.size(); ++j) {
+        result.coefficient[i + j] += coefficient[i] * rhs.coefficient[j];
       }
     }
     return result;
   }
 
-  // Addition-assignment operator
+  bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
+  bool operator==(const Polynomial & rhs) const {
+    size_t maxSize = std::max(coefficient.size(), rhs.coefficient.size());
+    for (size_t i = 0; i < maxSize; ++i) {
+      NumT lhsCoeff = (i < coefficient.size()) ? coefficient[i] : NumT();
+      NumT rhsCoeff = (i < rhs.coefficient.size()) ? rhs.coefficient[i] : NumT();
+      if (lhsCoeff != rhsCoeff) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void addTerm(const NumT c, unsigned p) {
+    if (p >= coefficient.size()) {
+      coefficient.resize(p + 1, NumT());
+    }
+    coefficient[p] += c;
+  }
   Polynomial & operator+=(const Polynomial & rhs) {
     *this = *this + rhs;
     return *this;
   }
-
-  // Subtraction-assignment operator
   Polynomial & operator-=(const Polynomial & rhs) {
     *this = *this - rhs;
     return *this;
   }
-
-  // Scalar multiplication-assignment operator
-  Polynomial & operator*=(const NumT & n) {
-    *this = *this * n;
+  Polynomial & operator*=(const NumT & rhs) {
+    *this = *this * rhs;
     return *this;
   }
-
-  // Polynomial multiplication-assignment operator
   Polynomial & operator*=(const Polynomial & rhs) {
     *this = *this * rhs;
     return *this;
   }
 
-  // Equality operator
-  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
-
-  // Inequality operator
-  bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
-
-  // Friend function for outputting polynomial
   template<typename N>
   friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
-
- private:
-  // Helper function to remove zero terms (used in output and equality)
-  void cleanUp() {
-    for (typename std::map<unsigned, NumT>::iterator it = terms.begin();
-         it != terms.end();) {
-      if (it->second == NumT()) {
-        it = terms.erase(it);
-      }
-      else {
-        ++it;
-      }
-    }
-  }
 };
 
-// Output operator for Polynomial
 template<typename NumT>
 std::ostream & operator<<(std::ostream & os, const Polynomial<NumT> & p) {
-  bool first = true;
-  for (typename std::map<unsigned, NumT>::const_reverse_iterator it = p.terms.rbegin();
-       it != p.terms.rend();
-       ++it) {
-    if (it->second == NumT())
-      continue;
-    if (!first)
-      os << " + ";
-    first = false;
-    os << it->second << "*x^" << it->first;
+  bool firstTerm = true;
+  for (int i = p.coefficient.size() - 1; i >= 0; --i) {
+    if (p.coefficient[i] != NumT()) {
+      if (!firstTerm)
+        os << " + ";
+      os << p.coefficient[i] << "*x^" << i;
+      firstTerm = false;
+    }
   }
-  if (first)
-    os << NumT();  // output "0" if polynomial is zero
+  if (firstTerm) {
+    os << NumT();
+  }
   return os;
 }
-
-#endif  // POLY_HPP
+#endif
