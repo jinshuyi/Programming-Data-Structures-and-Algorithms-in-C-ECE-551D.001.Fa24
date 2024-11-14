@@ -1,6 +1,6 @@
-Grading at 11/14/2024:02:48:43.420517
-For commit ID b6fee30b83238b7a56f75518e178e65b109c655d
-Grading at Wed Nov 13 09:48:42 PM EST 2024
+Grading at 11/14/2024:02:52:54.323231
+For commit ID e43d2ece8b771a1473e24029f90460a594851e8c
+Grading at Wed Nov 13 09:52:53 PM EST 2024
 Compiling your code with our test main
 Your output differed from ours.  here are the difference
 yours on the left, ours on the right
@@ -37,8 +37,8 @@ polys[0] == polys[5] ? 0  [0 == 6*x^1 + 9 ]   |	polys[0] == polys[5] ? 0  [0 == 
 polys[0] != polys[5] ? 1  [0 != 6*x^1 + 9 ]   |	polys[0] != polys[5] ? 1  [0 != 6*x^1 + 9*x^0
 polys[0] == polys[6] ? 0  [0 == 16*x^2 + 36*x |	polys[0] == polys[6] ? 0  [0 == 16*x^2 + 36*x
 polys[0] != polys[6] ? 1  [0 != 16*x^2 + 36*x |	polys[0] != polys[6] ? 1  [0 != 16*x^2 + 36*x
-polys[0] - polys[0] == p0 ? 1			polys[0] - polys[0] == p0 ? 1
-polys[0] - polys[0] != p0 ? 0			polys[0] - polys[0] != p0 ? 0
+polys[0] - polys[0] == p0 ? 0		      |	polys[0] - polys[0] == p0 ? 1
+polys[0] - polys[0] != p0 ? 1		      |	polys[0] - polys[0] != p0 ? 0
 polys[1] == polys[0] ? 0  [-2*x^5 + 14*x^3 +  |	polys[1] == polys[0] ? 0  [-2*x^5 + 14*x^3 + 
 polys[1] != polys[0] ? 1  [-2*x^5 + 14*x^3 +  |	polys[1] != polys[0] ? 1  [-2*x^5 + 14*x^3 + 
 polys[1] == polys[1] ? 1  [-2*x^5 + 14*x^3 +  |	polys[1] == polys[1] ? 1  [-2*x^5 + 14*x^3 + 
@@ -53,8 +53,8 @@ polys[1] == polys[5] ? 0  [-2*x^5 + 14*x^3 +  |	polys[1] == polys[5] ? 0  [-2*x^
 polys[1] != polys[5] ? 1  [-2*x^5 + 14*x^3 +  |	polys[1] != polys[5] ? 1  [-2*x^5 + 14*x^3 + 
 polys[1] == polys[6] ? 0  [-2*x^5 + 14*x^3 +  |	polys[1] == polys[6] ? 0  [-2*x^5 + 14*x^3 + 
 polys[1] != polys[6] ? 1  [-2*x^5 + 14*x^3 +  |	polys[1] != polys[6] ? 1  [-2*x^5 + 14*x^3 + 
-polys[1] - polys[1] == p0 ? 1			polys[1] - polys[1] == p0 ? 1
-polys[1] - polys[1] != p0 ? 0			polys[1] - polys[1] != p0 ? 0
+polys[1] - polys[1] == p0 ? 0		      |	polys[1] - polys[1] == p0 ? 1
+polys[1] - polys[1] != p0 ? 1		      |	polys[1] - polys[1] != p0 ? 0
 polys[2] == polys[0] ? 0  [4*x^5 + -3*x^3 + 3 |	polys[2] == polys[0] ? 0  [4*x^5 + -3*x^3 + 3
 polys[2] != polys[0] ? 1  [4*x^5 + -3*x^3 + 3 |	polys[2] != polys[0] ? 1  [4*x^5 + -3*x^3 + 3
 polys[2] == polys[1] ? 0  [4*x^5 + -3*x^3 + 3 |	polys[2] == polys[1] ? 0  [4*x^5 + -3*x^3 + 3
@@ -69,8 +69,8 @@ polys[2] == polys[5] ? 0  [4*x^5 + -3*x^3 + 3 |	polys[2] == polys[5] ? 0  [4*x^5
 polys[2] != polys[5] ? 1  [4*x^5 + -3*x^3 + 3 |	polys[2] != polys[5] ? 1  [4*x^5 + -3*x^3 + 3
 polys[2] == polys[6] ? 0  [4*x^5 + -3*x^3 + 3 |	polys[2] == polys[6] ? 0  [4*x^5 + -3*x^3 + 3
 polys[2] != polys[6] ? 1  [4*x^5 + -3*x^3 + 3 |	polys[2] != polys[6] ? 1  [4*x^5 + -3*x^3 + 3
-polys[2] - polys[2] == p0 ? 1			polys[2] - polys[2] == p0 ? 1
-polys[2] - polys[2] != p0 ? 0			polys[2] - polys[2] != p0 ? 0
+polys[2] - polys[2] == p0 ? 0		      |	polys[2] - polys[2] == p0 ? 1
+polys[2] - polys[2] != p0 ? 1		      |	polys[2] - polys[2] != p0 ? 0
 polys[3] == polys[0] ? 0  [16*x^2 + 36*x^1 +  |	polys[3] == polys[0] ? 0  [16*x^2 + 36*x^1 + 
 polys[3] != polys[0] ? 1  [16*x^2 + 36*x^1 +  |	polys[3] != polys[0] ? 1  [16*x^2 + 36*x^1 + 
 polys[3] == polys[1] ? 0  [16*x^2 + 36*x^1 +  |	polys[3] == polys[1] ? 0  [16*x^2 + 36*x^1 + 
@@ -85,8 +85,8 @@ polys[3] == polys[5] ? 0  [16*x^2 + 36*x^1 +  |	polys[3] == polys[5] ? 0  [16*x^
 polys[3] != polys[5] ? 1  [16*x^2 + 36*x^1 +  |	polys[3] != polys[5] ? 1  [16*x^2 + 36*x^1 + 
 polys[3] == polys[6] ? 1  [16*x^2 + 36*x^1 +  |	polys[3] == polys[6] ? 1  [16*x^2 + 36*x^1 + 
 polys[3] != polys[6] ? 0  [16*x^2 + 36*x^1 +  |	polys[3] != polys[6] ? 0  [16*x^2 + 36*x^1 + 
-polys[3] - polys[3] == p0 ? 1			polys[3] - polys[3] == p0 ? 1
-polys[3] - polys[3] != p0 ? 0			polys[3] - polys[3] != p0 ? 0
+polys[3] - polys[3] == p0 ? 0		      |	polys[3] - polys[3] == p0 ? 1
+polys[3] - polys[3] != p0 ? 1		      |	polys[3] - polys[3] != p0 ? 0
 polys[4] == polys[0] ? 0  [6*x^1 + 9 == 0 ]   |	polys[4] == polys[0] ? 0  [6*x^1 + 9*x^0 == 0
 polys[4] != polys[0] ? 1  [6*x^1 + 9 != 0 ]   |	polys[4] != polys[0] ? 1  [6*x^1 + 9*x^0 != 0
 polys[4] == polys[1] ? 0  [6*x^1 + 9 == -2*x^ |	polys[4] == polys[1] ? 0  [6*x^1 + 9*x^0 == -
@@ -101,8 +101,8 @@ polys[4] == polys[5] ? 1  [6*x^1 + 9 == 6*x^1 |	polys[4] == polys[5] ? 1  [6*x^1
 polys[4] != polys[5] ? 0  [6*x^1 + 9 != 6*x^1 |	polys[4] != polys[5] ? 0  [6*x^1 + 9*x^0 != 6
 polys[4] == polys[6] ? 0  [6*x^1 + 9 == 16*x^ |	polys[4] == polys[6] ? 0  [6*x^1 + 9*x^0 == 1
 polys[4] != polys[6] ? 1  [6*x^1 + 9 != 16*x^ |	polys[4] != polys[6] ? 1  [6*x^1 + 9*x^0 != 1
-polys[4] - polys[4] == p0 ? 1			polys[4] - polys[4] == p0 ? 1
-polys[4] - polys[4] != p0 ? 0			polys[4] - polys[4] != p0 ? 0
+polys[4] - polys[4] == p0 ? 0		      |	polys[4] - polys[4] == p0 ? 1
+polys[4] - polys[4] != p0 ? 1		      |	polys[4] - polys[4] != p0 ? 0
 polys[5] == polys[0] ? 0  [6*x^1 + 9 == 0 ]   |	polys[5] == polys[0] ? 0  [6*x^1 + 9*x^0 == 0
 polys[5] != polys[0] ? 1  [6*x^1 + 9 != 0 ]   |	polys[5] != polys[0] ? 1  [6*x^1 + 9*x^0 != 0
 polys[5] == polys[1] ? 0  [6*x^1 + 9 == -2*x^ |	polys[5] == polys[1] ? 0  [6*x^1 + 9*x^0 == -
@@ -117,8 +117,8 @@ polys[5] == polys[5] ? 1  [6*x^1 + 9 == 6*x^1 |	polys[5] == polys[5] ? 1  [6*x^1
 polys[5] != polys[5] ? 0  [6*x^1 + 9 != 6*x^1 |	polys[5] != polys[5] ? 0  [6*x^1 + 9*x^0 != 6
 polys[5] == polys[6] ? 0  [6*x^1 + 9 == 16*x^ |	polys[5] == polys[6] ? 0  [6*x^1 + 9*x^0 == 1
 polys[5] != polys[6] ? 1  [6*x^1 + 9 != 16*x^ |	polys[5] != polys[6] ? 1  [6*x^1 + 9*x^0 != 1
-polys[5] - polys[5] == p0 ? 1			polys[5] - polys[5] == p0 ? 1
-polys[5] - polys[5] != p0 ? 0			polys[5] - polys[5] != p0 ? 0
+polys[5] - polys[5] == p0 ? 0		      |	polys[5] - polys[5] == p0 ? 1
+polys[5] - polys[5] != p0 ? 1		      |	polys[5] - polys[5] != p0 ? 0
 polys[6] == polys[0] ? 0  [16*x^2 + 36*x^1 +  |	polys[6] == polys[0] ? 0  [16*x^2 + 36*x^1 + 
 polys[6] != polys[0] ? 1  [16*x^2 + 36*x^1 +  |	polys[6] != polys[0] ? 1  [16*x^2 + 36*x^1 + 
 polys[6] == polys[1] ? 0  [16*x^2 + 36*x^1 +  |	polys[6] == polys[1] ? 0  [16*x^2 + 36*x^1 + 
@@ -133,8 +133,8 @@ polys[6] == polys[5] ? 0  [16*x^2 + 36*x^1 +  |	polys[6] == polys[5] ? 0  [16*x^
 polys[6] != polys[5] ? 1  [16*x^2 + 36*x^1 +  |	polys[6] != polys[5] ? 1  [16*x^2 + 36*x^1 + 
 polys[6] == polys[6] ? 1  [16*x^2 + 36*x^1 +  |	polys[6] == polys[6] ? 1  [16*x^2 + 36*x^1 + 
 polys[6] != polys[6] ? 0  [16*x^2 + 36*x^1 +  |	polys[6] != polys[6] ? 0  [16*x^2 + 36*x^1 + 
-polys[6] - polys[6] == p0 ? 1			polys[6] - polys[6] == p0 ? 1
-polys[6] - polys[6] != p0 ? 0			polys[6] - polys[6] != p0 ? 0
+polys[6] - polys[6] == p0 ? 0		      |	polys[6] - polys[6] == p0 ? 1
+polys[6] - polys[6] != p0 ? 1		      |	polys[6] - polys[6] != p0 ? 0
 pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1		pd1 is 8.4*x^5 + 1.3*x^2 + -4.3*x^1
 pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1	pd1 is now -26.88*x^5 + -4.16*x^2 + 13.76*x^1
 pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512	pd1 * 3.1 is 32.256*x^5 + 4.992*x^2 + -16.512
