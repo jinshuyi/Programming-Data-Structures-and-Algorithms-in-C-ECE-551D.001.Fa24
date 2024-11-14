@@ -1,146 +1,136 @@
-#ifndef POLYNOMIAL_HPP
-#define POLYNOMIAL_HPP
+#ifndef POLY_HPP
+#define POLY_HPP
 
-#include <complex>
+#include <algorithm>
 #include <iostream>
+#include <map>
 #include <vector>
 
 template<typename NumT>
 class Polynomial {
  private:
-  std::vector<std::pair<NumT, unsigned> >
-      terms;  // 用来存储多项式的项，每项是一个（系数，指数）对
+  std::map<unsigned, NumT> terms;  // 存储每项的指数和系数
 
  public:
-  // 默认构造函数，初始化为零多项式
-  Polynomial() {}
+  // 默认构造函数，将多项式初始化为 0
+  Polynomial() { terms[0] = NumT(); }
 
-  // 添加一项到多项式中
-  void addTerm(const NumT & coefficient, unsigned power) {
-    for (size_t i = 0; i < terms.size(); ++i) {
-      if (terms[i].second == power) {
-        terms[i].first = terms[i].first + coefficient;
-        return;
-      }
+  // 添加项：添加系数为 c、指数为 p 的项
+  void addTerm(const NumT & c, unsigned p) {
+    terms[p] += c;
+    if (terms[p] == NumT()) {
+      terms.erase(p);  // 移除系数为 0 的项
     }
-    terms.push_back(std::make_pair(coefficient, power));
   }
 
-  // 多项式加法
+  // 重载加法运算符
   Polynomial operator+(const Polynomial & rhs) const {
     Polynomial result = *this;
-    for (size_t i = 0; i < rhs.terms.size(); ++i) {
-      result.addTerm(rhs.terms[i].first, rhs.terms[i].second);
+    for (typename std::map<unsigned, NumT>::const_iterator it = rhs.terms.begin();
+         it != rhs.terms.end();
+         ++it) {
+      result.addTerm(it->second, it->first);
     }
     return result;
   }
 
-  // 多项式负号
+  // 重载减法运算符
+  Polynomial operator-(const Polynomial & rhs) const {
+    Polynomial result = *this;
+    for (typename std::map<unsigned, NumT>::const_iterator it = rhs.terms.begin();
+         it != rhs.terms.end();
+         ++it) {
+      result.addTerm(-it->second, it->first);
+    }
+    return result;
+  }
+
+  // 重载一元负运算符
   Polynomial operator-() const {
     Polynomial result;
-    for (size_t i = 0; i < terms.size(); ++i) {
-      result.addTerm(-terms[i].first, terms[i].second);
+    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
+         it != terms.end();
+         ++it) {
+      result.terms[it->first] = -it->second;
     }
     return result;
   }
 
-  // 多项式减法
-  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
-
-  // 标量乘法
-  Polynomial operator*(const NumT & scalar) const {
+  // 重载乘以标量的运算符
+  Polynomial operator*(const NumT & n) const {
     Polynomial result;
-    for (size_t i = 0; i < terms.size(); ++i) {
-      result.addTerm(terms[i].first * scalar, terms[i].second);
+    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
+         it != terms.end();
+         ++it) {
+      result.terms[it->first] = it->second * n;
     }
     return result;
   }
 
-  // 多项式乘法
+  // 重载乘法运算符：多项式乘以多项式
   Polynomial operator*(const Polynomial & rhs) const {
     Polynomial result;
-    for (size_t i = 0; i < terms.size(); ++i) {
-      for (size_t j = 0; j < rhs.terms.size(); ++j) {
-        NumT new_coefficient = terms[i].first * rhs.terms[j].first;
-        unsigned new_power = terms[i].second + rhs.terms[j].second;
-        result.addTerm(new_coefficient, new_power);
+    for (typename std::map<unsigned, NumT>::const_iterator it1 = terms.begin();
+         it1 != terms.end();
+         ++it1) {
+      for (typename std::map<unsigned, NumT>::const_iterator it2 = rhs.terms.begin();
+           it2 != rhs.terms.end();
+           ++it2) {
+        result.addTerm(it1->second * it2->second, it1->first + it2->first);
       }
     }
     return result;
   }
 
-  // 标量乘法赋值
-  Polynomial & operator*=(const NumT & scalar) {
-    for (size_t i = 0; i < terms.size(); ++i) {
-      terms[i].first *= scalar;
-    }
-    return *this;
-  }
+  // 重载比较运算符==
+  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
 
-  // 多项式乘法赋值
-  Polynomial & operator*=(const Polynomial & rhs) {
-    Polynomial result;
-    for (size_t i = 0; i < terms.size(); ++i) {
-      for (size_t j = 0; j < rhs.terms.size(); ++j) {
-        NumT new_coefficient = terms[i].first * rhs.terms[j].first;
-        unsigned new_power = terms[i].second + rhs.terms[j].second;
-        result.addTerm(new_coefficient, new_power);
-      }
-    }
-    terms = result.terms;
-    return *this;
-  }
-
-  // 比较两个多项式是否相等
-  bool operator==(const Polynomial & rhs) const {
-    if (terms.size() != rhs.terms.size())
-      return false;
-    for (size_t i = 0; i < terms.size(); ++i) {
-      if (terms[i].first != rhs.terms[i].first || terms[i].second != rhs.terms[i].second)
-        return false;
-    }
-    return true;
-  }
-
-  // 比较两个多项式是否不相等
+  // 重载比较运算符!=
   bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
 
-  // 赋值运算符
-  Polynomial & operator=(const Polynomial & rhs) {
-    if (this != &rhs) {
-      terms = rhs.terms;
-    }
-    return *this;
-  }
-
-  // 加法赋值运算符
+  // 重载+=运算符
   Polynomial & operator+=(const Polynomial & rhs) {
     *this = *this + rhs;
     return *this;
   }
 
-  // 减法赋值运算符
+  // 重载-=运算符
   Polynomial & operator-=(const Polynomial & rhs) {
     *this = *this - rhs;
     return *this;
   }
 
-  // 流输出友元函数
-  friend std::ostream & operator<<(std::ostream & os, const Polynomial<NumT> & p) {
+  // 重载*=运算符（多项式与标量）
+  Polynomial & operator*=(const NumT & rhs) {
+    *this = *this * rhs;
+    return *this;
+  }
+
+  // 重载*=运算符（多项式与多项式）
+  Polynomial & operator*=(const Polynomial & rhs) {
+    *this = *this * rhs;
+    return *this;
+  }
+
+  // 输出运算符<<
+  friend std::ostream & operator<<(std::ostream & os, const Polynomial & p) {
     if (p.terms.empty()) {
-      os << "0";
+      os << NumT();
+      return os;
     }
-    else {
-      bool first = true;
-      for (size_t i = p.terms.size(); i-- > 0;) {
-        if (!first)
-          os << " + ";
-        os << p.terms[i].first << "*x^" << p.terms[i].second;
-        first = false;
+
+    bool first = true;
+    for (typename std::map<unsigned, NumT>::const_reverse_iterator it = p.terms.rbegin();
+         it != p.terms.rend();
+         ++it) {
+      if (!first) {
+        os << " + ";
       }
+      first = false;
+      os << it->second << "*x^" << it->first;
     }
     return os;
   }
 };
 
-#endif  // POLYNOMIAL_HPP
+#endif
