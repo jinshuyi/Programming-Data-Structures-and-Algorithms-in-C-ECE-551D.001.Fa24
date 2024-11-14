@@ -13,7 +13,9 @@ class Polynomial {
 
  public:
   // 默认构造函数，将多项式初始化为 0
-  Polynomial() { terms[0] = NumT(); }
+  Polynomial() {
+    terms.clear();  // 初始化为空，用于检测零多项式
+  }
 
   // 添加项：添加系数为 c、指数为 p 的项
   void addTerm(const NumT & c, unsigned p) {
@@ -83,7 +85,9 @@ class Polynomial {
   }
 
   // 重载比较运算符==
-  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
+  bool operator==(const Polynomial & rhs) const {
+    return terms == rhs.terms || (terms.empty() && rhs.terms.empty());
+  }
 
   // 重载比较运算符!=
   bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
@@ -115,7 +119,7 @@ class Polynomial {
   // 输出运算符<<
   friend std::ostream & operator<<(std::ostream & os, const Polynomial & p) {
     if (p.terms.empty()) {
-      os << NumT();
+      os << NumT();  // 如果多项式为空，直接输出 0
       return os;
     }
 
@@ -127,7 +131,10 @@ class Polynomial {
         os << " + ";
       }
       first = false;
-      os << it->second << "*x^" << it->first;
+      os << it->second;
+      if (it->first != 0) {
+        os << "*x^" << it->first;  // 只在指数非零时输出 *x^n
+      }
     }
     return os;
   }
