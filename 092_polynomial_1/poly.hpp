@@ -25,11 +25,10 @@ class Polynomial {
     else {
       terms[p] += c;
       if (terms[p] == NumT()) {
-        terms.erase(p);  // Remove term if coefficient becomes zero
+        terms.erase(p);
       }
     }
   }
-
   // Negation operator
   Polynomial operator-() const {
     Polynomial result;
@@ -105,10 +104,14 @@ class Polynomial {
     return *this;
   }
 
-  // Equality operator
-  bool operator==(const Polynomial & rhs) const { return terms == rhs.terms; }
+  bool operator==(const Polynomial & rhs) const {
+    // 清除零系数项，确保比较正确
+    const_cast<Polynomial *>(this)->cleanUp();
+    const_cast<Polynomial *>(&rhs)->cleanUp();
+    return terms == rhs.terms;
+  }
 
-  // Inequality operator
+  // Inequality
   bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
 
   // Friend function for outputting polynomial
@@ -116,7 +119,7 @@ class Polynomial {
   friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
 
  private:
-  // Helper function to remove zero terms (used in output and equality)
+  // Helper function to remove zero terms
   void cleanUp() {
     for (typename std::map<unsigned, NumT>::iterator it = terms.begin();
          it != terms.end();) {
@@ -149,4 +152,4 @@ std::ostream & operator<<(std::ostream & os, const Polynomial<NumT> & p) {
   return os;
 }
 
-#endif  // POLY_HPP
+#endif
