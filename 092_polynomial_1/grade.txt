@@ -1,21 +1,342 @@
-Grading at 11/14/2024:18:22:04.812564
-For commit ID a11750071f317920e1803483c4be2b06bff931da
-Grading at Thu Nov 14 01:22:04 PM EST 2024
+Grading at 11/14/2024:18:35:25.315294
+For commit ID 1a603d7a7bb70337dbad24f4dc1407b7c2bf8762
+Grading at Thu Nov 14 01:35:25 PM EST 2024
 Compiling your code with our test main
+testmain.cpp: In function ‘int main()’:
+testmain.cpp:15:27: error: no match for ‘operator-’ (operand type is ‘Polynomial<int>’)
+   15 |   std::cout << "-p1: " << -p1 << "\n";
+      |                           ^~~
 In file included from testmain.cpp:4:
-poly.hpp: In instantiation of ‘void Polynomial<NumT>::cleanUp() [with NumT = int]’:
-poly.hpp:113:13:   required from ‘bool Polynomial<NumT>::operator==(const Polynomial<NumT>&) const [with NumT = int]’
-testmain.cpp:64:89:   required from here
-poly.hpp:132:12: error: no match for ‘operator=’ (operand types are ‘std::map<unsigned int, int, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’ {aka ‘std::_Rb_tree<unsigned int, std::pair<const unsigned int, int>, std::_Select1st<std::pair<const unsigned int, int> >, std::less<unsigned int>, std::allocator<std::pair<const unsigned int, int> > >::iterator’} and ‘void’)
-  132 |         it = terms.erase(it);
-      |         ~~~^~~~~~~~~~~~~~~~~
-In file included from /usr/include/c++/11/map:60,
+poly.hpp:49:14: note: candidate: ‘Polynomial<NumT> Polynomial<NumT>::operator-(const Polynomial<NumT>&) const [with NumT = int]’
+   49 |   Polynomial operator-(const Polynomial & rhs) const {
+      |              ^~~~~~~~
+poly.hpp:49:14: note:   candidate expects 1 argument, 0 provided
+testmain.cpp:37:6: error: no match for ‘operator+=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   37 |   p3 += p4;
+      |   ~~~^~~~~
+testmain.cpp:39:6: error: no match for ‘operator*=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   39 |   p3 *= p4;
+      |   ~~~^~~~~
+testmain.cpp:41:6: error: no match for ‘operator-=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   41 |   p3 -= p4;
+      |   ~~~^~~~~
+testmain.cpp:43:6: error: no match for ‘operator*=’ (operand types are ‘Polynomial<int>’ and ‘int’)
+   43 |   p4 *= 3;
+      |   ~~~^~~~
+testmain.cpp:59:12: error: no match for ‘operator-=’ (operand types are ‘Polynomial<int>’ and ‘Polynomial<int>’)
+   59 |   polys[6] -= p1;  //note that polys[6] now should == p3
+testmain.cpp:79:7: error: no match for ‘operator*=’ (operand types are ‘Polynomial<double>’ and ‘double’)
+   79 |   pd1 *= -3.2;
+      |   ~~~~^~~~~~~
+testmain.cpp:81:39: error: no match for ‘operator*’ (operand types are ‘Polynomial<double>’ and ‘double’)
+   81 |   std::cout << "pd1 * 3.1 is " << pd1 * -1.2 << "\n";
+      |                                   ~~~ ^ ~~~~
+      |                                   |     |
+      |                                   |     double
+      |                                   Polynomial<double>
+In file included from testmain.cpp:4:
+poly.hpp:61:14: note: candidate: ‘Polynomial<NumT> Polynomial<NumT>::operator*(const Polynomial<NumT>&) const [with NumT = double]’
+   61 |   Polynomial operator*(const Polynomial & rhs) const {
+      |              ^~~~~~~~
+poly.hpp:61:43: note:   no known conversion for argument 1 from ‘double’ to ‘const Polynomial<double>&’
+   61 |   Polynomial operator*(const Polynomial & rhs) const {
+      |                        ~~~~~~~~~~~~~~~~~~~^~~
+testmain.cpp:83:20: error: cannot convert ‘std::complex<double>’ to ‘int’
+   83 |   pc1.addTerm(std::complex<double>(1.2, 1.1), 3);
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~
+      |                    |
+      |                    std::complex<double>
+In file included from testmain.cpp:4:
+poly.hpp:31:20: note:   initializing argument 1 of ‘void Polynomial<NumT>::addTerm(int, NumT) [with NumT = std::complex<double>]’
+   31 |   void addTerm(int exponent, NumT coefficient) {
+      |                ~~~~^~~~~~~~
+poly.hpp: In instantiation of ‘std::ostream& operator<<(std::ostream&, const Polynomial<std::complex<double> >&)’:
+testmain.cpp:84:29:   required from here
+poly.hpp:108:27: error: no match for ‘operator>=’ (operand types are ‘const std::complex<double>’ and ‘std::complex<double>’)
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:64,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_pair.h:514:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator>=(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)’
+  514 |     operator>=(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_pair.h:514:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::pair<_T1, _T2>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:450:5: note: candidate: ‘template<class _Iterator> bool std::operator>=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)’
+  450 |     operator>=(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:450:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:489:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> bool std::operator>=(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  489 |     operator>=(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:489:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6454:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator>=(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6454 |     operator>=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6454:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6467:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator>=(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)’
+ 6467 |     operator>=(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6467:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6479:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator>=(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6479 |     operator>=(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6479:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/map:61,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_map.h:1529:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator>=(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)’
+ 1529 |     operator>=(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_map.h:1529:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/map:62,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_multimap.h:1194:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator>=(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)’
+ 1194 |     operator>=(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_multimap.h:1194:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+In file included from /usr/include/c++/11/vector:67,
                  from poly.hpp:7,
                  from testmain.cpp:4:
-/usr/include/c++/11/bits/stl_tree.h:256:12: note: candidate: ‘std::_Rb_tree_iterator<std::pair<const unsigned int, int> >& std::_Rb_tree_iterator<std::pair<const unsigned int, int> >::operator=(const std::_Rb_tree_iterator<std::pair<const unsigned int, int> >&)’
+/usr/include/c++/11/bits/stl_vector.h:1955:5: note: candidate: ‘template<class _Tp, class _Alloc> bool std::operator>=(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)’
+ 1955 |     operator>=(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_vector.h:1955:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:108:27: note:   ‘const std::complex<double>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  108 |         os << (it->second >= NumT(0) ? " + " : " - ");
+      |                ~~~~~~~~~~~^~~~~~~~~~
+poly.hpp:110:22: error: no match for ‘operator<’ (operand types are ‘const std::complex<double>’ and ‘std::complex<double>’)
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:64,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_pair.h:489:5: note: candidate: ‘template<class _T1, class _T2> bool std::operator<(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)’
+  489 |     operator<(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_pair.h:489:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::pair<_T1, _T2>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:426:5: note: candidate: ‘template<class _Iterator> bool std::operator<(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)’
+  426 |     operator<(const reverse_iterator<_Iterator>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:426:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/bits/stl_algobase.h:67,
+                 from /usr/include/c++/11/bits/char_traits.h:39,
+                 from /usr/include/c++/11/ios:40,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/stl_iterator.h:465:5: note: candidate: ‘template<class _IteratorL, class _IteratorR> bool std::operator<(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)’
+  465 |     operator<(const reverse_iterator<_IteratorL>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_iterator.h:465:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6340:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6340 |     operator<(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6340:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6353:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)’
+ 6353 |     operator<(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6353:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/istream:38,
+                 from /usr/include/c++/11/sstream:38,
+                 from /usr/include/c++/11/complex:45,
+                 from testmain.cpp:1:
+/usr/include/c++/11/bits/basic_string.h:6365:5: note: candidate: ‘template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)’
+ 6365 |     operator<(const _CharT* __lhs,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/basic_string.h:6365:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   mismatched types ‘const _CharT*’ and ‘std::complex<double>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/map:61,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_map.h:1501:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator<(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)’
+ 1501 |     operator<(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_map.h:1501:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/map:62,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_multimap.h:1166:5: note: candidate: ‘template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator<(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)’
+ 1166 |     operator<(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_multimap.h:1166:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+In file included from /usr/include/c++/11/vector:67,
+                 from poly.hpp:7,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_vector.h:1930:5: note: candidate: ‘template<class _Tp, class _Alloc> bool std::operator<(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)’
+ 1930 |     operator<(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+      |     ^~~~~~~~
+/usr/include/c++/11/bits/stl_vector.h:1930:5: note:   template argument deduction/substitution failed:
+In file included from testmain.cpp:4:
+poly.hpp:110:22: note:   ‘const std::complex<double>’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+  110 |       if (it->second < NumT(0)) {
+      |           ~~~~~~~~~~~^~~~~~~~~
+poly.hpp: In instantiation of ‘void Polynomial<NumT>::cleanUp() [with NumT = int]’:
+poly.hpp:33:5:   required from ‘void Polynomial<NumT>::addTerm(int, NumT) [with NumT = int]’
+testmain.cpp:10:13:   required from here
+poly.hpp:18:12: error: no match for ‘operator=’ (operand types are ‘std::map<int, int, std::less<int>, std::allocator<std::pair<const int, int> > >::iterator’ {aka ‘std::_Rb_tree<int, std::pair<const int, int>, std::_Select1st<std::pair<const int, int> >, std::less<int>, std::allocator<std::pair<const int, int> > >::iterator’} and ‘void’)
+   18 |         it = terms.erase(it);  // 移除系数为零的项
+      |         ~~~^~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/map:60,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_tree.h:256:12: note: candidate: ‘std::_Rb_tree_iterator<std::pair<const int, int> >& std::_Rb_tree_iterator<std::pair<const int, int> >::operator=(const std::_Rb_tree_iterator<std::pair<const int, int> >&)’
   256 |     struct _Rb_tree_iterator
       |            ^~~~~~~~~~~~~~~~~
-/usr/include/c++/11/bits/stl_tree.h:256:12: note:   no known conversion for argument 1 from ‘void’ to ‘const std::_Rb_tree_iterator<std::pair<const unsigned int, int> >&’
+/usr/include/c++/11/bits/stl_tree.h:256:12: note:   no known conversion for argument 1 from ‘void’ to ‘const std::_Rb_tree_iterator<std::pair<const int, int> >&’
+In file included from testmain.cpp:4:
+poly.hpp: In instantiation of ‘void Polynomial<NumT>::cleanUp() [with NumT = double]’:
+poly.hpp:33:5:   required from ‘void Polynomial<NumT>::addTerm(int, NumT) [with NumT = double]’
+testmain.cpp:75:14:   required from here
+poly.hpp:18:12: error: no match for ‘operator=’ (operand types are ‘std::map<int, double, std::less<int>, std::allocator<std::pair<const int, double> > >::iterator’ {aka ‘std::_Rb_tree<int, std::pair<const int, double>, std::_Select1st<std::pair<const int, double> >, std::less<int>, std::allocator<std::pair<const int, double> > >::iterator’} and ‘void’)
+   18 |         it = terms.erase(it);  // 移除系数为零的项
+      |         ~~~^~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/map:60,
+                 from poly.hpp:6,
+                 from testmain.cpp:4:
+/usr/include/c++/11/bits/stl_tree.h:256:12: note: candidate: ‘std::_Rb_tree_iterator<std::pair<const int, double> >& std::_Rb_tree_iterator<std::pair<const int, double> >::operator=(const std::_Rb_tree_iterator<std::pair<const int, double> >&)’
+  256 |     struct _Rb_tree_iterator
+      |            ^~~~~~~~~~~~~~~~~
+/usr/include/c++/11/bits/stl_tree.h:256:12: note:   no known conversion for argument 1 from ‘void’ to ‘const std::_Rb_tree_iterator<std::pair<const int, double> >&’
 g++ failed
 
 Overall Grade: FAILED
