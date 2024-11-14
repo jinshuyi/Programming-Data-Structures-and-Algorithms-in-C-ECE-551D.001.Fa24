@@ -114,8 +114,8 @@ class Polynomial {
 
   // 输出运算符<<
   friend std::ostream & operator<<(std::ostream & os, const Polynomial & p) {
-    if (p.terms.empty() || (p.terms.size() == 1 && p.terms.begin()->second == NumT())) {
-      os << "0";
+    if (p.terms.empty()) {
+      os << "0";  // 修改输出为空时显示为 "0" 而不是 "0*x^0"
       return os;
     }
 
@@ -123,22 +123,14 @@ class Polynomial {
     for (typename std::map<unsigned, NumT>::const_reverse_iterator it = p.terms.rbegin();
          it != p.terms.rend();
          ++it) {
-      // 不显示 x^0
-      if (it->first == 0 && it->second == NumT())
-        continue;  // 忽略0项
       if (!first) {
         os << " + ";
       }
       first = false;
 
-      if (it->first == 0) {  // 只输出系数
-        os << it->second;
-      }
-      else if (it->second == NumT(1)) {
-        os << "x^" << it->first;  // 输出 x^指数
-      }
-      else if (it->second == NumT(-1)) {
-        os << "-x^" << it->first;  // 输出 -x^指数
+      // 输出每项时，根据指数调整格式
+      if (it->first == 0) {
+        os << it->second;  // 常数项
       }
       else {
         os << it->second << "*x^" << it->first;
