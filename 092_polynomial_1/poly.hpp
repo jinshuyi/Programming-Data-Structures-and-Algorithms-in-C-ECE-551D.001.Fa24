@@ -105,10 +105,15 @@ class Polynomial {
   }
 
   bool operator==(const Polynomial & rhs) const {
+    // 创建两个副本来清除零项
+    Polynomial lhsCopy = *this;
+    Polynomial rhsCopy = rhs;
+
     // 清除零系数项，确保比较正确
-    const_cast<Polynomial *>(this)->cleanUp();
-    const_cast<Polynomial *>(&rhs)->cleanUp();
-    return terms == rhs.terms;
+    lhsCopy.cleanUp();
+    rhsCopy.cleanUp();
+
+    return lhsCopy.terms == rhsCopy.terms;
   }
 
   // Inequality
