@@ -1,160 +1,130 @@
 #ifndef POLY_HPP
 #define POLY_HPP
 
-#include <cmath>
-#include <complex>
+#include <algorithm>
 #include <iostream>
 #include <map>
-#include <stdexcept>
 #include <vector>
 
 template<typename NumT>
 class Polynomial {
  private:
-  std::map<unsigned, NumT> terms;
+  std::map<int, NumT> terms;  // 存储多项式的项，键为指数，值为系数
 
- public:
-  // Default constructor
-  Polynomial() { terms[0] = NumT(); }
-
-  // Add a term with coefficient c and exponent p
-  void addTerm(const NumT & c, unsigned p) {
-    if (terms.count(p) == 0) {
-      terms[p] = c;
-    }
-    else {
-      terms[p] += c;
-      if (terms[p] == NumT()) {
-        terms.erase(p);
-      }
-    }
-  }
-  // Negation operator
-  Polynomial operator-() const {
-    Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
-         it != terms.end();
-         ++it) {
-      result.addTerm(-it->second, it->first);
-    }
-    return result;
-  }
-
-  // Addition operator
-  Polynomial operator+(const Polynomial & rhs) const {
-    Polynomial result = *this;
-    for (typename std::map<unsigned, NumT>::const_iterator it = rhs.terms.begin();
-         it != rhs.terms.end();
-         ++it) {
-      result.addTerm(it->second, it->first);
-    }
-    return result;
-  }
-
-  // Subtraction operator
-  Polynomial operator-(const Polynomial & rhs) const { return *this + (-rhs); }
-
-  // Scalar multiplication operator
-  Polynomial operator*(const NumT & n) const {
-    Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it = terms.begin();
-         it != terms.end();
-         ++it) {
-      result.addTerm(it->second * n, it->first);
-    }
-    return result;
-  }
-
-  // Polynomial multiplication operator
-  Polynomial operator*(const Polynomial & rhs) const {
-    Polynomial result;
-    for (typename std::map<unsigned, NumT>::const_iterator it1 = terms.begin();
-         it1 != terms.end();
-         ++it1) {
-      for (typename std::map<unsigned, NumT>::const_iterator it2 = rhs.terms.begin();
-           it2 != rhs.terms.end();
-           ++it2) {
-        result.addTerm(it1->second * it2->second, it1->first + it2->first);
-      }
-    }
-    return result;
-  }
-
-  // Addition-assignment operator
-  Polynomial & operator+=(const Polynomial & rhs) {
-    *this = *this + rhs;
-    return *this;
-  }
-
-  // Subtraction-assignment operator
-  Polynomial & operator-=(const Polynomial & rhs) {
-    *this = *this - rhs;
-    return *this;
-  }
-
-  // Scalar multiplication-assignment operator
-  Polynomial & operator*=(const NumT & n) {
-    *this = *this * n;
-    return *this;
-  }
-
-  // Polynomial multiplication-assignment operator
-  Polynomial & operator*=(const Polynomial & rhs) {
-    *this = *this * rhs;
-    return *this;
-  }
-
-  bool operator==(const Polynomial & rhs) const {
-    // 创建两个副本来清除零项
-    Polynomial lhsCopy = *this;
-    Polynomial rhsCopy = rhs;
-
-    // 清除零系数项，确保比较正确
-    lhsCopy.cleanUp();
-    rhsCopy.cleanUp();
-
-    return lhsCopy.terms == rhsCopy.terms;
-  }
-
-  // Inequality
-  bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
-
-  // Friend function for outputting polynomial
-  template<typename N>
-  friend std::ostream & operator<<(std::ostream & os, const Polynomial<N> & p);
-
- private:
-  // Helper function to remove zero terms
+  // 辅助函数：清除系数为零的项
   void cleanUp() {
-    for (typename std::map<unsigned, NumT>::iterator it = terms.begin();
-         it != terms.end();) {
-      if (it->second == NumT()) {
-        it = terms.erase(it);
+    for (typename std::map<int, NumT>::iterator it = terms.begin(); it != terms.end();) {
+      if (it->second == NumT(0)) {
+        it = terms.erase(it);  // 移除系数为零的项
       }
       else {
         ++it;
       }
     }
   }
+
+ public:
+  // 默认构造函数
+  Polynomial() {}
+
+  // 添加项到多项式中
+  void addTerm(int exponent, NumT coefficient) {
+    terms[exponent] += coefficient;
+    cleanUp();  // 确保清除零系数项
+  }
+
+  // 运算符重载：加法
+  Polynomial operator+(const Polynomial & rhs) const {
+    Polynomial result = *this;
+    for (typename std::map<int, NumT>::const_iterator it = rhs.terms.begin();
+         it != rhs.terms.end();
+         ++it) {
+      result.terms[it->first] += it->second;
+    }
+    result.cleanUp();
+    return result;
+  }
+
+  // 运算符重载：减法
+  Polynomial operator-(const Polynomial & rhs) const {
+    Polynomial result = *this;
+    for (typename std::map<int, NumT>::const_iterator it = rhs.terms.begin();
+         it != rhs.terms.end();
+         ++it) {
+      result.terms[it->first] -= it->second;
+    }
+    result.cleanUp();
+    return result;
+  }
+
+  // 运算符重载：乘法
+  Polynomial operator*(const Polynomial & rhs) const {
+    Polynomial result;
+    for (typename std::map<int, NumT>::const_iterator it1 = terms.begin();
+         it1 != terms.end();
+         ++it1) {
+      for (typename std::map<int, NumT>::const_iterator it2 = rhs.terms.begin();
+           it2 != rhs.terms.end();
+           ++it2) {
+        int newExponent = it1->first + it2->first;
+        NumT newCoefficient = it1->second * it2->second;
+        result.terms[newExponent] += newCoefficient;
+      }
+    }
+    result.cleanUp();
+    return result;
+  }
+
+  // 赋值运算符重载
+  Polynomial & operator=(const Polynomial & rhs) {
+    if (this != &rhs) {
+      terms = rhs.terms;
+    }
+    return *this;
+  }
+
+  // 比较运算符重载：等于
+  bool operator==(const Polynomial & rhs) const {
+    Polynomial lhsCopy = *this;
+    Polynomial rhsCopy = rhs;
+    lhsCopy.cleanUp();
+    rhsCopy.cleanUp();
+    return lhsCopy.terms == rhsCopy.terms;
+  }
+
+  // 比较运算符重载：不等于
+  bool operator!=(const Polynomial & rhs) const { return !(*this == rhs); }
+
+  // 友元函数：流输出运算符重载
+  friend std::ostream & operator<<(std::ostream & os, const Polynomial & poly) {
+    bool first = true;
+    for (typename std::map<int, NumT>::const_reverse_iterator it = poly.terms.rbegin();
+         it != poly.terms.rend();
+         ++it) {
+      if (first) {
+        first = false;
+      }
+      else {
+        os << (it->second >= NumT(0) ? " + " : " - ");
+      }
+      if (it->second < NumT(0)) {
+        os << -it->second;
+      }
+      else {
+        os << it->second;
+      }
+      if (it->first > 0) {
+        os << "x";
+        if (it->first > 1) {
+          os << "^" << it->first;
+        }
+      }
+    }
+    if (first) {
+      os << "0";
+    }
+    return os;
+  }
 };
 
-// Output operator for Polynomial
-template<typename NumT>
-std::ostream & operator<<(std::ostream & os, const Polynomial<NumT> & p) {
-  bool first = true;
-  for (typename std::map<unsigned, NumT>::const_reverse_iterator it = p.terms.rbegin();
-       it != p.terms.rend();
-       ++it) {
-    if (it->second == NumT())
-      continue;
-    if (!first)
-      os << " + ";
-    first = false;
-    os << it->second << "*x^" << it->first;
-  }
-  if (first)
-    os << NumT();  // output "0" if polynomial is zero
-  return os;
-}
-
-#endif
+#endif  // POLY_HPP
