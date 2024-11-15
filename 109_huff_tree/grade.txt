@@ -1,0 +1,28 @@
+Grading at 11/15/2024:02:39:49.640411
+For commit ID c2fd83ea457434fda76f8aaac0111d56a0fa7323
+Grading at Thu Nov 14 09:39:44 PM EST 2024
+compiling
+g++ -ggdb3 -Wall -Werror -pedantic -o testTree testTree.cpp readFreq.cpp buildTree.cpp
+Make succeed, testTree created
+Testcase 1
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 2
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 3
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 4
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+
+Overall Grade: A
