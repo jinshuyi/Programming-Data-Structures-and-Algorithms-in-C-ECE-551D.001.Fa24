@@ -1,0 +1,23 @@
+Grading at 11/15/2024:02:33:49.931567
+For commit ID 4e09167783aac775f08cae013371820cb7b87401
+Grading at Thu Nov 14 09:33:46 PM EST 2024
+-----------------------------------------------
+testcase 1 : Testing with BstSet<int>
+...compiling...
+The code compiled.
+Your file matched the expected output
+Testcase passed 
+-----------------------------------------------
+testcase 2 : Testing with BstSet<std::string>
+...compiling...
+The code compiled.
+Your file matched the expected output
+Testcase passed 
+-----------------------------------------------
+testcase 3 : Testing with BstSet<(a custom class we wrote)>
+...compiling...
+The code compiled.
+Your file matched the expected output
+Testcase passed 
+
+Overall Grade: A
