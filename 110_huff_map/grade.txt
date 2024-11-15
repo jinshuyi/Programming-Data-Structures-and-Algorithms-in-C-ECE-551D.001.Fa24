@@ -1,0 +1,33 @@
+Grading at 11/15/2024:02:42:05.325158
+For commit ID 8d3e9bd4ec99bf2d436c50bfb770936bff6f6adf
+Grading at Thu Nov 14 09:41:59 PM EST 2024
+compiling
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -c bitstring.cpp
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -c buildTree.cpp
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -c node.cpp
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -c readFreq.cpp
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -c testMap.cpp
+g++ -ggdb3 -Wall -Werror -pedantic -std=gnu++98 -o testMap  bitstring.o  buildTree.o  node.o  readFreq.o  testMap.o
+Make succeed, testMap created
+Testcase 1
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 2
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 3
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+Testcase 4
+-----------------------
+Checking output:
+Your file matched the expected output
+Testcase passed 
+
+Overall Grade: A
