@@ -1,24 +1,76 @@
-Grading at 12/01/2024:19:36:49.907422
-For commit ID 43e874ae727a1f1b412c297fb062363b3102796c
-Grading at Sun Dec  1 02:36:47 PM EST 2024
+Grading at 12/01/2024:19:38:32.351975
+For commit ID 6ed013493eac23a65e73146e482bba0bcc91f765
+Grading at Sun Dec  1 02:38:30 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
 -------------------------
  This test case will run 
- ships-step1 
+ ships-step2 
  With arguments 
- inputs/ships0.txt 
+ inputs/ships0.txt inputs/cargo0.txt 
 -------------------------
-I need to compile your code for ships-step1 (make ships-step1)
+I need to compile your code for ships-step2 (make ships-step2)
 
-Compiling ships-step1
-g++ -o ships-step1 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step1.cpp 
+Compiling ships-step2
+g++ -o ships-step2 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step2.cpp 
 Running our code...
 Running your code
-We agreed on this testcase and valgrind was clean
- *** This is one of the three test cases for step 1 early start EC **
-You have PASSED all of your test cases
-Keep adding test cases until you are satisfied your program is correct
+We both agreed this was not an error, but your output is different from ours
+Your output on the left, ours on the right
+No ships can carry the toy cars from Mordor to Sarth	      |	3 ships can carry the toy cars from Mordor to Sarth
+No ships can carry the fireworks from Mordor to Sarth	      |	  The Majestic Dreadnought
+No ships can carry the used batteries from Mordor to Luthadel |	  The Shining Turtle
+No ships can carry the radioactive waste from Mordor to Sarth |	  The Swift Shark
+No ships can carry the radioactive waste from Mordor to Sarth |	  **Loading the cargo onto The Majestic Dreadnought**
+No ships can carry the radioactive waste from Mordor to Sarth |	2 ships can carry the fireworks from Mordor to Sarth
+No ships can carry the radioactive waste from Mordor to Lutha |	  The Majestic Dreadnought
+No ships can carry the cloth from Mordor to Luthadel	      |	  The Shining Turtle
+							      >	  **Loading the cargo onto The Majestic Dreadnought**
+							      >	1 ships can carry the used batteries from Mordor to Luthadel
+							      >	  The Majestic Kraken
+							      >	  **Loading the cargo onto The Majestic Kraken**
+							      >	2 ships can carry the radioactive waste from Mordor to Sarth
+							      >	  The Majestic Dreadnought
+							      >	  The Shining Turtle
+							      >	  **Loading the cargo onto The Majestic Dreadnought**
+							      >	2 ships can carry the radioactive waste from Mordor to Sarth
+							      >	  The Majestic Dreadnought
+							      >	  The Shining Turtle
+							      >	  **Loading the cargo onto The Majestic Dreadnought**
+							      >	1 ships can carry the radioactive waste from Mordor to Sarth
+							      >	  The Shining Turtle
+							      >	  **Loading the cargo onto The Shining Turtle**
+							      >	1 ships can carry the radioactive waste from Mordor to Luthad
+							      >	  The Majestic Kraken
+							      >	  **Loading the cargo onto The Majestic Kraken**
+							      >	1 ships can carry the cloth from Mordor to Luthadel
+							      >	  The Night Eagle
+							      >	  **Loading the cargo onto The Night Eagle**
+No ships can carry the rat poison from Mordor to Sarth		No ships can carry the rat poison from Mordor to Sarth
+---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
+The Container Ship The Majestic Dreadnought:Container(0/4) is |	The Container Ship The Majestic Dreadnought(320/1550) is carr
+(0) slots remain					      |	  toy cars(20)
+The Container Ship The Majestic Kraken:Container(0/9) is carr |	  fireworks(100)
+(0) slots remain					      |	  radioactive waste(100)
+The Container Ship The Misty Dreadnought:Container(0/3) is ca |	  radioactive waste(100)
+(0) slots remain					      |	  (0) slots remain
+The Container Ship The Night Eagle:Container(0/6) is carrying |	The Container Ship The Majestic Kraken(550/650) is carrying :
+(0) slots remain					      |	  used batteries(50)
+The Container Ship The Swift Shark:Container(0/5) is carrying |	  radioactive waste(500)
+(0) slots remain					      |	  (7) slots remain
+The Container Ship The Shining Turtle:Container(0/3) is carry |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
+(0) slots remain					      |	  (3) slots remain
+							      >	The Container Ship The Night Eagle(200/1500) is carrying : 
+							      >	  cloth(200)
+							      >	  (5) slots remain
+							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
+							      >	  (5) slots remain
+							      >	The Container Ship The Shining Turtle(100/500) is carrying : 
+							      >	  radioactive waste(100)
+							      >	  (2) slots remain
+Your file did not match the expected output
+You have FAILED one or more of your test cases
+Keep debugging
 
 Overall Grade: NO GRADE YET
