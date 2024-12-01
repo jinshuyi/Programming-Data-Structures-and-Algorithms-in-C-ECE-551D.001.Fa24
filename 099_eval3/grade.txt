@@ -1,6 +1,6 @@
-Grading at 12/01/2024:20:02:45.062477
-For commit ID 3a76225b5a44f06a019b6d66fb07f8aa92665cbf
-Grading at Sun Dec  1 03:02:42 PM EST 2024
+Grading at 12/01/2024:20:06:04.586904
+For commit ID 2b008c61bd4b460233a676329d85919287da1ba8
+Grading at Sun Dec  1 03:06:02 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -18,7 +18,7 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-0 ships can carry the toy from ars,Mordor,Sarth,20,container  |	3 ships can carry the toy cars from Mordor to Sarth
+6 ships can carry the toy from ars,Mordor,Sarth,20,container  |	3 ships can carry the toy cars from Mordor to Sarth
   The							      |	  The Majestic Dreadnought
   The							      |	  The Shining Turtle
   The							      |	  The Swift Shark
@@ -40,7 +40,7 @@ The Container Ship The(0/81524272) is carrying :	      |	  The Shining Turtle
 (81524272) slots remain					      |	  **Loading the cargo onto The Majestic Dreadnought**
 The Container Ship The(0/81524272) is carrying :	      |	1 ships can carry the radioactive waste from Mordor to Sarth
 (81524272) slots remain					      |	  The Shining Turtle
-0 ships can carry the fireworks,Mordor,Sarth,100,container,ha |	  **Loading the cargo onto The Shining Turtle**
+6 ships can carry the fireworks,Mordor,Sarth,100,container,ha |	  **Loading the cargo onto The Shining Turtle**
   The							      |	1 ships can carry the radioactive waste from Mordor to Luthad
   The							      |	  The Majestic Kraken
   The							      |	  **Loading the cargo onto The Majestic Kraken**
@@ -63,7 +63,7 @@ The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The 
 (81524272) slots remain					      |	  (3) slots remain
 The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The Night Eagle(200/1500) is carrying : 
 (81524272) slots remain					      |	  cloth(200)
-0 ships can carry the used from atteries,Mordor,Luthadel,50,h |	  (5) slots remain
+6 ships can carry the used from atteries,Mordor,Luthadel,50,h |	  (5) slots remain
   The							      |	The Container Ship The Swift Shark(0/2500) is carrying : 
   The							      |	  (5) slots remain
   The							      |	The Container Ship The Shining Turtle(100/500) is carrying : 
@@ -87,7 +87,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+6 ships can carry the radioactive from aste,Mordor,Sarth,100, <
   The							      <
   The							      <
   The							      <
@@ -112,7 +112,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+6 ships can carry the radioactive from aste,Mordor,Sarth,100, <
   The							      <
   The							      <
   The							      <
@@ -138,7 +138,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+6 ships can carry the radioactive from aste,Mordor,Sarth,100, <
   The							      <
   The							      <
   The							      <
@@ -165,7 +165,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the radioactive from aste,Mordor,Luthadel,5 <
+6 ships can carry the radioactive from aste,Mordor,Luthadel,5 <
   The							      <
   The							      <
   The							      <
@@ -193,7 +193,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the cloth,Mordor,Luthadel,200,container fro <
+6 ships can carry the cloth,Mordor,Luthadel,200,container fro <
   The							      <
   The							      <
   The							      <
@@ -222,7 +222,7 @@ The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
 The Container Ship The(0/81524272) is carrying :	      <
 (81524272) slots remain					      <
-0 ships can carry the rat from oison,Mordor,Sarth,20,containe <
+6 ships can carry the rat from oison,Mordor,Sarth,20,containe <
   The							      <
   The							      <
   The							      <
