@@ -6,15 +6,15 @@
 #include <string>
 #include <vector>
 
-// A class representing a Ship
+// A class represent a ship
 class Ship {
  public:
   std::string name;
   std::string source;
   std::string destination;
-  unsigned long capacity;  // Changed from unsigned long long to unsigned long
+  unsigned long capacity;
 
-  // Constructor to initialize a Ship object
+  // Constructor definedto initialize the objetc of ship
   Ship(const std::string & line) {
     std::istringstream iss(line);
     std::string typeInfo, capacityStr;
@@ -23,15 +23,13 @@ class Ship {
         !std::getline(iss, capacityStr)) {
       throw std::invalid_argument("Invalid input line format.");
     }
-
-    // Ensure the name is unique (handled externally)
+    //!!! Ensure the name is unique(the readme reuqires)
     capacity = parseCapacity(capacityStr);
   }
-
-  // Static function to parse capacity from string
+  // key step: Static function to parse capacity from string
   static unsigned long parseCapacity(const std::string & str) {
     std::istringstream iss(str);
-    unsigned long value;  // Changed from unsigned long long to unsigned long
+    unsigned long value;
     if (!(iss >> value) || !iss.eof()) {
       throw std::invalid_argument("Invalid capacity value.");
     }
@@ -41,8 +39,7 @@ class Ship {
   // Returns the route in "Source -> Destination" format
   std::string getRoute() const { return source + " -> " + destination; }
 };
-
-// A class to manage the Fleet
+// define the  class fleetmanager to manage the Fleet
 class FleetManager {
  private:
   std::vector<Ship> ships;
@@ -57,6 +54,7 @@ class FleetManager {
 
     std::vector<std::string> shipNames;  // To ensure unique names
     std::string line;
+    //use getline just as C in AOP
     while (std::getline(file, line)) {
       try {
         Ship ship(line);
@@ -84,8 +82,8 @@ class FleetManager {
     // Accumulate capacities by route
     for (size_t i = 0; i < ships.size(); ++i) {
       std::string route = ships[i].getRoute();
+      //use boolen to judge whether the route exists
       bool found = false;
-
       // Check if route already exists
       for (size_t j = 0; j < routeCapacities.size(); ++j) {
         if (routeCapacities[j].first == route) {
@@ -112,6 +110,7 @@ class FleetManager {
   }
 };
 
+//use try,catch to meet the requirements of the exception
 int main(int argc, char * argv[]) {
   if (argc != 2) {
     std::cerr << "Usage: " << argv[0] << " <input_file>\n";
