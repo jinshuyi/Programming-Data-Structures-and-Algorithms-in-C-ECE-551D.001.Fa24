@@ -1,6 +1,6 @@
-Grading at 12/01/2024:19:38:32.351975
-For commit ID 6ed013493eac23a65e73146e482bba0bcc91f765
-Grading at Sun Dec  1 02:38:30 PM EST 2024
+Grading at 12/01/2024:20:02:45.062477
+For commit ID 3a76225b5a44f06a019b6d66fb07f8aa92665cbf
+Grading at Sun Dec  1 03:02:42 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -18,57 +18,240 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-No ships can carry the toy cars from Mordor to Sarth	      |	3 ships can carry the toy cars from Mordor to Sarth
-No ships can carry the fireworks from Mordor to Sarth	      |	  The Majestic Dreadnought
-No ships can carry the used batteries from Mordor to Luthadel |	  The Shining Turtle
-No ships can carry the radioactive waste from Mordor to Sarth |	  The Swift Shark
-No ships can carry the radioactive waste from Mordor to Sarth |	  **Loading the cargo onto The Majestic Dreadnought**
-No ships can carry the radioactive waste from Mordor to Sarth |	2 ships can carry the fireworks from Mordor to Sarth
-No ships can carry the radioactive waste from Mordor to Lutha |	  The Majestic Dreadnought
-No ships can carry the cloth from Mordor to Luthadel	      |	  The Shining Turtle
-							      >	  **Loading the cargo onto The Majestic Dreadnought**
-							      >	1 ships can carry the used batteries from Mordor to Luthadel
-							      >	  The Majestic Kraken
-							      >	  **Loading the cargo onto The Majestic Kraken**
-							      >	2 ships can carry the radioactive waste from Mordor to Sarth
-							      >	  The Majestic Dreadnought
-							      >	  The Shining Turtle
-							      >	  **Loading the cargo onto The Majestic Dreadnought**
-							      >	2 ships can carry the radioactive waste from Mordor to Sarth
-							      >	  The Majestic Dreadnought
-							      >	  The Shining Turtle
-							      >	  **Loading the cargo onto The Majestic Dreadnought**
-							      >	1 ships can carry the radioactive waste from Mordor to Sarth
-							      >	  The Shining Turtle
-							      >	  **Loading the cargo onto The Shining Turtle**
-							      >	1 ships can carry the radioactive waste from Mordor to Luthad
-							      >	  The Majestic Kraken
-							      >	  **Loading the cargo onto The Majestic Kraken**
-							      >	1 ships can carry the cloth from Mordor to Luthadel
-							      >	  The Night Eagle
-							      >	  **Loading the cargo onto The Night Eagle**
-No ships can carry the rat poison from Mordor to Sarth		No ships can carry the rat poison from Mordor to Sarth
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The Container Ship The Majestic Dreadnought:Container(0/4) is |	The Container Ship The Majestic Dreadnought(320/1550) is carr
-(0) slots remain					      |	  toy cars(20)
-The Container Ship The Majestic Kraken:Container(0/9) is carr |	  fireworks(100)
-(0) slots remain					      |	  radioactive waste(100)
-The Container Ship The Misty Dreadnought:Container(0/3) is ca |	  radioactive waste(100)
-(0) slots remain					      |	  (0) slots remain
-The Container Ship The Night Eagle:Container(0/6) is carrying |	The Container Ship The Majestic Kraken(550/650) is carrying :
-(0) slots remain					      |	  used batteries(50)
-The Container Ship The Swift Shark:Container(0/5) is carrying |	  radioactive waste(500)
-(0) slots remain					      |	  (7) slots remain
-The Container Ship The Shining Turtle:Container(0/3) is carry |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-(0) slots remain					      |	  (3) slots remain
-							      >	The Container Ship The Night Eagle(200/1500) is carrying : 
-							      >	  cloth(200)
-							      >	  (5) slots remain
-							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
-							      >	  (5) slots remain
-							      >	The Container Ship The Shining Turtle(100/500) is carrying : 
-							      >	  radioactive waste(100)
-							      >	  (2) slots remain
+0 ships can carry the toy from ars,Mordor,Sarth,20,container  |	3 ships can carry the toy cars from Mordor to Sarth
+  The							      |	  The Majestic Dreadnought
+  The							      |	  The Shining Turtle
+  The							      |	  The Swift Shark
+  The							      |	  **Loading the cargo onto The Majestic Dreadnought**
+  The							      |	2 ships can carry the fireworks from Mordor to Sarth
+  The							      |	  The Majestic Dreadnought
+**Loading the cargo onto The**				      |	  The Shining Turtle
+---Done Loading---Here are the ships---			      |	  **Loading the cargo onto The Majestic Dreadnought**
+The Container Ship The(0/81524272) is carrying :	      |	1 ships can carry the used batteries from Mordor to Luthadel
+  toy							      |	  The Majestic Kraken
+(81524272) slots remain					      |	  **Loading the cargo onto The Majestic Kraken**
+The Container Ship The(0/81524272) is carrying :	      |	2 ships can carry the radioactive waste from Mordor to Sarth
+(81524272) slots remain					      |	  The Majestic Dreadnought
+The Container Ship The(0/81524272) is carrying :	      |	  The Shining Turtle
+(81524272) slots remain					      |	  **Loading the cargo onto The Majestic Dreadnought**
+The Container Ship The(0/81524272) is carrying :	      |	2 ships can carry the radioactive waste from Mordor to Sarth
+(81524272) slots remain					      |	  The Majestic Dreadnought
+The Container Ship The(0/81524272) is carrying :	      |	  The Shining Turtle
+(81524272) slots remain					      |	  **Loading the cargo onto The Majestic Dreadnought**
+The Container Ship The(0/81524272) is carrying :	      |	1 ships can carry the radioactive waste from Mordor to Sarth
+(81524272) slots remain					      |	  The Shining Turtle
+0 ships can carry the fireworks,Mordor,Sarth,100,container,ha |	  **Loading the cargo onto The Shining Turtle**
+  The							      |	1 ships can carry the radioactive waste from Mordor to Luthad
+  The							      |	  The Majestic Kraken
+  The							      |	  **Loading the cargo onto The Majestic Kraken**
+  The							      |	1 ships can carry the cloth from Mordor to Luthadel
+  The							      |	  The Night Eagle
+  The							      |	  **Loading the cargo onto The Night Eagle**
+**Loading the cargo onto The**				      |	No ships can carry the rat poison from Mordor to Sarth
+---Done Loading---Here are the ships---			      |	---Done Loading---Here are the ships---
+The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The Majestic Dreadnought(320/1550) is carr
+  toy							      |	  toy cars(20)
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    |	  fireworks(100)
+(81524272) slots remain					      |	  radioactive waste(100)
+The Container Ship The(0/81524272) is carrying :	      |	  radioactive waste(100)
+(81524272) slots remain					      |	  (0) slots remain
+The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The Majestic Kraken(550/650) is carrying :
+(81524272) slots remain					      |	  used batteries(50)
+The Container Ship The(0/81524272) is carrying :	      |	  radioactive waste(500)
+(81524272) slots remain					      |	  (7) slots remain
+The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
+(81524272) slots remain					      |	  (3) slots remain
+The Container Ship The(0/81524272) is carrying :	      |	The Container Ship The Night Eagle(200/1500) is carrying : 
+(81524272) slots remain					      |	  cloth(200)
+0 ships can carry the used from atteries,Mordor,Luthadel,50,h |	  (5) slots remain
+  The							      |	The Container Ship The Swift Shark(0/2500) is carrying : 
+  The							      |	  (5) slots remain
+  The							      |	The Container Ship The Shining Turtle(100/500) is carrying : 
+  The							      |	  radioactive waste(100)
+  The							      |	  (2) slots remain
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+  radioactive						      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the radioactive from aste,Mordor,Sarth,100, <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the radioactive from aste,Mordor,Luthadel,5 <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the cloth,Mordor,Luthadel,200,container fro <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+  cloth,Mordor,Luthadel,200,container			      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+0 ships can carry the rat from oison,Mordor,Sarth,20,containe <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+  The							      <
+**Loading the cargo onto The**				      <
+---Done Loading---Here are the ships---			      <
+The Container Ship The(0/81524272) is carrying :	      <
+  toy							      <
+  fireworks,Mordor,Sarth,100,container,hazardous-explosive    <
+  used							      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+  radioactive						      <
+  cloth,Mordor,Luthadel,200,container			      <
+  rat							      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
+The Container Ship The(0/81524272) is carrying :	      <
+(81524272) slots remain					      <
 Your file did not match the expected output
 You have FAILED one or more of your test cases
 Keep debugging
