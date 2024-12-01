@@ -53,17 +53,14 @@ class FleetManager {
 
   FleetManager(vector<Ship> ships) : ships(ships) {}
 
-  // Function object to compare ships by name (for sorting)
   struct CompareShipByName {
     bool operator()(const Ship & a, const Ship & b) const { return a.name < b.name; }
   };
 
-  // Sort ships by name
   void sortShipsByName() { sort(ships.begin(), ships.end(), CompareShipByName()); }
 
-  // Load cargo and print results
   void loadCargoAndPrintResults(const Cargo & cargo) {
-    cout << cargo.weight << " ships can carry the " << cargo.name << " from "
+    cout << ships.size() << " ships can carry the " << cargo.name << " from "
          << cargo.source << " to " << cargo.destination << endl;
     vector<Ship *> eligibleShips;
     for (size_t i = 0; i < ships.size(); ++i) {
@@ -81,12 +78,10 @@ class FleetManager {
         cout << "  " << eligibleShips[i]->name << endl;
       }
 
-      // Select the first ship in the list and load the cargo
       eligibleShips[0]->loadCargo(cargo.name, cargo.weight);
       cout << "**Loading the cargo onto " << eligibleShips[0]->name << "**" << endl;
     }
 
-    // Print the status of all ships
     cout << "---Done Loading---Here are the ships---" << endl;
     for (size_t i = 0; i < ships.size(); ++i) {
       ships[i].printStatus();
@@ -95,7 +90,6 @@ class FleetManager {
 };
 
 int main() {
-  // Step 1: Reading ship data from ships0.txt
   ifstream shipsFile("inputs/ships0.txt");
   vector<Ship> ships;
   string line;
@@ -106,7 +100,6 @@ int main() {
     int maxCapacity;
     char dummy;
 
-    // Parse ship data
     ss >> name >> dummy >> type >> dummy >> source >> dummy >> destination >> dummy >>
         maxCapacity;
     ships.push_back(Ship(name, maxCapacity));
@@ -115,7 +108,6 @@ int main() {
   FleetManager manager(ships);
   manager.sortShipsByName();
 
-  // Step 2: Reading cargo data from cargo0.txt
   ifstream cargoFile("inputs/cargo0.txt");
   vector<Cargo> cargoList;
   while (getline(cargoFile, line)) {
@@ -124,13 +116,11 @@ int main() {
     int weight;
     char dummy;
 
-    // Parse cargo data
     ss >> name >> dummy >> source >> dummy >> destination >> dummy >> weight >> dummy >>
         type;
     cargoList.push_back(Cargo(name, source, destination, weight, type));
   }
 
-  // Step 3: Load cargo onto ships and print results
   for (size_t i = 0; i < cargoList.size(); ++i) {
     manager.loadCargoAndPrintResults(cargoList[i]);
   }
