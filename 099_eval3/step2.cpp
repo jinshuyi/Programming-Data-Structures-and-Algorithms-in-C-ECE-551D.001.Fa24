@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+//degfine the correspoindig class
 class Cargo {
  public:
   std::string name;
@@ -14,6 +15,7 @@ class Cargo {
   unsigned int weight;
   std::vector<std::string> properties;
 
+  //fonsturctor to initilize
   Cargo(const std::string & line) {
     std::istringstream ss(line);
     std::string temp;
@@ -27,6 +29,7 @@ class Cargo {
     }
   }
 
+  //check whether the cargo have special porperty
   bool requiresProperty(const std::string & property) const {
     return std::find(properties.begin(), properties.end(), property) != properties.end();
   }
@@ -58,10 +61,11 @@ class Ship {
     parseTypeInfo(typeInfo);
   }
 
+  // Get the name of the ship
   const std::string & getName() const { return name; }
-
+  // Virtual destructor for polymorphic usage
   virtual ~Ship() {}
-
+  // Check if the ship can carry the given cargo.
   virtual bool canCarry(const Cargo & cargo) const {
     if (cargo.source != source || cargo.destination != destination) {
       return false;
@@ -72,6 +76,7 @@ class Ship {
     if (usedSlots >= slots) {
       return false;
     }
+    // Check hazardous material compatibility
     for (size_t i = 0; i < cargo.properties.size(); ++i) {
       const std::string & property = cargo.properties[i];
       if (property.find("hazardous-") == 0) {
@@ -84,13 +89,13 @@ class Ship {
     }
     return true;
   }
-
+  // Load a cargo onto the ship
   virtual void loadCargo(const Cargo & cargo) {
     usedCapacity += cargo.weight;
     usedSlots++;
     loadedCargo.push_back(cargo);
   }
-
+  // Print details of the ship and its loaded cargo
   virtual void printDetails() const {
     std::cout << "The Container Ship " << name << " (" << usedCapacity << "/"
               << totalCapacity << ") is carrying:" << std::endl;
@@ -102,11 +107,12 @@ class Ship {
   }
 
  protected:
+  // Parse type-specific information from the typeInfo string
   virtual void parseTypeInfo(const std::string & typeInfo) {
     std::istringstream ss(typeInfo);
     std::string temp;
     std::getline(ss, temp, ',');  // Skip "Container"
-    std::getline(ss, temp, ',');
+    std::getline(ss, temp, ',');  // Parse number of slots
     slots = static_cast<unsigned int>(std::atoi(temp.c_str()));
     while (std::getline(ss, temp, ',')) {
       hazmatCapabilities.push_back(temp);
@@ -119,19 +125,19 @@ bool compareShipsByName(const Ship * a, const Ship * b) {
   return a->getName() < b->getName();
 }
 
+// Read ship data from a file and populate teh shipsvector..
 void readShips(const std::string & filename, std::vector<Ship> & ships) {
   std::ifstream file(filename.c_str());
   if (!file) {
     std::cerr << "Error opening file: " << filename << std::endl;
     exit(EXIT_FAILURE);
   }
-
   std::string line;
   while (std::getline(file, line)) {
     ships.push_back(Ship(line));
   }
 }
-
+// Read cargo data from a file and populate the cargoList vector
 void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
   std::ifstream file(filename.c_str());
   if (!file) {
@@ -144,7 +150,7 @@ void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
     cargoList.push_back(Cargo(line));
   }
 }
-
+// Process and load cargo onto the appropriate ships.
 void processCargo(std::vector<Ship> & ships, const std::vector<Cargo> & cargoList) {
   for (size_t i = 0; i < cargoList.size(); ++i) {
     const Cargo & cargo = cargoList[i];
@@ -175,25 +181,27 @@ void processCargo(std::vector<Ship> & ships, const std::vector<Cargo> & cargoLis
               << std::endl;
   }
 
+  // Print the final status of all ships as REDME
   std::cout << "---Done Loading---Here are the ships---" << std::endl;
   for (size_t i = 0; i < ships.size(); ++i) {
     ships[i].printDetails();
   }
 }
 
+// Main function to run the program
 int main(int argc, char * argv[]) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
     return EXIT_FAILURE;
   }
 
-  std::vector<Ship> ships;
-  readShips(argv[1], ships);
+  std::vector<Ship> ships;    // Lits of ships
+  readShips(argv[1], ships);  // Load ship data
 
-  std::vector<Cargo> cargoList;
-  readCargo(argv[2], cargoList);
+  std::vector<Cargo> cargoList;   // List of cargo
+  readCargo(argv[2], cargoList);  // load cargo data
 
-  processCargo(ships, cargoList);
+  processCargo(ships, cargoList);  // Processing cargo and load onto ships
 
   return EXIT_SUCCESS;
 }
