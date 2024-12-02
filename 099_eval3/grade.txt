@@ -1,6 +1,6 @@
-Grading at 12/02/2024:21:35:02.685937
-For commit ID 6352548d31150bdd6f40454e34ed6f3ca2e5ea61
-Grading at Mon Dec  2 04:34:59 PM EST 2024
+Grading at 12/02/2024:21:46:05.646256
+For commit ID 81d8e4d7a843b16bf0762794f8b3de7d9dd7efbf
+Grading at Mon Dec  2 04:46:03 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -18,6 +18,7 @@ Running our code...
 Running your code
 We agreed on this testcase and valgrind was clean
  *** This is the test case for step 2 early start EC **
+You have already pass the basic tests for step2:
 **step2 basic tests passed for sj445 at 1733175302** : 7e4873af205230e01fab111c8ae1ffcf6f203e03  -
 You have PASSED all of your test cases
 Keep adding test cases until you are satisfied your program is correct
