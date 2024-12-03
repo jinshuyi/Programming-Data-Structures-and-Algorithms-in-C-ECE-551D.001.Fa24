@@ -1,6 +1,6 @@
-Grading at 12/03/2024:00:42:06.659321
-For commit ID c4e39c821dd9a5e94409b833f543990ccd881f4c
-Grading at Mon Dec  2 07:42:04 PM EST 2024
+Grading at 12/03/2024:00:50:10.305768
+For commit ID 16c4a63d9b4ec910b79a859c3fdc00fe53d8ac22
+Grading at Mon Dec  2 07:50:07 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -8,7 +8,7 @@ Running your test cases
  This test case will run 
  ships-step3 
  With arguments 
- inputs/ships1.txt inputs/cargo1.txt 
+ inputs/ships0.txt inputs/cargo1.txt 
 -------------------------
 I need to compile your code for ships-step3 (make ships-step3)
 
@@ -16,13 +16,9 @@ Compiling ships-step3
 g++ -o ships-step3 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step3.cpp 
 Running our code...
 Running your code
-You said this was an error (exit status was 1), but we said it was valid
-Note: this may happen if your code timed out too...
-Here is what you printed to stderr:
-------
-Unknown ship type: Tanker
-------
-You have FAILED one or more of your test cases
-Keep debugging
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four test cases for step 3 early start EC **
+You have PASSED all of your test cases
+Keep adding test cases until you are satisfied your program is correct
 
 Overall Grade: NO GRADE YET
