@@ -128,57 +128,60 @@ class ContainerShip : public Ship {
   }
 };
 
-// Derived class: Tanker Ship
-class Tanker : public Ship {
-  int minTemp;
-  int maxTemp;
-  unsigned int tanks;
-  unsigned int usedTanks;
+// Derived class: Animals Ship
+class AnimalsShip : public Ship {
+  unsigned int smallCargoLimit;
+  bool hasRoamer;
   std::vector<Cargo> loadedCargo;
 
  public:
-  Tanker(const std::string & name,
-         const std::string & source,
-         const std::string & destination,
-         unsigned int capacity,
-         int minTemp,
-         int maxTemp,
-         unsigned int tanks) :
+  AnimalsShip(const std::string & name,
+              const std::string & source,
+              const std::string & destination,
+              unsigned int capacity,
+              unsigned int smallCargoLimit) :
       Ship(name, source, destination, capacity),
-      minTemp(minTemp),
-      maxTemp(maxTemp),
-      tanks(tanks),
-      usedTanks(0) {}
+      smallCargoLimit(smallCargoLimit),
+      hasRoamer(false) {}
 
   bool canCarry(const Cargo & cargo) const {
-    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
-        usedTanks >= tanks) {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
       return false;
     }
-    if (!cargo.requiresProperty("liquid") && !cargo.requiresProperty("gas")) {
+    if (cargo.requiresProperty("animal")) {
+      if (!cargo.requiresProperty("roamer")) {
+        return true;
+      }
+      else {
+        return !hasRoamer;
+      }
+    }
+    if (cargo.requiresProperty("liquid") || cargo.requiresProperty("gas")) {
       return false;
     }
-    int cargoMinTemp = cargo.getPropertyValue("mintemp");
-    int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
-    if (cargoMinTemp > maxTemp || cargoMaxTemp < minTemp) {
-      return false;
+    for (size_t i = 0; i < cargo.properties.size(); ++i) {
+      if (cargo.properties[i].find("hazardous-") == 0) {
+        return false;
+      }
     }
-    return true;
+    return cargo.weight <= smallCargoLimit;
   }
 
   void loadCargo(const Cargo & cargo) {
     usedCapacity += cargo.weight;
-    usedTanks++;
+    if (cargo.requiresProperty("animal") && cargo.requiresProperty("roamer")) {
+      hasRoamer = true;
+    }
     loadedCargo.push_back(cargo);
   }
 
   void printDetails() const {
-    std::cout << "The Tanker Ship " << name << " (" << usedCapacity << "/"
+    std::cout << "The Animals Ship " << name << " (" << usedCapacity << "/"
               << totalCapacity << ") is carrying:\n";
     for (size_t i = 0; i < loadedCargo.size(); ++i) {
       std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
     }
-    std::cout << "  " << usedTanks << " / " << tanks << " tanks used\n";
+    std::cout << "  " << (hasRoamer ? "has a roamer" : "does not have a roamer") << "\n";
   }
 };
 
@@ -212,16 +215,11 @@ Ship * createShip(const std::string & line) {
     }
     return new ContainerShip(name, source, destination, capacity, slots, hazmat);
   }
-  else if (temp == "Tanker") {
-    int minTemp, maxTemp;
-    unsigned int tanks;
+  else if (temp == "Animals") {
+    unsigned int smallCargoLimit;
     std::getline(typeStream, temp, ',');
-    minTemp = std::atoi(temp.c_str());
-    std::getline(typeStream, temp, ',');
-    maxTemp = std::atoi(temp.c_str());
-    std::getline(typeStream, temp, ',');
-    tanks = std::atoi(temp.c_str());
-    return new Tanker(name, source, destination, capacity, minTemp, maxTemp, tanks);
+    smallCargoLimit = std::atoi(temp.c_str());
+    return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
   }
 
   std::cerr << "Unknown ship type: " << temp << std::endl;
