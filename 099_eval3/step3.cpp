@@ -1,227 +1,358 @@
 #include <algorithm>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
-#include <map>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <vector>
 
-// Helper function to parse properties
-std::map<std::string, std::string> parseProperties(const std::string & propertiesStr) {
-  std::map<std::string, std::string> properties;
-  std::istringstream ss(propertiesStr);
-  std::string property;
-  while (std::getline(ss, property, ',')) {
-    size_t equalPos = property.find('=');
-    if (equalPos != std::string::npos) {
-      properties[property.substr(0, equalPos)] = property.substr(equalPos + 1);
-    }
-    else {
-      properties[property] = "0";  // Default value for properties without values
+// Class representing a piece of cargo
+class Cargo {
+ public:
+  std::string name;
+  std::string source;
+  std::string destination;
+  unsigned int weight;
+  std::vector<std::string> properties;
+
+  Cargo(const std::string & line) {
+    std::istringstream ss(line);
+    std::string temp;
+    std::getline(ss, name, ',');
+    std::getline(ss, source, ',');
+    std::getline(ss, destination, ',');
+    std::getline(ss, temp, ',');
+    weight = std::strtoull(temp.c_str(), NULL, 10);
+    while (std::getline(ss, temp, ',')) {
+      properties.push_back(temp);
     }
   }
-  return properties;
-}
 
-// Abstract base class for ships
+  bool requiresProperty(const std::string & property) const {
+    return std::find(properties.begin(), properties.end(), property) != properties.end();
+  }
+
+  int getPropertyValue(const std::string & key) const {
+    for (size_t i = 0; i < properties.size(); ++i) {
+      if (properties[i].find(key + "=") == 0) {
+        std::string value = properties[i].substr(key.length() + 1);
+        return std::atoi(value.c_str());
+      }
+    }
+    return 0;  // Default value
+  }
+};
+
+// Base class for all ship types
 class Ship {
  protected:
   std::string name;
   std::string source;
   std::string destination;
-  unsigned int capacity;
+  unsigned int totalCapacity;
+  unsigned int usedCapacity;
 
  public:
-  Ship(const std::string & line) {
-    std::istringstream ss(line);
-    std::getline(ss, name, ':');
-    std::string typeInfo;
-    std::getline(ss, typeInfo, ':');
-    std::getline(ss, source, ':');
-    std::getline(ss, destination, ':');
-    std::string capacityStr;
-    std::getline(ss, capacityStr, ':');
-    capacity = std::atoi(capacityStr.c_str());
-    // The derived class will handle type-specific parsing
-  }
-
-  virtual void parseTypeInfo(const std::string & typeInfo) = 0;
-  virtual bool canCarry(const std::string & cargoType,
-                        const std::map<std::string, std::string> & properties) const = 0;
-  virtual void loadCargo(const std::string & cargoType, unsigned int weight) = 0;
-  virtual void printDetails() const = 0;
+  Ship(const std::string & name,
+       const std::string & source,
+       const std::string & destination,
+       unsigned int capacity) :
+      name(name),
+      source(source),
+      destination(destination),
+      totalCapacity(capacity),
+      usedCapacity(0) {}
 
   virtual ~Ship() {}
+
+  virtual bool canCarry(const Cargo & cargo) const = 0;
+  virtual void loadCargo(const Cargo & cargo) = 0;
+  virtual void printDetails() const = 0;
+
+  const std::string & getName() const { return name; }
+
+  bool isOnRoute(const Cargo & cargo) const {
+    return cargo.source == source && cargo.destination == destination;
+  }
 };
 
-// TankerShip class
+// Derived class: ContainerShip
+class ContainerShip : public Ship {
+  unsigned int slots;
+  unsigned int usedSlots;
+  std::vector<Cargo> loadedCargo;
+
+ public:
+  ContainerShip(const std::string & name,
+                const std::string & source,
+                const std::string & destination,
+                unsigned int capacity,
+                unsigned int slots) :
+      Ship(name, source, destination, capacity), slots(slots), usedSlots(0) {}
+
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
+        usedSlots >= slots) {
+      return false;
+    }
+    return cargo.requiresProperty("container");
+  }
+
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    usedSlots++;
+    loadedCargo.push_back(cargo);
+  }
+
+  void printDetails() const {
+    std::cout << "The Container Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  (" << (slots - usedSlots) << ") slots remain\n";
+  }
+};
+
+// Derived class: AnimalsShip
+class AnimalsShip : public Ship {
+  unsigned int smallCargoLimit;
+  bool hasRoamer;
+  std::vector<Cargo> loadedCargo;
+
+ public:
+  AnimalsShip(const std::string & name,
+              const std::string & source,
+              const std::string & destination,
+              unsigned int capacity,
+              unsigned int smallCargoLimit) :
+      Ship(name, source, destination, capacity),
+      smallCargoLimit(smallCargoLimit),
+      hasRoamer(false) {}
+
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
+      return false;
+    }
+    if (cargo.requiresProperty("animal")) {
+      if (!cargo.requiresProperty("roamer")) {
+        return true;
+      }
+      else {
+        return !hasRoamer;
+      }
+    }
+    return cargo.weight <= smallCargoLimit && !cargo.requiresProperty("liquid") &&
+           !cargo.requiresProperty("gas");
+  }
+
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    if (cargo.requiresProperty("animal") && cargo.requiresProperty("roamer")) {
+      hasRoamer = true;
+    }
+    loadedCargo.push_back(cargo);
+  }
+
+  void printDetails() const {
+    std::cout << "The Animals Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  " << (hasRoamer ? "has a roamer" : "does not have a roamer") << "\n";
+  }
+};
+
+// Derived class: TankerShip
 class TankerShip : public Ship {
   int minTemp;
   int maxTemp;
-  unsigned int numTanks;
-  unsigned int tanksUsed;
-  std::map<std::string, unsigned int> cargoMap;
+  unsigned int tanks;
+  unsigned int usedTanks;
+  std::vector<Cargo> loadedCargo;
 
  public:
-  TankerShip(const std::string & line) : Ship(line), tanksUsed(0) {
-    std::string typeInfo = line.substr(
-        line.find(':') + 1, line.find(':', line.find(':') + 1) - line.find(':') - 1);
-    parseTypeInfo(typeInfo);
-  }
+  TankerShip(const std::string & name,
+             const std::string & source,
+             const std::string & destination,
+             unsigned int capacity,
+             int minTemp,
+             int maxTemp,
+             unsigned int tanks) :
+      Ship(name, source, destination, capacity),
+      minTemp(minTemp),
+      maxTemp(maxTemp),
+      tanks(tanks),
+      usedTanks(0) {}
 
-  void parseTypeInfo(const std::string & typeInfo) {
-    std::istringstream ss(typeInfo);
-    std::string temp;
-    std::getline(ss, temp, ',');
-    minTemp = std::atoi(temp.c_str());
-    std::getline(ss, temp, ',');
-    maxTemp = std::atoi(temp.c_str());
-    std::getline(ss, temp, ',');
-    numTanks = std::atoi(temp.c_str());
-    if (capacity % numTanks != 0) {
-      throw std::runtime_error("Capacity must be a multiple of the number of tanks.");
-    }
-  }
-
-  bool canCarry(const std::string & cargoType,
-                const std::map<std::string, std::string> & properties) const {
-    if (cargoType != "liquid" && cargoType != "gas")
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
       return false;
-
-    if (properties.find("mintemp") != properties.end() ||
-        properties.find("maxtemp") != properties.end()) {
-      int cargoMinTemp = properties.find("mintemp") != properties.end()
-                             ? std::atoi(properties.find("mintemp")->second.c_str())
-                             : -1000;
-      int cargoMaxTemp = properties.find("maxtemp") != properties.end()
-                             ? std::atoi(properties.find("maxtemp")->second.c_str())
-                             : 1000;
-      if (cargoMaxTemp < minTemp || cargoMinTemp > maxTemp)
-        return false;
     }
-    return true;
+    if (cargo.requiresProperty("liquid") || cargo.requiresProperty("gas")) {
+      int cargoMinTemp = cargo.getPropertyValue("mintemp");
+      int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
+      return (cargoMaxTemp >= minTemp && cargoMinTemp <= maxTemp);
+    }
+    return false;
   }
 
-  void loadCargo(const std::string & cargoType, unsigned int weight) {
-    unsigned int tankCapacity = capacity / numTanks;
-    unsigned int remainingWeight = weight;
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    usedTanks++;
+    loadedCargo.push_back(cargo);
+  }
 
-    for (std::map<std::string, unsigned int>::iterator it = cargoMap.begin();
-         it != cargoMap.end();
-         ++it) {
-      if (it->first == cargoType) {
-        unsigned int freeSpace = tankCapacity - it->second;
-        unsigned int toLoad = std::min(remainingWeight, freeSpace);
-        it->second += toLoad;
-        remainingWeight -= toLoad;
-        if (remainingWeight == 0)
-          break;
+  void printDetails() const {
+    std::cout << "The Tanker Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  " << usedTanks << " / " << tanks << " tanks used\n";
+  }
+};
+
+bool compareShipsByName(Ship * a, Ship * b) {
+  return a->getName() < b->getName();
+}
+
+// Function to dynamically create ships based on input
+Ship * createShip(const std::string & line) {
+  std::istringstream ss(line);
+  std::string name, typeInfo, source, destination, temp;
+  unsigned int capacity;
+
+  std::getline(ss, name, ':');
+  std::getline(ss, typeInfo, ':');
+  std::getline(ss, source, ':');
+  std::getline(ss, destination, ':');
+  std::getline(ss, temp, ':');
+  capacity = std::strtoull(temp.c_str(), NULL, 10);
+
+  std::istringstream typeStream(typeInfo);
+  std::getline(typeStream, temp, ',');  // Read ship type
+
+  if (temp == "Container") {
+    unsigned int slots;
+    std::getline(typeStream, temp, ',');
+    slots = std::atoi(temp.c_str());
+    return new ContainerShip(name, source, destination, capacity, slots);
+  }
+  else if (temp == "Animals") {
+    unsigned int smallCargoLimit;
+    std::getline(typeStream, temp, ',');
+    smallCargoLimit = std::atoi(temp.c_str());
+    return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
+  }
+  else if (temp == "Tanker") {
+    int minTemp, maxTemp;
+    unsigned int tanks;
+    std::getline(typeStream, temp, ',');
+    minTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    maxTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    tanks = std::atoi(temp.c_str());
+    return new TankerShip(name, source, destination, capacity, minTemp, maxTemp, tanks);
+  }
+
+  std::cerr << "Unknown ship type: " << temp << std::endl;
+  return NULL;
+}
+
+// Function to read ships from file
+void readShips(const std::string & filename, std::vector<Ship *> & ships) {
+  std::ifstream file(filename.c_str());
+  if (!file) {
+    std::cerr << "Error opening file: " << filename << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  std::string line;
+  while (std::getline(file, line)) {
+    Ship * ship = createShip(line);
+    if (ship) {
+      ships.push_back(ship);
+    }
+    else {
+      std::cerr << "Error: Ship creation failed for line: " << line << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+}
+
+// Function to read cargo from file
+void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
+  std::ifstream file(filename.c_str());
+  if (!file) {
+    std::cerr << "Error opening file: " << filename << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  std::string line;
+  while (std::getline(file, line)) {
+    cargoList.push_back(Cargo(line));
+  }
+}
+
+// Function to process and load cargo
+void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoList) {
+  for (size_t i = 0; i < cargoList.size(); ++i) {
+    const Cargo & cargo = cargoList[i];
+    std::vector<Ship *> possibleShips;
+
+    for (size_t j = 0; j < ships.size(); ++j) {
+      if (ships[j]->canCarry(cargo)) {
+        possibleShips.push_back(ships[j]);
       }
     }
 
-    while (remainingWeight > 0 && tanksUsed < numTanks) {
-      unsigned int toLoad = std::min(remainingWeight, tankCapacity);
-      cargoMap[cargoType] += toLoad;
-      tanksUsed++;
-      remainingWeight -= toLoad;
+    if (possibleShips.empty()) {
+      std::cout << "No ships can carry the " << cargo.name << " from " << cargo.source
+                << " to " << cargo.destination << std::endl;
+      continue;
     }
 
-    if (remainingWeight > 0) {
-      throw std::runtime_error("Not enough tank capacity to load cargo.");
+    std::sort(possibleShips.begin(), possibleShips.end(), compareShipsByName);
+
+    std::cout << possibleShips.size() << " ships can carry the " << cargo.name << " from "
+              << cargo.source << " to " << cargo.destination << std::endl;
+    for (size_t k = 0; k < possibleShips.size(); ++k) {
+      std::cout << "  " << possibleShips[k]->getName() << std::endl;
     }
+
+    Ship * selectedShip = possibleShips[0];
+    selectedShip->loadCargo(cargo);
+
+    std::cout << "**Loading the cargo onto " << selectedShip->getName() << "**\n";
   }
 
-  void printDetails() const {
-    std::cout << "The Tanker Ship " << name << "("
-              << capacity - (numTanks * (capacity / numTanks - tanksUsed)) << "/"
-              << capacity << ") is carrying :" << std::endl;
-    for (std::map<std::string, unsigned int>::const_iterator it = cargoMap.begin();
-         it != cargoMap.end();
-         ++it) {
-      std::cout << "  " << it->first << "(" << it->second << ")" << std::endl;
-    }
-    std::cout << "  " << tanksUsed << " / " << numTanks << " tanks used" << std::endl;
+  std::cout << "---Done Loading---Here are the ships---\n";
+  for (size_t i = 0; i < ships.size(); ++i) {
+    ships[i]->printDetails();
   }
-};
-
-// AnimalShip class
-class AnimalShip : public Ship {
-  unsigned int smallCargoLimit;
-  bool hasRoamer;
-
- public:
-  AnimalShip(const std::string & line) : Ship(line), hasRoamer(false) {
-    std::string typeInfo = line.substr(
-        line.find(':') + 1, line.find(':', line.find(':') + 1) - line.find(':') - 1);
-    parseTypeInfo(typeInfo);
-  }
-
-  void parseTypeInfo(const std::string & typeInfo) {
-    std::istringstream ss(typeInfo);
-    std::string temp;
-    std::getline(ss, temp, ',');
-    smallCargoLimit = std::atoi(temp.c_str());
-  }
-
-  bool canCarry(const std::string & cargoType,
-                const std::map<std::string, std::string> & properties) const {
-    if (cargoType == "animal") {
-      if (properties.find("roamer") != properties.end() && hasRoamer)
-        return false;
-      return true;
-    }
-    if (properties.find("hazardous") != properties.end() || cargoType == "liquid" ||
-        cargoType == "gas")
-      return false;
-    unsigned int weight = std::atoi(properties.find("weight")->second.c_str());
-    return weight <= smallCargoLimit;
-  }
-
-  void loadCargo(const std::string & cargoType, unsigned int weight) {
-    if (cargoType == "animal") {
-      if (hasRoamer)
-        throw std::runtime_error("Cannot load multiple roamers.");
-      hasRoamer = true;
-    }
-    capacity -= weight;
-  }
-
-  void printDetails() const {
-    std::cout << "The Animals Ship " << name << "(" << capacity << "/" << capacity
-              << ") is carrying :" << std::endl;
-    if (hasRoamer) {
-      std::cout << "  has a roamer" << std::endl;
-    }
-    else {
-      std::cout << "  does not have a roamer" << std::endl;
-    }
-  }
-};
-
-// Reading ships
-void readShips(const std::string & filename, std::vector<Ship *> & ships) {
-  // Implementation
 }
 
-// Processing cargo
-void processCargo(std::vector<Ship *> & ships, const std::string & cargoFile) {
-  // Implementation
-}
-
+// Main function
 int main(int argc, char * argv[]) {
   if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <ships file> <cargo file>" << std::endl;
+    std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
     return EXIT_FAILURE;
   }
 
   std::vector<Ship *> ships;
   readShips(argv[1], ships);
-  processCargo(ships, argv[2]);
+
+  std::vector<Cargo> cargoList;
+  readCargo(argv[2], cargoList);
+
+  processCargo(ships, cargoList);
 
   for (size_t i = 0; i < ships.size(); ++i) {
-    ships[i]->printDetails();
     delete ships[i];
   }
+
   return EXIT_SUCCESS;
 }
