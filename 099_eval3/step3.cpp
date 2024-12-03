@@ -80,7 +80,6 @@ class Ship {
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
-  std::vector<std::string> hazmatCapabilities;
   std::vector<Cargo> loadedCargo;
 
  public:
@@ -88,28 +87,15 @@ class ContainerShip : public Ship {
                 const std::string & source,
                 const std::string & destination,
                 unsigned int capacity,
-                unsigned int slots,
-                const std::vector<std::string> & hazmat) :
-      Ship(name, source, destination, capacity),
-      slots(slots),
-      usedSlots(0),
-      hazmatCapabilities(hazmat) {}
+                unsigned int slots) :
+      Ship(name, source, destination, capacity), slots(slots), usedSlots(0) {}
 
   bool canCarry(const Cargo & cargo) const {
     if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
         usedSlots >= slots) {
       return false;
     }
-    for (size_t i = 0; i < cargo.properties.size(); ++i) {
-      if (cargo.properties[i].find("hazardous-") == 0) {
-        std::string hazard = cargo.properties[i].substr(10);
-        if (std::find(hazmatCapabilities.begin(), hazmatCapabilities.end(), hazard) ==
-            hazmatCapabilities.end()) {
-          return false;
-        }
-      }
-    }
-    return true;
+    return cargo.requiresProperty("container");
   }
 
   void loadCargo(const Cargo & cargo) {
@@ -156,15 +142,8 @@ class AnimalsShip : public Ship {
         return !hasRoamer;
       }
     }
-    if (cargo.requiresProperty("liquid") || cargo.requiresProperty("gas")) {
-      return false;
-    }
-    for (size_t i = 0; i < cargo.properties.size(); ++i) {
-      if (cargo.properties[i].find("hazardous-") == 0) {
-        return false;
-      }
-    }
-    return cargo.weight <= smallCargoLimit;
+    return cargo.weight <= smallCargoLimit && !cargo.requiresProperty("liquid") &&
+           !cargo.requiresProperty("gas");
   }
 
   void loadCargo(const Cargo & cargo) {
@@ -262,13 +241,9 @@ Ship * createShip(const std::string & line) {
 
   if (temp == "Container") {
     unsigned int slots;
-    std::vector<std::string> hazmat;
     std::getline(typeStream, temp, ',');
     slots = std::atoi(temp.c_str());
-    while (std::getline(typeStream, temp, ',')) {
-      hazmat.push_back(temp);
-    }
-    return new ContainerShip(name, source, destination, capacity, slots, hazmat);
+    return new ContainerShip(name, source, destination, capacity, slots);
   }
   else if (temp == "Tanker") {
     int minTemp, maxTemp;
@@ -340,6 +315,12 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
 
     std::sort(possibleShips.begin(), possibleShips.end(), compareShipsByName);
 
+    std::cout << possibleShips.size() << " ships can carry the " << cargo.name << " from "
+              << cargo.source << " to " << cargo.destination << std::endl;
+    for (size_t k = 0; k < possibleShips.size(); ++k) {
+      std::cout << "  " << possibleShips[k]->getName() << std::endl;
+    }
+
     Ship * selectedShip = possibleShips[0];
     selectedShip->loadCargo(cargo);
 
@@ -352,6 +333,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
   }
 }
 
+// Main function
 int main(int argc, char * argv[]) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
