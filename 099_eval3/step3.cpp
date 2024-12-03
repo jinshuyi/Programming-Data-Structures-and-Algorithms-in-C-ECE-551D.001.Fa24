@@ -114,9 +114,55 @@ class ContainerShip : public Ship {
   }
 };
 
-// Derived class: AnimalsShip (Implementation omitted for brevity)
+// Derived class: AnimalsShip
+class AnimalsShip : public Ship {
+  unsigned int smallCargoLimit;
+  bool hasRoamer;
+  std::vector<Cargo> loadedCargo;
 
-// Derived class: TankerShip (Implementation omitted for brevity)
+ public:
+  AnimalsShip(const std::string & name,
+              const std::string & source,
+              const std::string & destination,
+              unsigned int capacity,
+              unsigned int smallCargoLimit) :
+      Ship(name, source, destination, capacity),
+      smallCargoLimit(smallCargoLimit),
+      hasRoamer(false) {}
+
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
+      return false;
+    }
+    if (cargo.requiresProperty("animal")) {
+      if (!cargo.requiresProperty("roamer")) {
+        return true;
+      }
+      else {
+        return !hasRoamer;
+      }
+    }
+    return cargo.weight <= smallCargoLimit && !cargo.requiresProperty("liquid") &&
+           !cargo.requiresProperty("gas");
+  }
+
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    if (cargo.requiresProperty("animal") && cargo.requiresProperty("roamer")) {
+      hasRoamer = true;
+    }
+    loadedCargo.push_back(cargo);
+  }
+
+  void printDetails() const {
+    std::cout << "The Animals Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  " << (hasRoamer ? "has a roamer" : "does not have a roamer") << "\n";
+  }
+};  // **修复：类定义后加分号**
 
 // Compare ships by name
 bool compareShipsByName(Ship * a, Ship * b) {
@@ -145,7 +191,13 @@ Ship * createShip(const std::string & line) {
     slots = std::atoi(temp.c_str());
     return new ContainerShip(name, source, destination, capacity, slots);
   }
-  // Add TankerShip and AnimalsShip implementation here
+  else if (temp == "Animals") {
+    unsigned int smallCargoLimit;
+    std::getline(typeStream, temp, ',');
+    smallCargoLimit = std::atoi(temp.c_str());
+    return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
+  }
+
   std::cerr << "Unknown ship type: " << temp << std::endl;
   return NULL;
 }
