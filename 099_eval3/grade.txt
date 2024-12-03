@@ -1,26 +1,29 @@
-Grading at 12/02/2024:21:46:05.646256
-For commit ID 81d8e4d7a843b16bf0762794f8b3de7d9dd7efbf
-Grading at Mon Dec  2 04:46:03 PM EST 2024
+Grading at 12/03/2024:00:37:54.099973
+For commit ID 11ead02e8953f5953a55129fa2d9c452699dc2c6
+Grading at Mon Dec  2 07:37:51 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
 -------------------------
  This test case will run 
- ships-step2 
+ ships-step3 
  With arguments 
- inputs/ships0.txt inputs/cargo0.txt 
+ inputs/ships1.txt inputs/cargo1.txt 
 -------------------------
-I need to compile your code for ships-step2 (make ships-step2)
+I need to compile your code for ships-step3 (make ships-step3)
 
-Compiling ships-step2
-g++ -o ships-step2 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step2.cpp 
+Compiling ships-step3
+g++ -o ships-step3 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step3.cpp 
 Running our code...
 Running your code
-We agreed on this testcase and valgrind was clean
- *** This is the test case for step 2 early start EC **
-You have already pass the basic tests for step2:
-**step2 basic tests passed for sj445 at 1733175302** : 7e4873af205230e01fab111c8ae1ffcf6f203e03  -
-You have PASSED all of your test cases
-Keep adding test cases until you are satisfied your program is correct
+You said this was an error (exit status was 1), but we said it was valid
+Note: this may happen if your code timed out too...
+Here is what you printed to stderr:
+------
+Unknown ship type: Animals
+------
+The info about step2 in your grade.txt is weird. Please ask Drew
+You have FAILED one or more of your test cases
+Keep debugging
 
 Overall Grade: NO GRADE YET
