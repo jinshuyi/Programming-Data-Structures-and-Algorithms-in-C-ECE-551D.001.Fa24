@@ -128,6 +128,60 @@ class ContainerShip : public Ship {
   }
 };
 
+// Derived class: Tanker Ship
+class Tanker : public Ship {
+  int minTemp;
+  int maxTemp;
+  unsigned int tanks;
+  unsigned int usedTanks;
+  std::vector<Cargo> loadedCargo;
+
+ public:
+  Tanker(const std::string & name,
+         const std::string & source,
+         const std::string & destination,
+         unsigned int capacity,
+         int minTemp,
+         int maxTemp,
+         unsigned int tanks) :
+      Ship(name, source, destination, capacity),
+      minTemp(minTemp),
+      maxTemp(maxTemp),
+      tanks(tanks),
+      usedTanks(0) {}
+
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
+        usedTanks >= tanks) {
+      return false;
+    }
+    if (!cargo.requiresProperty("liquid") && !cargo.requiresProperty("gas")) {
+      return false;
+    }
+    int cargoMinTemp = cargo.getPropertyValue("mintemp");
+    int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
+    if (cargoMinTemp > maxTemp || cargoMaxTemp < minTemp) {
+      return false;
+    }
+    return true;
+  }
+
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    usedTanks++;
+    loadedCargo.push_back(cargo);
+  }
+
+  void printDetails() const {
+    std::cout << "The Tanker Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  " << usedTanks << " / " << tanks << " tanks used\n";
+  }
+};
+
 // Derived class: Animals Ship
 class AnimalsShip : public Ship {
   unsigned int smallCargoLimit;
@@ -204,7 +258,8 @@ Ship * createShip(const std::string & line) {
   capacity = std::strtoull(temp.c_str(), NULL, 10);
 
   std::istringstream typeStream(typeInfo);
-  std::getline(typeStream, temp, ',');
+  std::getline(typeStream, temp, ',');  // Read ship type
+
   if (temp == "Container") {
     unsigned int slots;
     std::vector<std::string> hazmat;
@@ -214,6 +269,17 @@ Ship * createShip(const std::string & line) {
       hazmat.push_back(temp);
     }
     return new ContainerShip(name, source, destination, capacity, slots, hazmat);
+  }
+  else if (temp == "Tanker") {
+    int minTemp, maxTemp;
+    unsigned int tanks;
+    std::getline(typeStream, temp, ',');
+    minTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    maxTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    tanks = std::atoi(temp.c_str());
+    return new Tanker(name, source, destination, capacity, minTemp, maxTemp, tanks);
   }
   else if (temp == "Animals") {
     unsigned int smallCargoLimit;
@@ -287,6 +353,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
 }
 
 // Main function
+
 int main(int argc, char * argv[]) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
