@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-// Class representing a piece of cargo
+// 定义Cargo类
 class Cargo {
  public:
   std::string name;
@@ -39,11 +39,11 @@ class Cargo {
         return std::atoi(value.c_str());
       }
     }
-    return 0;  // Default value
+    return 0;
   }
 };
 
-// Base class for all ship types
+// 定义Ship基类
 class Ship {
  protected:
   std::string name;
@@ -76,7 +76,7 @@ class Ship {
   }
 };
 
-// Derived class: ContainerShip
+// ContainerShip类
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
@@ -114,7 +114,7 @@ class ContainerShip : public Ship {
   }
 };
 
-// Derived class: AnimalsShip
+// AnimalsShip类
 class AnimalsShip : public Ship {
   unsigned int smallCargoLimit;
   bool hasRoamer;
@@ -164,7 +164,7 @@ class AnimalsShip : public Ship {
   }
 };
 
-// Derived class: TankerShip
+// TankerShip类
 class TankerShip : public Ship {
   int minTemp;
   int maxTemp;
@@ -214,11 +214,12 @@ class TankerShip : public Ship {
   }
 };
 
+// 辅助函数，按船名排序
 bool compareShipsByName(Ship * a, Ship * b) {
   return a->getName() < b->getName();
 }
 
-// Function to dynamically create ships based on input
+// 动态创建船只
 Ship * createShip(const std::string & line) {
   std::istringstream ss(line);
   std::string name, typeInfo, source, destination, temp;
@@ -232,7 +233,7 @@ Ship * createShip(const std::string & line) {
   capacity = std::strtoull(temp.c_str(), NULL, 10);
 
   std::istringstream typeStream(typeInfo);
-  std::getline(typeStream, temp, ',');  // Read ship type
+  std::getline(typeStream, temp, ',');  // 读取船类型
 
   if (temp == "Container") {
     unsigned int slots;
@@ -262,7 +263,7 @@ Ship * createShip(const std::string & line) {
   return NULL;
 }
 
-// Function to read ships from file
+// 读取船只信息
 void readShips(const std::string & filename, std::vector<Ship *> & ships) {
   std::ifstream file(filename.c_str());
   if (!file) {
@@ -283,7 +284,7 @@ void readShips(const std::string & filename, std::vector<Ship *> & ships) {
   }
 }
 
-// Function to read cargo from file
+// 读取货物信息
 void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
   std::ifstream file(filename.c_str());
   if (!file) {
@@ -297,7 +298,7 @@ void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
   }
 }
 
-// Function to process and load cargo
+// 处理货物装载
 void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoList) {
   for (size_t i = 0; i < cargoList.size(); ++i) {
     const Cargo & cargo = cargoList[i];
@@ -335,7 +336,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
   }
 }
 
-// Main function
+// 主函数
 int main(int argc, char * argv[]) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
