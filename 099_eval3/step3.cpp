@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-// 货物类
+// Cargo class
 class Cargo {
  public:
   std::string name;
@@ -38,11 +38,11 @@ class Cargo {
         return std::atoi(properties[i].substr(key.length() + 1).c_str());
       }
     }
-    return 0;  // 默认值
+    return 0;  // Default value
   }
 };
 
-// 抽象船只类
+// Abstract Ship class
 class Ship {
  protected:
   std::string name;
@@ -75,7 +75,7 @@ class Ship {
   }
 };
 
-// 容器船
+// Container Ship class
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
@@ -110,7 +110,7 @@ class ContainerShip : public Ship {
   }
 };
 
-// 油轮
+// Tanker Ship class
 class TankerShip : public Ship {
   int minTemp;
   int maxTemp;
@@ -160,7 +160,7 @@ class TankerShip : public Ship {
   }
 };
 
-// 动物运输船
+// Animals Ship class
 class AnimalsShip : public Ship {
   unsigned int smallCargoLimit;
   bool hasRoamer;
@@ -205,7 +205,7 @@ class AnimalsShip : public Ship {
   }
 };
 
-// 创建船只
+// Create Ship
 Ship * createShip(const std::string & line) {
   std::istringstream ss(line);
   std::string name, typeInfo, source, destination, temp;
@@ -241,7 +241,7 @@ Ship * createShip(const std::string & line) {
   return NULL;
 }
 
-// 读取船只数据
+// Read Ships
 void readShips(const std::string & filename, std::vector<Ship *> & ships) {
   std::ifstream file(filename.c_str());
   if (!file) {
@@ -260,12 +260,12 @@ void readShips(const std::string & filename, std::vector<Ship *> & ships) {
   }
 }
 
-// 比较船只名称
+// Compare Ships by Name
 bool compareShipsByName(const Ship * a, const Ship * b) {
   return a->getName() < b->getName();
 }
 
-// 读取货物数据
+// Read Cargo
 void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
   std::ifstream file(filename.c_str());
   if (!file) {
@@ -279,7 +279,7 @@ void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
   }
 }
 
-// 处理货物
+// Process Cargo
 void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoList) {
   for (size_t i = 0; i < cargoList.size(); ++i) {
     const Cargo & cargo = cargoList[i];
@@ -317,7 +317,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
   }
 }
 
-// 主函数
+// Main function
 int main(int argc, char * argv[]) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>" << std::endl;
