@@ -65,7 +65,7 @@ class Ship {
 
   virtual ~Ship() {}
 
-  virtual bool canCarry(const Cargo & cargo) const = 0;  // Pure virtual function
+  virtual bool canCarry(const Cargo & cargo) const = 0;
   virtual void loadCargo(const Cargo & cargo) = 0;
   virtual void printDetails() const = 0;
 
@@ -76,7 +76,7 @@ class Ship {
   }
 };
 
-// Derived class: Container Ship
+// Derived class: ContainerShip
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
@@ -114,14 +114,14 @@ class ContainerShip : public Ship {
   }
 };
 
+// Derived class: AnimalsShip (Implementation omitted for brevity)
+
+// Derived class: TankerShip (Implementation omitted for brevity)
+
 // Compare ships by name
 bool compareShipsByName(Ship * a, Ship * b) {
   return a->getName() < b->getName();
 }
-
-// Derived class: Animals Ship (Implementation omitted for brevity)
-
-// Derived class: Tanker Ship (Implementation omitted for brevity)
 
 // Function to dynamically create ships based on input
 Ship * createShip(const std::string & line) {
@@ -145,8 +145,9 @@ Ship * createShip(const std::string & line) {
     slots = std::atoi(temp.c_str());
     return new ContainerShip(name, source, destination, capacity, slots);
   }
-  // Tanker and Animals implementation omitted
-  return NULL;  // Use NULL instead of nullptr for C++03
+  // Add TankerShip and AnimalsShip implementation here
+  std::cerr << "Unknown ship type: " << temp << std::endl;
+  return NULL;
 }
 
 // Function to read ships from file
@@ -159,7 +160,14 @@ void readShips(const std::string & filename, std::vector<Ship *> & ships) {
 
   std::string line;
   while (std::getline(file, line)) {
-    ships.push_back(createShip(line));
+    Ship * ship = createShip(line);
+    if (ship) {
+      ships.push_back(ship);
+    }
+    else {
+      std::cerr << "Error: Ship creation failed for line: " << line << std::endl;
+      exit(EXIT_FAILURE);
+    }
   }
 }
 
