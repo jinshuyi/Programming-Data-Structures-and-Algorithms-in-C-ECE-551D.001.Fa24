@@ -1,6 +1,6 @@
-Grading at 12/03/2024:00:37:54.099973
-For commit ID 11ead02e8953f5953a55129fa2d9c452699dc2c6
-Grading at Mon Dec  2 07:37:51 PM EST 2024
+Grading at 12/03/2024:00:42:06.659321
+For commit ID c4e39c821dd9a5e94409b833f543990ccd881f4c
+Grading at Mon Dec  2 07:42:04 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -20,9 +20,8 @@ You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-Unknown ship type: Animals
+Unknown ship type: Tanker
 ------
-The info about step2 in your grade.txt is weird. Please ask Drew
 You have FAILED one or more of your test cases
 Keep debugging
 
