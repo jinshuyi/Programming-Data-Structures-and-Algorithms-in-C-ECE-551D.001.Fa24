@@ -162,9 +162,58 @@ class AnimalsShip : public Ship {
     }
     std::cout << "  " << (hasRoamer ? "has a roamer" : "does not have a roamer") << "\n";
   }
-};  // **修复：类定义后加分号**
+};
 
-// Compare ships by name
+// Derived class: TankerShip
+class TankerShip : public Ship {
+  int minTemp;
+  int maxTemp;
+  unsigned int tanks;
+  unsigned int usedTanks;
+  std::vector<Cargo> loadedCargo;
+
+ public:
+  TankerShip(const std::string & name,
+             const std::string & source,
+             const std::string & destination,
+             unsigned int capacity,
+             int minTemp,
+             int maxTemp,
+             unsigned int tanks) :
+      Ship(name, source, destination, capacity),
+      minTemp(minTemp),
+      maxTemp(maxTemp),
+      tanks(tanks),
+      usedTanks(0) {}
+
+  bool canCarry(const Cargo & cargo) const {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
+      return false;
+    }
+    if (cargo.requiresProperty("liquid") || cargo.requiresProperty("gas")) {
+      int cargoMinTemp = cargo.getPropertyValue("mintemp");
+      int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
+      return (cargoMaxTemp >= minTemp && cargoMinTemp <= maxTemp);
+    }
+    return false;
+  }
+
+  void loadCargo(const Cargo & cargo) {
+    usedCapacity += cargo.weight;
+    usedTanks++;
+    loadedCargo.push_back(cargo);
+  }
+
+  void printDetails() const {
+    std::cout << "The Tanker Ship " << name << " (" << usedCapacity << "/"
+              << totalCapacity << ") is carrying:\n";
+    for (size_t i = 0; i < loadedCargo.size(); ++i) {
+      std::cout << "  " << loadedCargo[i].name << " (" << loadedCargo[i].weight << ")\n";
+    }
+    std::cout << "  " << usedTanks << " / " << tanks << " tanks used\n";
+  }
+};
+
 bool compareShipsByName(Ship * a, Ship * b) {
   return a->getName() < b->getName();
 }
@@ -196,6 +245,17 @@ Ship * createShip(const std::string & line) {
     std::getline(typeStream, temp, ',');
     smallCargoLimit = std::atoi(temp.c_str());
     return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
+  }
+  else if (temp == "Tanker") {
+    int minTemp, maxTemp;
+    unsigned int tanks;
+    std::getline(typeStream, temp, ',');
+    minTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    maxTemp = std::atoi(temp.c_str());
+    std::getline(typeStream, temp, ',');
+    tanks = std::atoi(temp.c_str());
+    return new TankerShip(name, source, destination, capacity, minTemp, maxTemp, tanks);
   }
 
   std::cerr << "Unknown ship type: " << temp << std::endl;
