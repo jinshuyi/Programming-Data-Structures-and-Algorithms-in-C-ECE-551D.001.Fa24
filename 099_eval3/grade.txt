@@ -1,6 +1,6 @@
-Grading at 12/03/2024:01:28:03.661364
-For commit ID 35de4d490392ff8fb2e6737f0289ae61cba5bd65
-Grading at Mon Dec  2 08:27:58 PM EST 2024
+Grading at 12/03/2024:01:42:10.755069
+For commit ID 69a4194d86366f7403fd5cce13473cd72ae8c0bd
+Grading at Mon Dec  2 08:42:05 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -26,11 +26,12 @@ We agreed on this testcase and valgrind was clean
 -------------------------
 Running our code...
 Running your code
-You said this was an error (exit status was 139), but we said it was valid
+You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-timeout: the monitored command dumped core
+Unknown ship type: Animals
+Error: Ship creation failed for line: The Dawn Dolphin:Animals,75:Luthadel:Midgar:110
 ------
 -------------------------
  This test case will run 
@@ -40,11 +41,12 @@ timeout: the monitored command dumped core
 -------------------------
 Running our code...
 Running your code
-You said this was an error (exit status was 139), but we said it was valid
+You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-timeout: the monitored command dumped core
+Unknown ship type: Animals
+Error: Ship creation failed for line: The Dawn Dolphin:Animals,75:Luthadel:Midgar:110
 ------
 -------------------------
  This test case will run 
@@ -54,11 +56,12 @@ timeout: the monitored command dumped core
 -------------------------
 Running our code...
 Running your code
-You said this was an error (exit status was 139), but we said it was valid
+You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-timeout: the monitored command dumped core
+Unknown ship type: Animals
+Error: Ship creation failed for line: The Dawn Boat:Animals,50:Midgar:Mordor:190
 ------
 You have FAILED one or more of your test cases
 Keep debugging
