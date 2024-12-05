@@ -1,6 +1,6 @@
-Grading at 12/05/2024:20:59:48.463839
-For commit ID 07fa5701afeecdfeb66c7551bc16cbe9629aaba4
-Grading at Thu Dec  5 03:59:44 PM EST 2024
+Grading at 12/05/2024:21:34:33.286621
+For commit ID e2dbea84958383e06151727a24d16f933a8000d5
+Grading at Thu Dec  5 04:34:28 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -31,23 +31,21 @@ No ships can carry the toy cars from Luthadel to Midgar		No ships can carry the 
 No ships can carry the cats from Luthadel to Midgar		No ships can carry the cats from Luthadel to Midgar
 No ships can carry the paper from Luthadel to Midgar		No ships can carry the paper from Luthadel to Midgar
 No ships can carry the hot stuff from Luthadel to Midgar	No ships can carry the hot stuff from Luthadel to Midgar
-Loading propane onto The Night Eagle from Luthadel to Midgar  |	No ships can carry the propane from Luthadel to Midgar
-Loading milk onto The Misty Dreadnought from Luthadel to Midg |	No ships can carry the milk from Luthadel to Midgar
+No ships can carry the propane from Luthadel to Midgar		No ships can carry the propane from Luthadel to Midgar
+No ships can carry the milk from Luthadel to Midgar		No ships can carry the milk from Luthadel to Midgar
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
 The Container Ship The Majestic Dreadnought(0/0) is carrying  |	The Container Ship The Majestic Dreadnought(0/1550) is carryi
-  (4) slots remain						  (4) slots remain
-The Container Ship The Majestic Kraken(0/0) is carrying :     |	The Container Ship The Majestic Kraken(0/650) is carrying : 
-  (9) slots remain						  (9) slots remain
-The Container Ship The Misty Dreadnought(1/3) is carrying :   |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-  (2) slots remain					      |	  (3) slots remain
-The Container Ship The Night Eagle(4/6) is carrying :	      |	The Container Ship The Night Eagle(0/1500) is carrying : 
+The Container Ship The Majestic Kraken(0/0) is carrying :     |	  (4) slots remain
+The Container Ship The Misty Dreadnought(0/0) is carrying :   |	The Container Ship The Majestic Kraken(0/650) is carrying : 
+The Container Ship The Night Eagle(0/0) is carrying :	      |	  (9) slots remain
+The Container Ship The Swift Shark(0/0) is carrying :	      |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
+The Container Ship The Shining Turtle(0/0) is carrying :      |	  (3) slots remain
+							      >	The Container Ship The Night Eagle(0/1500) is carrying : 
 							      >	  (6) slots remain
 							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
-  (5) slots remain						  (5) slots remain
-The Container Ship The Swift Shark(0/5) is carrying :	      |	The Container Ship The Shining Turtle(0/500) is carrying : 
-  (5) slots remain					      <
-The Container Ship The Shining Turtle(0/0) is carrying :      <
-  (3) slots remain						  (3) slots remain
+							      >	  (5) slots remain
+							      >	The Container Ship The Shining Turtle(0/500) is carrying : 
+							      >	  (3) slots remain
 Your file did not match the expected output
 -------------------------
  This test case will run 
@@ -65,24 +63,24 @@ No ships can carry the fireworks from Mordor to Sarth		No ships can carry the fi
 No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
 No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
 No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
-Loading used batteries onto The Dawn Dolphin from Mordor to L |	No ships can carry the used batteries from Mordor to Luthadel
-Loading toy cars onto The Gleaming Eagle from Mordor to Sarth |	No ships can carry the toy cars from Mordor to Sarth
-Loading rat poison onto The Dawn Dolphin from Mordor to Sarth |	No ships can carry the rat poison from Mordor to Sarth
+No ships can carry the used batteries from Mordor to Luthadel	No ships can carry the used batteries from Mordor to Luthadel
+No ships can carry the toy cars from Mordor to Sarth		No ships can carry the toy cars from Mordor to Sarth
+No ships can carry the rat poison from Mordor to Sarth		No ships can carry the rat poison from Mordor to Sarth
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The Container Ship The Dawn Clipper(0/2) is carrying :	      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-  (2) slots remain						  (2) slots remain
-The Animals Ship The Dawn Dolphin(70/75) is carrying :	      |	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
-  does not have a roamer					  does not have a roamer
-The Tanker Ship The Dawn Dreadnought(0/0) is carrying :	      |	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
-  0 / 50 tanks used					      |	  0 / 25 tanks used
-The Tanker Ship The Gleaming Dreadnought(0/10) is carrying :  |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-  0 / 50 tanks used					      |	  0 / 10 tanks used
-The Animals Ship The Gleaming Eagle(20/35) is carrying :      |	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
-  does not have a roamer					  does not have a roamer
-The Tanker Ship The Gleaming Narwhal(0/0) is carrying :	      |	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
-  0 / 90 tanks used					      |	  0 / 50 tanks used
-The Animals Ship The Gleaming Shark(0/65) is carrying :	      |	The Animals Ship The Gleaming Shark(0/190) is carrying : 
-  does not have a roamer					  does not have a roamer
+The Container Ship The Dawn Clipper(0/0) is carrying :	      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
+The Animals Ship The Dawn Dolphin(0/0) is carrying :	      |	  (2) slots remain
+The Tanker Ship The Dawn Dreadnought(0/0) is carrying :	      |	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
+The Tanker Ship The Gleaming Dreadnought(0/0) is carrying :   |	  does not have a roamer
+The Animals Ship The Gleaming Eagle(0/0) is carrying :	      |	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
+The Tanker Ship The Gleaming Narwhal(0/0) is carrying :	      |	  0 / 25 tanks used
+The Animals Ship The Gleaming Shark(0/0) is carrying :	      |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
+							      >	  0 / 10 tanks used
+							      >	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
+							      >	  does not have a roamer
+							      >	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
+							      >	  0 / 50 tanks used
+							      >	The Animals Ship The Gleaming Shark(0/190) is carrying : 
+							      >	  does not have a roamer
 Your file did not match the expected output
 -------------------------
  This test case will run 
@@ -100,31 +98,23 @@ No ships can carry the liquid hydrogen from Luthadel to Midga |	Loading liquid h
 No ships can carry the birds from Luthadel to Midgar	      |	Loading birds onto The Gleaming Shark from Luthadel to Midgar
 No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
 No ships can carry the liquid helium from Luthadel to Midgar	No ships can carry the liquid helium from Luthadel to Midgar
-Loading toy planes onto The Dawn Dolphin from Luthadel to Mid |	Loading toy planes onto The Dawn Dolphin from Luthadel to Mid
-Loading lions onto The Gleaming Shark from Luthadel to Midgar |	Loading lions onto The Dawn Dolphin from Luthadel to Midgar 1
+No ships can carry the toy planes from Luthadel to Midgar     |	Loading toy planes onto The Dawn Dolphin from Luthadel to Mid
+No ships can carry the lions from Luthadel to Midgar	      |	Loading lions onto The Dawn Dolphin from Luthadel to Midgar 1
 No ships can carry the caribou from Luthadel to Midgar	      |	Loading caribou onto The Gleaming Eagle from Luthadel to Midg
-Loading toy cars onto The Gleaming Eagle from Luthadel to Mid |	Loading toy cars onto The Gleaming Eagle from Luthadel to Mid
+No ships can carry the toy cars from Luthadel to Midgar	      |	Loading toy cars onto The Gleaming Eagle from Luthadel to Mid
 No ships can carry the cats from Luthadel to Midgar	      |	Loading cats onto The Gleaming Eagle from Luthadel to Midgar 
 No ships can carry the paper from Luthadel to Midgar	      |	Loading paper onto The Gleaming Eagle from Luthadel to Midgar
-Loading hot stuff onto The Gleaming Dreadnought from Luthadel |	Loading hot stuff onto The Gleaming Narwhal from Luthadel to 
-Loading propane onto The Gleaming Shark from Luthadel to Midg |	Loading propane onto The Gleaming Narwhal from Luthadel to Mi
-Loading milk onto The Dawn Clipper from Luthadel to Midgar 1  |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
+No ships can carry the hot stuff from Luthadel to Midgar      |	Loading hot stuff onto The Gleaming Narwhal from Luthadel to 
+No ships can carry the propane from Luthadel to Midgar	      |	Loading propane onto The Gleaming Narwhal from Luthadel to Mi
+No ships can carry the milk from Luthadel to Midgar	      |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The Container Ship The Dawn Clipper(1/2) is carrying :	      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-  (1) slots remain					      |	  (2) slots remain
-The Animals Ship The Dawn Dolphin(50/75) is carrying :	      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
-  does not have a roamer				      |	  toy planes(50)
-The Tanker Ship The Dawn Dreadnought(0/0) is carrying :	      |	  lions(50)
-  0 / 50 tanks used					      <
-The Tanker Ship The Gleaming Dreadnought(10/10) is carrying : <
-  1 / 50 tanks used					      <
-The Animals Ship The Gleaming Eagle(30/35) is carrying :      <
-  does not have a roamer				      <
-The Tanker Ship The Gleaming Narwhal(0/0) is carrying :	      <
-  0 / 90 tanks used					      <
-The Animals Ship The Gleaming Shark(54/65) is carrying :      <
-  has a roamer							  has a roamer
-							      >	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
+The Container Ship The Dawn Clipper(0/0) is carrying :	      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
+The Animals Ship The Dawn Dolphin(0/0) is carrying :	      |	  (2) slots remain
+The Tanker Ship The Dawn Dreadnought(0/0) is carrying :	      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
+The Tanker Ship The Gleaming Dreadnought(0/0) is carrying :   |	  toy planes(50)
+The Animals Ship The Gleaming Eagle(0/0) is carrying :	      |	  lions(50)
+The Tanker Ship The Gleaming Narwhal(0/0) is carrying :	      |	  has a roamer
+The Animals Ship The Gleaming Shark(0/0) is carrying :	      |	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
 							      >	  liquid hydrogen(200)
 							      >	  liquid hydrogen(200)
 							      >	  15 / 25 tanks used
