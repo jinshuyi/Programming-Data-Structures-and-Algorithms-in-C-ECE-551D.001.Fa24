@@ -107,7 +107,7 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       // 读取逗号分隔的值，找到第三个值并赋值给 tanks
       while (std::getline(type_stream, value, ',')) {
         count++;
-        if (count == 3) {
+        if (count == 4) {
           ship.tanks = std::atoi(value.c_str());
           break;
         }
