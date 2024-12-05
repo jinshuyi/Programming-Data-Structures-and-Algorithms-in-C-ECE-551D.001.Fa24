@@ -1,6 +1,6 @@
-Grading at 12/05/2024:20:36:48.265534
-For commit ID cdecbba51c09b8a3db32e984934aa69454025da5
-Grading at Thu Dec  5 03:36:45 PM EST 2024
+Grading at 12/05/2024:20:47:51.058665
+For commit ID e528252f16a26a39e593e1fe8958e5e7da378af4
+Grading at Thu Dec  5 03:47:48 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -18,34 +18,36 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-Loading milk onto The Night Eagle from Luthadel to Midgar 102 |	No ships can carry the milk from Luthadel to Midgar
-Loading liquid hydrogen onto The Majestic Dreadnought from Lu |	No ships can carry the liquid hydrogen from Luthadel to Midga
-Loading liquid hydrogen onto The Night Eagle from Luthadel to |	No ships can carry the liquid hydrogen from Luthadel to Midga
-Loading birds onto The Majestic Dreadnought from Luthadel to  |	No ships can carry the birds from Luthadel to Midgar
-Loading fireworks onto The Night Eagle from Luthadel to Midga |	No ships can carry the fireworks from Luthadel to Midgar
-Loading liquid helium onto The Majestic Dreadnought from Luth |	No ships can carry the liquid helium from Luthadel to Midgar
-Loading toy planes onto The Night Eagle from Luthadel to Midg |	No ships can carry the toy planes from Luthadel to Midgar
-Loading lions onto The Majestic Dreadnought from Luthadel to  |	No ships can carry the lions from Luthadel to Midgar
-Loading caribou onto The Night Eagle from Luthadel to Midgar  |	No ships can carry the caribou from Luthadel to Midgar
-Loading toy cars onto The Night Eagle from Luthadel to Midgar |	No ships can carry the toy cars from Luthadel to Midgar
-Loading cats onto The Shining Turtle from Luthadel to Midgar  |	No ships can carry the cats from Luthadel to Midgar
-Loading paper onto The Shining Turtle from Luthadel to Midgar |	No ships can carry the paper from Luthadel to Midgar
-Loading hot stuff onto The Shining Turtle from Luthadel to Mi |	No ships can carry the hot stuff from Luthadel to Midgar
-Loading propane onto The Majestic Kraken from Luthadel to Mid |	No ships can carry the propane from Luthadel to Midgar
-Loading milk onto The Majestic Kraken from Luthadel to Midgar |	No ships can carry the milk from Luthadel to Midgar
+No ships can carry the milk from Luthadel to Midgar		No ships can carry the milk from Luthadel to Midgar
+No ships can carry the liquid hydrogen from Luthadel to Midga	No ships can carry the liquid hydrogen from Luthadel to Midga
+No ships can carry the liquid hydrogen from Luthadel to Midga	No ships can carry the liquid hydrogen from Luthadel to Midga
+No ships can carry the birds from Luthadel to Midgar		No ships can carry the birds from Luthadel to Midgar
+No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
+No ships can carry the liquid helium from Luthadel to Midgar	No ships can carry the liquid helium from Luthadel to Midgar
+No ships can carry the toy planes from Luthadel to Midgar	No ships can carry the toy planes from Luthadel to Midgar
+No ships can carry the lions from Luthadel to Midgar		No ships can carry the lions from Luthadel to Midgar
+No ships can carry the caribou from Luthadel to Midgar		No ships can carry the caribou from Luthadel to Midgar
+No ships can carry the toy cars from Luthadel to Midgar		No ships can carry the toy cars from Luthadel to Midgar
+No ships can carry the cats from Luthadel to Midgar		No ships can carry the cats from Luthadel to Midgar
+No ships can carry the paper from Luthadel to Midgar		No ships can carry the paper from Luthadel to Midgar
+No ships can carry the hot stuff from Luthadel to Midgar	No ships can carry the hot stuff from Luthadel to Midgar
+Loading propane onto The Night Eagle from Luthadel to Midgar  |	No ships can carry the propane from Luthadel to Midgar
+Loading milk onto The Misty Dreadnought from Luthadel to Midg |	No ships can carry the milk from Luthadel to Midgar
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The Container Ship The Majestic Dreadnought(530/1550) is carr |	The Container Ship The Majestic Dreadnought(0/1550) is carryi
-  (0) slots remain					      |	  (4) slots remain
-The Container Ship The Majestic Kraken(5/650) is carrying :   |	The Container Ship The Majestic Kraken(0/650) is carrying : 
-  (7) slots remain					      |	  (9) slots remain
-The Container Ship The Misty Dreadnought(0/1550) is carrying  |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-  (3) slots remain						  (3) slots remain
-The Container Ship The Night Eagle(902/1500) is carrying :    |	The Container Ship The Night Eagle(0/1500) is carrying : 
-  (0) slots remain					      |	  (6) slots remain
-The Container Ship The Swift Shark(0/2500) is carrying :      |	The Container Ship The Swift Shark(0/2500) is carrying : 
+The Container Ship The Majestic Dreadnought(0/0) is carrying  |	The Container Ship The Majestic Dreadnought(0/1550) is carryi
+  (4) slots remain						  (4) slots remain
+The Container Ship The Majestic Kraken(0/0) is carrying :     |	The Container Ship The Majestic Kraken(0/650) is carrying : 
+  (9) slots remain						  (9) slots remain
+The Container Ship The Misty Dreadnought(1/3) is carrying :   |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
+  (2) slots remain					      |	  (3) slots remain
+The Container Ship The Night Eagle(4/6) is carrying :	      |	The Container Ship The Night Eagle(0/1500) is carrying : 
+							      >	  (6) slots remain
+							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
   (5) slots remain						  (5) slots remain
-The Container Ship The Shining Turtle(70/500) is carrying :   |	The Container Ship The Shining Turtle(0/500) is carrying : 
-  (0) slots remain					      |	  (3) slots remain
+The Container Ship The Swift Shark(0/5) is carrying :	      |	The Container Ship The Shining Turtle(0/500) is carrying : 
+  (5) slots remain					      <
+The Container Ship The Shining Turtle(0/0) is carrying :      <
+  (3) slots remain						  (3) slots remain
 Your file did not match the expected output
 You have FAILED one or more of your test cases
 Keep debugging
