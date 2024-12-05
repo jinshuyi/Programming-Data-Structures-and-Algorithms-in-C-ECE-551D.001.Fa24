@@ -1,6 +1,6 @@
-Grading at 12/05/2024:04:38:06.104436
-For commit ID 4ca407007d147653796dbeab51c261980aa17eb0
-Grading at Wed Dec  4 11:38:01 PM EST 2024
+Grading at 12/05/2024:04:43:40.342278
+For commit ID 964428f230b1b62a55005a5a0f7322f68b1e3a80
+Grading at Wed Dec  4 11:43:36 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -16,8 +16,37 @@ Compiling ships-step3
 g++ -o ships-step3 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step3.cpp 
 Running our code...
 Running your code
-We agreed on this testcase and valgrind was clean
- *** This is one of the four test cases for step 3 early start EC **
+We both agreed this was not an error, but your output is different from ours
+Your output on the left, ours on the right
+							      >	No ships can carry the toy cars from Luthadel to Midgar
+							      >	No ships can carry the toy planes from Luthadel to Midgar
+							      >	No ships can carry the fireworks from Luthadel to Midgar
+							      >	No ships can carry the liquid hydrogen from Luthadel to Midga
+							      >	No ships can carry the milk from Luthadel to Midgar
+							      >	No ships can carry the propane from Luthadel to Midgar
+							      >	No ships can carry the liquid hydrogen from Luthadel to Midga
+							      >	No ships can carry the hot stuff from Luthadel to Midgar
+							      >	No ships can carry the liquid helium from Luthadel to Midgar
+							      >	No ships can carry the lions from Luthadel to Midgar
+							      >	No ships can carry the caribou from Luthadel to Midgar
+							      >	No ships can carry the cats from Luthadel to Midgar
+							      >	No ships can carry the paper from Luthadel to Midgar
+							      >	No ships can carry the birds from Luthadel to Midgar
+							      >	No ships can carry the milk from Luthadel to Midgar
+							      >	---Done Loading---Here are the ships---
+							      >	The Container Ship The Majestic Dreadnought(0/1550) is carryi
+							      >	  (4) slots remain
+							      >	The Container Ship The Majestic Kraken(0/650) is carrying : 
+							      >	  (9) slots remain
+							      >	The Container Ship The Misty Dreadnought(0/1550) is carrying 
+							      >	  (3) slots remain
+							      >	The Container Ship The Night Eagle(0/1500) is carrying : 
+							      >	  (6) slots remain
+							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
+							      >	  (5) slots remain
+							      >	The Container Ship The Shining Turtle(0/500) is carrying : 
+							      >	  (3) slots remain
+Your file did not match the expected output
 -------------------------
  This test case will run 
  ships-step3 
@@ -30,8 +59,7 @@ You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-Unknown ship type: Animals
-Error: Ship creation failed for line: The Dawn Dolphin:Animals,75:Luthadel:Midgar:110
+Unknown ship type: Tanker
 ------
 -------------------------
  This test case will run 
@@ -45,8 +73,7 @@ You said this was an error (exit status was 1), but we said it was valid
 Note: this may happen if your code timed out too...
 Here is what you printed to stderr:
 ------
-Unknown ship type: Animals
-Error: Ship creation failed for line: The Dawn Dolphin:Animals,75:Luthadel:Midgar:110
+Unknown ship type: Tanker
 ------
 You have FAILED one or more of your test cases
 Keep debugging
