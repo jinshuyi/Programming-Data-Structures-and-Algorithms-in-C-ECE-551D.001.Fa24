@@ -101,13 +101,12 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
     else if (type_details.find("Tanker") != std::string::npos) {
       ship.type = "Tanker";
       std::stringstream type_stream(type_details);
-      std::string tanks_str, last_value;
+      std::string value;
 
-      std::getline(type_stream, ship.type, ',');  // 类型
-      while (std::getline(type_stream, last_value, ',')) {
-        tanks_str = last_value;  // 取最后一个值
+      // 解析Tanker的最后一个值为tanks
+      while (std::getline(type_stream, value, ',')) {
+        ship.tanks = std::atoi(value.c_str());
       }
-      ship.tanks = std::atoi(tanks_str.c_str());
     }
 
     std::getline(ss, ship.origin, ':');       // 起点
