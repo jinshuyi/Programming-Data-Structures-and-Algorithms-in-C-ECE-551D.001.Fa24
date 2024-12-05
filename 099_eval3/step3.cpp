@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-// Class representing a piece of cargo
+// Cargo class
 class Cargo {
  public:
   std::string name;
@@ -43,7 +43,7 @@ class Cargo {
   }
 };
 
-// Base class for all ship types
+// Base class: Ship
 class Ship {
  protected:
   std::string name;
@@ -65,7 +65,7 @@ class Ship {
 
   virtual ~Ship() {}
 
-  virtual bool canCarry(const Cargo & cargo) const = 0;  // Pure virtual function
+  virtual bool canCarry(const Cargo & cargo) const = 0;
   virtual void loadCargo(const Cargo & cargo) = 0;
   virtual void printDetails() const = 0;
 
@@ -76,7 +76,7 @@ class Ship {
   }
 };
 
-// Derived class: Container Ship
+// Derived class: ContainerShip
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
@@ -114,7 +114,7 @@ class ContainerShip : public Ship {
   }
 };
 
-// Derived class: Animals Ship
+// Derived class: AnimalsShip
 class AnimalsShip : public Ship {
   unsigned int smallCargoLimit;
   bool hasRoamer;
@@ -164,8 +164,8 @@ class AnimalsShip : public Ship {
   }
 };
 
-// Derived class: Tanker Ship
-class Tanker : public Ship {
+// Derived class: TankerShip
+class TankerShip : public Ship {
   int minTemp;
   int maxTemp;
   unsigned int tanks;
@@ -173,13 +173,13 @@ class Tanker : public Ship {
   std::vector<Cargo> loadedCargo;
 
  public:
-  Tanker(const std::string & name,
-         const std::string & source,
-         const std::string & destination,
-         unsigned int capacity,
-         int minTemp,
-         int maxTemp,
-         unsigned int tanks) :
+  TankerShip(const std::string & name,
+             const std::string & source,
+             const std::string & destination,
+             unsigned int capacity,
+             int minTemp,
+             int maxTemp,
+             unsigned int tanks) :
       Ship(name, source, destination, capacity),
       minTemp(minTemp),
       maxTemp(maxTemp),
@@ -187,19 +187,15 @@ class Tanker : public Ship {
       usedTanks(0) {}
 
   bool canCarry(const Cargo & cargo) const {
-    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
-        usedTanks >= tanks) {
+    if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity) {
       return false;
     }
-    if (!cargo.requiresProperty("liquid") && !cargo.requiresProperty("gas")) {
-      return false;
+    if (cargo.requiresProperty("liquid") || cargo.requiresProperty("gas")) {
+      int cargoMinTemp = cargo.getPropertyValue("mintemp");
+      int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
+      return (cargoMaxTemp >= minTemp && cargoMinTemp <= maxTemp);
     }
-    int cargoMinTemp = cargo.getPropertyValue("mintemp");
-    int cargoMaxTemp = cargo.getPropertyValue("maxtemp");
-    if (cargoMinTemp > maxTemp || cargoMaxTemp < minTemp) {
-      return false;
-    }
-    return true;
+    return false;
   }
 
   void loadCargo(const Cargo & cargo) {
@@ -218,12 +214,12 @@ class Tanker : public Ship {
   }
 };
 
-// Helper function to compare ships by name
+// Comparator for sorting ships by name
 bool compareShipsByName(Ship * a, Ship * b) {
   return a->getName() < b->getName();
 }
 
-// Function to dynamically create ships based on input
+// Function to create ships dynamically
 Ship * createShip(const std::string & line) {
   std::istringstream ss(line);
   std::string name, typeInfo, source, destination, temp;
@@ -245,6 +241,12 @@ Ship * createShip(const std::string & line) {
     slots = std::atoi(temp.c_str());
     return new ContainerShip(name, source, destination, capacity, slots);
   }
+  else if (temp == "Animals") {
+    unsigned int smallCargoLimit;
+    std::getline(typeStream, temp, ',');
+    smallCargoLimit = std::atoi(temp.c_str());
+    return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
+  }
   else if (temp == "Tanker") {
     int minTemp, maxTemp;
     unsigned int tanks;
@@ -254,17 +256,11 @@ Ship * createShip(const std::string & line) {
     maxTemp = std::atoi(temp.c_str());
     std::getline(typeStream, temp, ',');
     tanks = std::atoi(temp.c_str());
-    return new Tanker(name, source, destination, capacity, minTemp, maxTemp, tanks);
-  }
-  else if (temp == "Animals") {
-    unsigned int smallCargoLimit;
-    std::getline(typeStream, temp, ',');
-    smallCargoLimit = std::atoi(temp.c_str());
-    return new AnimalsShip(name, source, destination, capacity, smallCargoLimit);
+    return new TankerShip(name, source, destination, capacity, minTemp, maxTemp, tanks);
   }
 
   std::cerr << "Unknown ship type: " << temp << std::endl;
-  exit(EXIT_FAILURE);
+  return NULL;
 }
 
 // Function to read ships from file
@@ -277,7 +273,14 @@ void readShips(const std::string & filename, std::vector<Ship *> & ships) {
 
   std::string line;
   while (std::getline(file, line)) {
-    ships.push_back(createShip(line));
+    Ship * ship = createShip(line);
+    if (ship) {
+      ships.push_back(ship);
+    }
+    else {
+      std::cerr << "Error: Ship creation failed for line: " << line << std::endl;
+      exit(EXIT_FAILURE);
+    }
   }
 }
 
