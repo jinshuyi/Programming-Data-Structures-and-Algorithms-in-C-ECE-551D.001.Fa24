@@ -9,21 +9,20 @@
 
 #include "avlmultimap03.hpp"
 
-// 货物结构体
 struct Cargo {
   std::string name, origin, destination, category;
   uint64_t weight;
   std::vector<std::string> properties;
 };
 
-// 船只结构体
 struct Ship {
   std::string name, type, origin, destination;
   uint64_t capacity, used_capacity;
   std::vector<std::string> restrictions;
-  int slots, used_slots;
+  int slots, used_slots, tanks, used_tanks;
 
-  Ship() : capacity(0), used_capacity(0), slots(0), used_slots(0) {}
+  Ship() :
+      capacity(0), used_capacity(0), slots(0), used_slots(0), tanks(0), used_tanks(0) {}
 
   uint64_t remaining_capacity() const {
     return capacity > used_capacity ? capacity - used_capacity : 0;
@@ -35,6 +34,8 @@ struct Ship {
     if (capacity < used_capacity + cargo.weight)
       return false;
     if (type == "Animals" && slots <= used_slots)
+      return false;
+    if (type == "Tanker" && tanks <= used_tanks)
       return false;
     for (size_t i = 0; i < cargo.properties.size(); i++) {
       if (std::find(restrictions.begin(), restrictions.end(), cargo.properties[i]) ==
@@ -49,42 +50,80 @@ struct Ship {
     if (type == "Animals") {
       used_slots++;
     }
+    else if (type == "Tanker") {
+      used_tanks++;
+    }
   }
 };
 
-// 按货物重量降序排序
 bool cargo_weight_desc(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
 
-// 解析船只文件
 void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
   std::string line;
   while (std::getline(file, line)) {
-    std::stringstream ss(line);
     Ship ship;
-    std::string capacity_str, slots_str, restrictions_str;
+    std::stringstream ss(line);
+    std::string type_details;
 
-    std::getline(ss, ship.name, ':');
-    std::getline(ss, ship.type, ',');
-    std::getline(ss, slots_str, ':');
-    ship.slots = std::atoi(slots_str.c_str());
-    std::getline(ss, restrictions_str, ':');
-    if (!restrictions_str.empty()) {
-      std::stringstream res_ss(restrictions_str);
-      std::string restriction;
-      while (std::getline(res_ss, restriction, ',')) {
-        ship.restrictions.push_back(restriction);
+    std::getline(ss, ship.name, ':');     // 船名
+    std::getline(ss, type_details, ':');  // 类型和附加信息
+    std::string capacity_str;
+
+    if (type_details.find("Container") != std::string::npos) {
+      ship.type = "Container";
+      std::stringstream type_stream(type_details);
+      std::string slots_str, restrictions_str;
+
+      std::getline(type_stream, ship.type, ',');  // 类型
+      std::getline(type_stream, slots_str, ',');  // 槽数
+      ship.slots = std::atoi(slots_str.c_str());
+
+      std::getline(type_stream, restrictions_str, ':');  // 限制条件
+      if (!restrictions_str.empty()) {
+        std::stringstream res_stream(restrictions_str);
+        std::string restriction;
+        while (std::getline(res_stream, restriction, ',')) {
+          ship.restrictions.push_back(restriction);
+        }
       }
     }
-    std::getline(ss, ship.origin, ':');
-    std::getline(ss, ship.destination, ':');
-    ss >> ship.capacity;
+    else if (type_details.find("Animals") != std::string::npos) {
+      ship.type = "Animals";
+      std::stringstream type_stream(type_details);
+      std::string slots_str;
+
+      std::getline(type_stream, ship.type, ',');  // 类型
+      std::getline(type_stream, slots_str, ',');  // 槽数
+      ship.slots = std::atoi(slots_str.c_str());
+    }
+    else if (type_details.find("Tanker") != std::string::npos) {
+      ship.type = "Tanker";
+      std::stringstream type_stream(type_details);
+      std::string tanks_str, restrictions_str;
+
+      std::getline(type_stream, ship.type, ',');  // 类型
+      std::getline(type_stream, tanks_str, ',');  // 储罐数量
+      ship.tanks = std::atoi(tanks_str.c_str());
+
+      std::getline(type_stream, restrictions_str, ':');  // 限制条件
+      if (!restrictions_str.empty()) {
+        std::stringstream res_stream(restrictions_str);
+        std::string restriction;
+        while (std::getline(res_stream, restriction, ',')) {
+          ship.restrictions.push_back(restriction);
+        }
+      }
+    }
+
+    std::getline(ss, ship.origin, ':');       // 起点
+    std::getline(ss, ship.destination, ':');  // 终点
+    ss >> ship.capacity;                      // 容量
     ships.push_back(ship);
   }
 }
 
-// 解析货物文件
 void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
   std::string line;
   while (std::getline(file, line)) {
@@ -110,7 +149,6 @@ void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
   }
 }
 
-// 货物装载逻辑
 void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   typedef AVLMultiMap<uint64_t, Ship *> ShipMap;
   ShipMap ship_map;
@@ -161,7 +199,24 @@ void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   }
 }
 
-// 主函数
+void print_ships(const std::vector<Ship> & ships) {
+  std::cout << "---Done Loading---Here are the ships---\n";
+  for (size_t i = 0; i < ships.size(); i++) {
+    const Ship & ship = ships[i];
+    std::cout << "The " << ship.type << " Ship " << ship.name << "(" << ship.used_capacity
+              << "/" << ship.capacity << ") is carrying :\n";
+    if (ship.type == "Animals" && ship.used_slots > 0) {
+      std::cout << "  has a roamer\n";
+    }
+    else if (ship.type == "Tanker") {
+      std::cout << "  " << ship.used_tanks << " / " << ship.tanks << " tanks used\n";
+    }
+    else {
+      std::cout << "  (" << ship.slots - ship.used_slots << ") slots remain\n";
+    }
+  }
+}
+
 int main(int argc, char ** argv) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>\n";
@@ -182,13 +237,7 @@ int main(int argc, char ** argv) {
 
   std::sort(cargoes.begin(), cargoes.end(), cargo_weight_desc);
   load_cargo(cargoes, ships);
+  print_ships(ships);
 
-  std::cout << "---Done Loading---Here are the ships---\n";
-  for (size_t i = 0; i < ships.size(); i++) {
-    const Ship & ship = ships[i];
-    std::cout << "The " << ship.type << " Ship " << ship.name << "(" << ship.used_capacity
-              << "/" << ship.capacity << ") is carrying :\n";
-    // 输出每艘船的货物（此处留空，可以补充具体货物输出逻辑）
-  }
   return EXIT_SUCCESS;
 }
