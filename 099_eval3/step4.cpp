@@ -21,7 +21,6 @@ class Ship {
     std::istringstream ss(line);
     std::string temp;
 
-    // 解析船只信息
     std::getline(ss, name, ':');  // 船名
     std::getline(ss, type, ',');  // 类型
 
@@ -155,24 +154,6 @@ bool compareCargo(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
 
-// 读取船只
-void readShips(const std::string & filename, std::vector<Ship *> & ships) {
-  std::ifstream file(filename.c_str());
-  std::string line;
-  while (std::getline(file, line)) {
-    ships.push_back(new Ship(line));
-  }
-}
-
-// 读取货物
-void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
-  std::ifstream file(filename.c_str());
-  std::string line;
-  while (std::getline(file, line)) {
-    cargoList.push_back(Cargo(line));
-  }
-}
-
 // 查找最佳船只
 Ship * findBestShip(
     AVLMultiMap<unsigned int, Ship *, std::less<unsigned int>, ShipPtrCompare> & shipMap,
@@ -194,7 +175,7 @@ Ship * findBestShip(
   return NULL;
 }
 
-// 处理货物装载
+// 装载货物
 void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoList) {
   AVLMultiMap<unsigned int, Ship *, std::less<unsigned int>, ShipPtrCompare> shipMap;
   for (size_t i = 0; i < ships.size(); ++i) {
@@ -227,6 +208,24 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
   }
 }
 
+// 读取船只
+void readShips(const std::string & filename, std::vector<Ship *> & ships) {
+  std::ifstream file(filename.c_str());
+  std::string line;
+  while (std::getline(file, line)) {
+    ships.push_back(new Ship(line));
+  }
+}
+
+// 读取货物
+void readCargo(const std::string & filename, std::vector<Cargo> & cargoList) {
+  std::ifstream file(filename.c_str());
+  std::string line;
+  while (std::getline(file, line)) {
+    cargoList.push_back(Cargo(line));
+  }
+}
+
 // 主函数
 int main(int argc, char * argv[]) {
   if (argc != 3) {
@@ -240,12 +239,10 @@ int main(int argc, char * argv[]) {
   std::vector<Cargo> cargoList;
   readCargo(argv[2], cargoList);
 
-  // 使用普通函数进行稳定排序
   std::stable_sort(cargoList.begin(), cargoList.end(), compareCargo);
 
   processCargo(ships, cargoList);
 
-  // 清理内存
   for (size_t i = 0; i < ships.size(); ++i) {
     delete ships[i];
   }
