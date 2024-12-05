@@ -84,7 +84,7 @@ class Ship {
 
   virtual void loadCargo(const Cargo & cargo) {
     usedCapacity += cargo.weight;
-    usedSlots++;
+    usedSlots++;  // Correctly increment usedSlots
     loadedCargo.push_back(cargo);
   }
 
@@ -95,11 +95,14 @@ class Ship {
       std::cout << "  " << loadedCargo[i].name << "(" << loadedCargo[i].weight << ")"
                 << std::endl;
     }
-    std::cout << "  (" << slots - usedSlots << ") slots remain" << std::endl;
+    std::cout << "  (" << slots - usedSlots << ") slots remain"
+              << std::endl;  // Correctly print remaining slots
   }
 
   unsigned int getRemainingCapacity() const { return capacity - usedCapacity; }
-  unsigned int getRemainingSlots() const { return slots - usedSlots; }
+  unsigned int getRemainingSlots() const {
+    return slots - usedSlots;
+  }  // Add this helper method
 };
 
 bool compareCargo(const Cargo & a, const Cargo & b) {
