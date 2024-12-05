@@ -89,7 +89,10 @@ class ContainerShip : public Ship {
   std::string getRoute() const { return source + " -> " + destination; }
 };
 
-// Other ship types (Tanker and Animal ships) would be implemented similarly, following the same interface.
+// Function to compare ships by name (for sorting)
+bool compareShipsByName(Ship * a, Ship * b) {
+  return a->getName() < b->getName();
+}
 
 int main(int argc, char ** argv) {
   if (argc != 3) {
@@ -115,7 +118,6 @@ int main(int argc, char ** argv) {
     if (std::getline(iss, name, ':') && std::getline(iss, typeInfo, ':') &&
         std::getline(iss, src, ':') && std::getline(iss, dest, ':') && iss >> capacity) {
       if (typeInfo.find("Container") == 0) {
-        // Parse container ship specific data
         size_t commaPos = typeInfo.find(',');
         unsigned slots = std::atoi(typeInfo.substr(commaPos + 1).c_str());
         std::set<std::string> hazmat;  // Empty for now
@@ -140,31 +142,41 @@ int main(int argc, char ** argv) {
       std::getline(iss, props);
 
       std::map<std::string, std::string> properties;
-      // Parse properties into a map (example: hazmat rules)
       std::istringstream propStream(props);
       std::string prop;
       while (std::getline(propStream, prop, ',')) {
         size_t eqPos = prop.find('=');
         if (eqPos == std::string::npos) {
-          properties[prop] = "0";  // Default value
+          properties[prop] = "0";
         }
         else {
           properties[prop.substr(0, eqPos)] = prop.substr(eqPos + 1);
         }
       }
 
-      // Find eligible ships and load cargo
-      bool loaded = false;
+      std::vector<Ship *> eligibleShips;
       for (std::vector<Ship *>::iterator it = ships.begin(); it != ships.end(); ++it) {
         if ((*it)->getRoute() == (src + " -> " + dest) &&
             (*it)->canCarry(props, weight, properties)) {
-          std::cout << "**Loading the cargo onto " << (*it)->getName() << "**\n";
-          (*it)->loadCargo(cargoName, weight);
-          loaded = true;
-          break;
+          eligibleShips.push_back(*it);
         }
       }
-      if (!loaded) {
+
+      if (!eligibleShips.empty()) {
+        std::sort(eligibleShips.begin(), eligibleShips.end(), compareShipsByName);
+
+        std::cout << eligibleShips.size() << " ships can carry the " << cargoName
+                  << " from " << src << " to " << dest << "\n";
+        for (std::vector<Ship *>::iterator it = eligibleShips.begin();
+             it != eligibleShips.end();
+             ++it) {
+          std::cout << "  " << (*it)->getName() << "\n";
+        }
+
+        eligibleShips[0]->loadCargo(cargoName, weight);
+        std::cout << "**Loading the cargo onto " << eligibleShips[0]->getName() << "**\n";
+      }
+      else {
         std::cout << "No ships can carry the " << cargoName << " from " << src << " to "
                   << dest << "\n";
       }
@@ -179,7 +191,7 @@ int main(int argc, char ** argv) {
   std::cout << "---Done Loading---Here are the ships---\n";
   for (size_t i = 0; i < ships.size(); ++i) {
     ships[i]->printDetails();
-    delete ships[i];  // Clean up
+    delete ships[i];
   }
 
   return EXIT_SUCCESS;
