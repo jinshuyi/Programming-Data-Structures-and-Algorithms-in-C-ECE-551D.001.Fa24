@@ -1,6 +1,6 @@
-Grading at 12/05/2024:19:20:11.723828
-For commit ID 71214f7b461c905832242e7704abd04ffc3baf31
-Grading at Thu Dec  5 02:20:09 PM EST 2024
+Grading at 12/05/2024:19:47:48.959313
+For commit ID 894de6bfa79c13f7fa47946e67e502c614e363cb
+Grading at Thu Dec  5 02:47:46 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -35,17 +35,17 @@ No ships can carry the propane from Luthadel to Midgar		No ships can carry the p
 No ships can carry the milk from Luthadel to Midgar		No ships can carry the milk from Luthadel to Midgar
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
 The Container Ship The Majestic Dreadnought(0/1550) is carryi |	The Container Ship The Majestic Dreadnought(0/1550) is carryi
-  (1550) slots remain					      |	  (4) slots remain
+  (0) slots remain					      |	  (4) slots remain
 The Container Ship The Majestic Kraken(0/650) is carrying :   |	The Container Ship The Majestic Kraken(0/650) is carrying : 
-  (650) slots remain					      |	  (9) slots remain
+  (0) slots remain					      |	  (9) slots remain
 The Container Ship The Misty Dreadnought(0/1550) is carrying  |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-  (1550) slots remain					      |	  (3) slots remain
+  (0) slots remain					      |	  (3) slots remain
 The Container Ship The Night Eagle(0/1500) is carrying :      |	The Container Ship The Night Eagle(0/1500) is carrying : 
-  (1500) slots remain					      |	  (6) slots remain
+  (0) slots remain					      |	  (6) slots remain
 The Container Ship The Swift Shark(0/2500) is carrying :      |	The Container Ship The Swift Shark(0/2500) is carrying : 
-  (2500) slots remain					      |	  (5) slots remain
+  (0) slots remain					      |	  (5) slots remain
 The Container Ship The Shining Turtle(0/500) is carrying :    |	The Container Ship The Shining Turtle(0/500) is carrying : 
-  (500) slots remain					      |	  (3) slots remain
+  (0) slots remain					      |	  (3) slots remain
 Your file did not match the expected output
 You have FAILED one or more of your test cases
 Keep debugging
