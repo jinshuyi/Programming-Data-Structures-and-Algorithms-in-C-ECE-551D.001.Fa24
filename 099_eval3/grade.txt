@@ -1,6 +1,6 @@
-Grading at 12/05/2024:04:13:47.985335
-For commit ID 2fb1e3555f04ef7e73bb5d3890a921f2dad7ec1a
-Grading at Wed Dec  4 11:13:43 PM EST 2024
+Grading at 12/05/2024:04:22:52.564319
+For commit ID 92b906e24981ce2abfae7aa34a3305beac8e8675
+Grading at Wed Dec  4 11:22:48 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -63,15 +63,15 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-**Loading the cargo onto The Dawn Clipper**		      |	4 ships can carry the toy cars from Luthadel to Midgar
-**Loading the cargo onto The Dawn Clipper**		      |	  The Dawn Clipper
-							      >	  The Dawn Dolphin
-							      >	  The Gleaming Eagle
+1 ships can carry the toy cars from Luthadel to Midgar	      |	4 ships can carry the toy cars from Luthadel to Midgar
+  The Dawn Clipper						  The Dawn Clipper
+**Loading the cargo onto The Dawn Clipper**		      |	  The Dawn Dolphin
+1 ships can carry the toy planes from Luthadel to Midgar      |	  The Gleaming Eagle
 							      >	  The Gleaming Shark
 							      >	  **Loading the cargo onto The Dawn Clipper**
 							      >	3 ships can carry the toy planes from Luthadel to Midgar
-							      >	  The Dawn Clipper
-							      >	  The Dawn Dolphin
+  The Dawn Clipper						  The Dawn Clipper
+**Loading the cargo onto The Dawn Clipper**		      |	  The Dawn Dolphin
 							      >	  The Gleaming Shark
 							      >	  **Loading the cargo onto The Dawn Clipper**
 No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
