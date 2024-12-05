@@ -153,17 +153,14 @@ void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   typedef AVLMultiMap<uint64_t, Ship *> ShipMap;
   ShipMap ship_map;
 
-  // 将所有船只添加到AVL树中
   for (size_t i = 0; i < ships.size(); i++) {
     ship_map.add(ships[i].remaining_capacity(), &ships[i]);
   }
 
-  // 遍历货物列表，尝试装载
   for (size_t i = 0; i < cargoes.size(); i++) {
     const Cargo & cargo = cargoes[i];
     Ship * best_ship = NULL;
 
-    // 使用preOrderDump来获取所有键值对
     std::vector<std::pair<std::pair<uint64_t, std::set<Ship *> >, int> > ship_data =
         ship_map.preOrderDump();
 
@@ -205,8 +202,10 @@ void print_ships(const std::vector<Ship> & ships) {
     const Ship & ship = ships[i];
     std::cout << "The " << ship.type << " Ship " << ship.name << "(" << ship.used_capacity
               << "/" << ship.capacity << ") is carrying :\n";
-    if (ship.type == "Animals" && ship.used_slots > 0) {
-      std::cout << "  has a roamer\n";
+    if (ship.type == "Animals") {
+      if (ship.used_slots == 0) {
+        std::cout << "  does not have a roamer\n";
+      }
     }
     else if (ship.type == "Tanker") {
       std::cout << "  " << ship.used_tanks << " / " << ship.tanks << " tanks used\n";
