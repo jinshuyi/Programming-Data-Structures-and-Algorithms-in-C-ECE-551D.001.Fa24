@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -20,32 +21,29 @@ class Ship {
     std::istringstream ss(line);
     std::string temp;
 
-    // 解析船名和类型
-    std::getline(ss, name, ':');
-    std::getline(ss, temp, ':');
-    std::istringstream typeSS(temp);
-    std::getline(typeSS, type, ',');
+    // 解析船只信息
+    std::getline(ss, name, ':');  // 船名
+    std::getline(ss, type, ',');  // 类型
 
-    // 插槽或额外信息解析
     if (type == "Container") {
-      std::getline(typeSS, temp, ',');
+      std::getline(ss, temp, ',');
       totalSlots = std::atoi(temp.c_str());
     }
     else if (type == "Tanker") {
-      std::getline(typeSS, temp, ',');
+      std::getline(ss, temp, ',');  // 温度参数
+      std::getline(ss, temp, ',');  // 最大槽数
       maxTanks = std::atoi(temp.c_str());
+      std::getline(ss, temp, ',');  // 当前使用槽数
+      totalSlots = std::atoi(temp.c_str());
     }
     else if (type == "Animals") {
-      std::getline(typeSS, temp, ',');
+      std::getline(ss, temp, ',');
       totalSlots = std::atoi(temp.c_str());
     }
 
-    // 起点和终点
-    std::getline(ss, source, ':');
-    std::getline(ss, destination, ':');
-
-    // 总容量
-    std::getline(ss, temp, ':');
+    std::getline(ss, source, ':');       // 起点
+    std::getline(ss, destination, ':');  // 终点
+    std::getline(ss, temp, ':');         // 总容量
     totalCapacity = std::strtoull(temp.c_str(), NULL, 10);
   }
 
@@ -54,62 +52,65 @@ class Ship {
   const std::string & getDestination() const { return destination; }
   const std::string & getType() const { return type; }
 
-  bool canCarry(unsigned int weight, unsigned int slots) const {
+  bool canCarry(unsigned int weight,
+                unsigned int slots,
+                bool hazardous,
+                bool roamer) const {
     if (type == "Container") {
       return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots;
     }
     else if (type == "Tanker") {
-      return usedCapacity + weight <= totalCapacity && usedTanks < maxTanks;
+      return usedCapacity + weight <= totalCapacity && usedTanks + slots <= maxTanks;
     }
     else if (type == "Animals") {
-      return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots;
+      return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots &&
+             (!roamer || !hasRoamer);  // 不能超过一个roamer
     }
     return false;
   }
 
-  void load(unsigned int weight, unsigned int slots) {
+  void load(unsigned int weight, unsigned int slots, bool roamer) {
     usedCapacity += weight;
     if (type == "Container" || type == "Animals") {
       usedSlots += slots;
     }
     else if (type == "Tanker") {
-      usedTanks++;
+      usedTanks += slots;
+    }
+    if (roamer) {
+      hasRoamer = true;
     }
   }
 
   unsigned int getRemainingCapacity() const { return totalCapacity - usedCapacity; }
 
   unsigned int getRemainingSlots() const {
-    if (type == "Container" || type == "Animals") {
-      return totalSlots - usedSlots;
-    }
-    else if (type == "Tanker") {
+    if (type == "Tanker") {
       return maxTanks - usedTanks;
     }
-    return 0;
+    return totalSlots - usedSlots;
   }
 
   void printDetails() const {
     if (type == "Container") {
       std::cout << "The Container Ship " << name << "(" << usedCapacity << "/"
-                << totalCapacity << ") is carrying :" << std::endl;
-      std::cout << "  (" << getRemainingSlots() << ") slots remain" << std::endl;
+                << totalCapacity << ") is carrying :\n";
+      std::cout << "  (" << getRemainingSlots() << ") slots remain\n";
     }
     else if (type == "Tanker") {
       std::cout << "The Tanker Ship " << name << "(" << usedCapacity << "/"
-                << totalCapacity << ") is carrying :" << std::endl;
-      std::cout << "  " << usedTanks << " / " << maxTanks << " tanks used" << std::endl;
+                << totalCapacity << ") is carrying :\n";
+      std::cout << "  " << usedTanks << " / " << maxTanks << " tanks used\n";
     }
     else if (type == "Animals") {
       std::cout << "The Animals Ship " << name << "(" << usedCapacity << "/"
-                << totalCapacity << ") is carrying :" << std::endl;
+                << totalCapacity << ") is carrying :\n";
       if (hasRoamer) {
-        std::cout << "  has a roamer" << std::endl;
+        std::cout << "  has a roamer\n";
       }
       else {
-        std::cout << "  does not have a roamer" << std::endl;
+        std::cout << "  does not have a roamer\n";
       }
-      std::cout << "  (" << getRemainingSlots() << ") slots remain" << std::endl;
     }
   }
 };
@@ -119,16 +120,26 @@ class Cargo {
  public:
   std::string name, source, destination;
   unsigned int weight, slots;
+  bool hazardous, roamer;
 
-  Cargo(const std::string & line) {
+  Cargo(const std::string & line) : slots(1), hazardous(false), roamer(false) {
     std::istringstream ss(line);
+    std::string temp;
+
     std::getline(ss, name, ',');
     std::getline(ss, source, ',');
     std::getline(ss, destination, ',');
-    std::string temp;
     std::getline(ss, temp, ',');
     weight = std::strtoull(temp.c_str(), NULL, 10);
-    slots = 1;  // 默认每个货物占一个插槽
+
+    while (std::getline(ss, temp, ',')) {
+      if (temp == "hazardous") {
+        hazardous = true;
+      }
+      else if (temp == "roamer") {
+        roamer = true;
+      }
+    }
   }
 };
 
@@ -139,7 +150,7 @@ struct ShipPtrCompare {
   }
 };
 
-// 按货物重量排序
+// 比较货物重量（从大到小）
 bool compareCargo(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
@@ -174,8 +185,8 @@ Ship * findBestShip(
     for (std::set<Ship *, ShipPtrCompare>::const_iterator it = ships.begin();
          it != ships.end();
          ++it) {
-      Ship * ship = const_cast<Ship *>(*it);  // 解除 const 限制
-      if (ship->canCarry(cargo.weight, cargo.slots)) {
+      Ship * ship = const_cast<Ship *>(*it);
+      if (ship->canCarry(cargo.weight, cargo.slots, cargo.hazardous, cargo.roamer)) {
         return ship;
       }
     }
@@ -205,7 +216,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
                 << " capacity remains" << std::endl;
 
       shipMap.remove(bestShip->getRemainingCapacity(), bestShip);
-      bestShip->load(cargo.weight, cargo.slots);
+      bestShip->load(cargo.weight, cargo.slots, cargo.roamer);
       shipMap.add(bestShip->getRemainingCapacity(), bestShip);
     }
   }
@@ -229,10 +240,9 @@ int main(int argc, char * argv[]) {
   std::vector<Cargo> cargoList;
   readCargo(argv[2], cargoList);
 
-  // 按重量从大到小排序货物
+  // 使用普通函数进行稳定排序
   std::stable_sort(cargoList.begin(), cargoList.end(), compareCargo);
 
-  // 装载货物
   processCargo(ships, cargoList);
 
   // 清理内存
