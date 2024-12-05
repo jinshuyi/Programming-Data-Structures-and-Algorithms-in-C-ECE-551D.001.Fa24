@@ -7,6 +7,7 @@
 
 #include "avlmultimap03.hpp"
 
+// Cargo class for handling cargo details
 class Cargo {
  public:
   std::string name;
@@ -29,6 +30,7 @@ class Cargo {
   }
 };
 
+// Ship class for handling ship details
 class Ship {
  protected:
   std::string name;
@@ -109,6 +111,7 @@ bool compareCargo(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
 
+// Best-fit strategy for selecting ships
 class BestFitStrategy {
   AVLMultiMap<unsigned int, Ship *> shipMap;
 
@@ -135,6 +138,7 @@ class BestFitStrategy {
   }
 };
 
+// Process cargo and assign to best-fit ships
 void processCargo(std::vector<Ship *> & ships, std::vector<Cargo> & cargoList) {
   BestFitStrategy strategy;
   for (size_t i = 0; i < ships.size(); ++i) {
