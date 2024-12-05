@@ -1,3 +1,1 @@
-ships-step3 inputs/ships0.txt inputs/cargo1.txt
-ships-step3 inputs/ships1.txt inputs/cargo0.txt
-ships-step3 inputs/ships1.txt inputs/cargo1.txt
+ships-step4 inputs/ships0.txt inputs/cargo1.txt
