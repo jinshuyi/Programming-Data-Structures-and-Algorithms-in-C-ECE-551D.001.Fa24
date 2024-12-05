@@ -37,11 +37,12 @@ class Ship {
   unsigned int capacity;
   unsigned int usedCapacity;
   unsigned int slots;
+  unsigned int usedSlots;
   std::vector<std::string> capabilities;
   std::vector<Cargo> loadedCargo;
 
  public:
-  Ship(const std::string & line) : usedCapacity(0) {
+  Ship(const std::string & line) : usedCapacity(0), usedSlots(0) {
     std::istringstream ss(line);
     std::string temp;
     std::getline(ss, name, ':');
@@ -65,7 +66,7 @@ class Ship {
     if (source != cargo.source || destination != cargo.destination) {
       return false;
     }
-    if (usedCapacity + cargo.weight > capacity || loadedCargo.size() >= slots) {
+    if (usedCapacity + cargo.weight > capacity || usedSlots >= slots) {
       return false;
     }
     for (size_t i = 0; i < cargo.properties.size(); ++i) {
@@ -83,6 +84,7 @@ class Ship {
 
   virtual void loadCargo(const Cargo & cargo) {
     usedCapacity += cargo.weight;
+    usedSlots++;
     loadedCargo.push_back(cargo);
   }
 
@@ -93,10 +95,11 @@ class Ship {
       std::cout << "  " << loadedCargo[i].name << "(" << loadedCargo[i].weight << ")"
                 << std::endl;
     }
-    std::cout << "  (" << slots - loadedCargo.size() << ") slots remain" << std::endl;
+    std::cout << "  (" << slots - usedSlots << ") slots remain" << std::endl;
   }
 
   unsigned int getRemainingCapacity() const { return capacity - usedCapacity; }
+  unsigned int getRemainingSlots() const { return slots - usedSlots; }
 };
 
 bool compareCargo(const Cargo & a, const Cargo & b) {
@@ -141,7 +144,8 @@ void processCargo(std::vector<Ship *> & ships, std::vector<Cargo> & cargoList) {
     Cargo & cargo = cargoList[i];
     Ship * bestShip = strategy.findBestShip(cargo);
     if (bestShip == NULL) {
-      std::cout << "Could not load " << cargo.name << std::endl;
+      std::cout << "No ships can carry the " << cargo.name << " from " << cargo.source
+                << " to " << cargo.destination << std::endl;
     }
     else {
       unsigned int oldCapacity = bestShip->getRemainingCapacity();
