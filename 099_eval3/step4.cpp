@@ -102,10 +102,15 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       ship.type = "Tanker";
       std::stringstream type_stream(type_details);
       std::string value;
+      int count = 0;
 
-      // 解析Tanker的最后一个值为tanks
+      // 读取逗号分隔的值，找到第三个值并赋值给 tanks
       while (std::getline(type_stream, value, ',')) {
-        ship.tanks = std::atoi(value.c_str());
+        count++;
+        if (count == 3) {
+          ship.tanks = std::atoi(value.c_str());
+          break;
+        }
       }
     }
 
