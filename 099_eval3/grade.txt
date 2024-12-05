@@ -1,6 +1,6 @@
-Grading at 12/05/2024:22:31:46.882010
-For commit ID 4901f3b5da2ee24eaa8ca27d43fb7ce412a25231
-Grading at Thu Dec  5 05:31:42 PM EST 2024
+Grading at 12/05/2024:22:41:12.439478
+For commit ID da7d5e54fa2416b7b77036e21defa8a34aec1da3
+Grading at Thu Dec  5 05:41:07 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -43,13 +43,13 @@ The Container Ship The Dawn Clipper(0/1700) is carrying :     |	The Container Sh
 The Animals Ship The Dawn Dolphin(0/110) is carrying :	      |	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
   does not have a roamer					  does not have a roamer
 The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
-  0 / 0 tanks used					      |	  0 / 25 tanks used
+  0 / 50 tanks used					      |	  0 / 25 tanks used
 The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-  0 / 10 tanks used						  0 / 10 tanks used
+  0 / 50 tanks used					      |	  0 / 10 tanks used
 The Animals Ship The Gleaming Eagle(0/140) is carrying :      |	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
   does not have a roamer					  does not have a roamer
 The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
-  0 / 0 tanks used					      |	  0 / 50 tanks used
+  0 / 90 tanks used					      |	  0 / 50 tanks used
 The Animals Ship The Gleaming Shark(0/190) is carrying :      |	The Animals Ship The Gleaming Shark(0/190) is carrying : 
   does not have a roamer					  does not have a roamer
 Your file did not match the expected output
@@ -83,18 +83,18 @@ The Container Ship The Dawn Clipper(0/1700) is carrying :     |	The Container Sh
   (2) slots remain						  (2) slots remain
 The Animals Ship The Dawn Dolphin(110/110) is carrying :      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
 The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	  toy planes(50)
-  0 / 0 tanks used					      |	  lions(50)
+  0 / 50 tanks used					      |	  lions(50)
 The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	  has a roamer
-							      >	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
-							      >	  liquid hydrogen(200)
-							      >	  liquid hydrogen(200)
-							      >	  15 / 25 tanks used
-							      >	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-  0 / 10 tanks used						  0 / 10 tanks used
-The Animals Ship The Gleaming Eagle(30/140) is carrying :     |	The Animals Ship The Gleaming Eagle(140/140) is carrying : 
-The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	  caribou(50)
-  0 / 0 tanks used					      |	  toy cars(30)
-The Animals Ship The Gleaming Shark(180/190) is carrying :    |	  cats(30)
+  0 / 50 tanks used					      |	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
+The Animals Ship The Gleaming Eagle(30/140) is carrying :     |	  liquid hydrogen(200)
+The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	  liquid hydrogen(200)
+  0 / 90 tanks used					      |	  15 / 25 tanks used
+The Animals Ship The Gleaming Shark(180/190) is carrying :    |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
+							      >	  0 / 10 tanks used
+							      >	The Animals Ship The Gleaming Eagle(140/140) is carrying : 
+							      >	  caribou(50)
+							      >	  toy cars(30)
+							      >	  cats(30)
 							      >	  paper(30)
 							      >	  has a roamer
 							      >	The Tanker Ship The Gleaming Narwhal(487/500) is carrying : 
