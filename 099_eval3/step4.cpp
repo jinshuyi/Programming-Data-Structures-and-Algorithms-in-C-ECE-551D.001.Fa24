@@ -11,7 +11,7 @@
 // 船只类
 class Ship {
  private:
-  std::string name, source, destination, type;
+  std::string name, type, source, destination;
   unsigned int totalCapacity, usedCapacity, totalSlots, usedSlots, maxTanks, usedTanks;
   bool hasRoamer;
 
@@ -25,7 +25,7 @@ class Ship {
     std::getline(ss, type, ',');  // 类型
 
     if (type == "Container") {
-      std::getline(ss, temp, ',');
+      std::getline(ss, temp, ',');  // 插槽数
       totalSlots = std::atoi(temp.c_str());
     }
     else if (type == "Tanker") {
@@ -36,7 +36,7 @@ class Ship {
       totalSlots = std::atoi(temp.c_str());
     }
     else if (type == "Animals") {
-      std::getline(ss, temp, ',');
+      std::getline(ss, temp, ',');  // 插槽数
       totalSlots = std::atoi(temp.c_str());
     }
 
