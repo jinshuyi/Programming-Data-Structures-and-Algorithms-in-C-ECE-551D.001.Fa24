@@ -10,47 +10,107 @@
 // 船只类
 class Ship {
  private:
-  std::string name, source, destination;
-  unsigned int totalCapacity, usedCapacity, totalSlots, usedSlots;
+  std::string name, source, destination, type;
+  unsigned int totalCapacity, usedCapacity, totalSlots, usedSlots, maxTanks, usedTanks;
+  bool hasRoamer;
 
  public:
-  Ship(const std::string & line) : usedCapacity(0), usedSlots(0) {
+  Ship(const std::string & line) :
+      usedCapacity(0), usedSlots(0), usedTanks(0), hasRoamer(false) {
     std::istringstream ss(line);
     std::string temp;
 
-    std::getline(ss, name, ':');  // 船名
-    std::getline(ss, temp, ':');  // 类型和插槽信息
-    std::istringstream tempSS(temp);
-    std::getline(tempSS, temp, ',');  // 插槽数
-    totalSlots = std::atoi(temp.c_str());
+    // 解析船名和类型
+    std::getline(ss, name, ':');
+    std::getline(ss, temp, ':');
+    std::istringstream typeSS(temp);
+    std::getline(typeSS, type, ',');
 
-    std::getline(ss, source, ':');       // 起点
-    std::getline(ss, destination, ':');  // 终点
-    std::getline(ss, temp, ':');         // 总容量
+    // 插槽或额外信息解析
+    if (type == "Container") {
+      std::getline(typeSS, temp, ',');
+      totalSlots = std::atoi(temp.c_str());
+    }
+    else if (type == "Tanker") {
+      std::getline(typeSS, temp, ',');
+      maxTanks = std::atoi(temp.c_str());
+    }
+    else if (type == "Animals") {
+      std::getline(typeSS, temp, ',');
+      totalSlots = std::atoi(temp.c_str());
+    }
+
+    // 起点和终点
+    std::getline(ss, source, ':');
+    std::getline(ss, destination, ':');
+
+    // 总容量
+    std::getline(ss, temp, ':');
     totalCapacity = std::strtoull(temp.c_str(), NULL, 10);
   }
 
   const std::string & getName() const { return name; }
   const std::string & getSource() const { return source; }
   const std::string & getDestination() const { return destination; }
+  const std::string & getType() const { return type; }
 
   bool canCarry(unsigned int weight, unsigned int slots) const {
-    return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots;
+    if (type == "Container") {
+      return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots;
+    }
+    else if (type == "Tanker") {
+      return usedCapacity + weight <= totalCapacity && usedTanks < maxTanks;
+    }
+    else if (type == "Animals") {
+      return usedCapacity + weight <= totalCapacity && usedSlots + slots <= totalSlots;
+    }
+    return false;
   }
 
   void load(unsigned int weight, unsigned int slots) {
     usedCapacity += weight;
-    usedSlots += slots;
+    if (type == "Container" || type == "Animals") {
+      usedSlots += slots;
+    }
+    else if (type == "Tanker") {
+      usedTanks++;
+    }
   }
 
   unsigned int getRemainingCapacity() const { return totalCapacity - usedCapacity; }
 
-  unsigned int getRemainingSlots() const { return totalSlots - usedSlots; }
+  unsigned int getRemainingSlots() const {
+    if (type == "Container" || type == "Animals") {
+      return totalSlots - usedSlots;
+    }
+    else if (type == "Tanker") {
+      return maxTanks - usedTanks;
+    }
+    return 0;
+  }
 
   void printDetails() const {
-    std::cout << "The Container Ship " << name << "(" << usedCapacity << "/"
-              << totalCapacity << ") is carrying :" << std::endl;
-    std::cout << "  (" << getRemainingSlots() << ") slots remain" << std::endl;
+    if (type == "Container") {
+      std::cout << "The Container Ship " << name << "(" << usedCapacity << "/"
+                << totalCapacity << ") is carrying :" << std::endl;
+      std::cout << "  (" << getRemainingSlots() << ") slots remain" << std::endl;
+    }
+    else if (type == "Tanker") {
+      std::cout << "The Tanker Ship " << name << "(" << usedCapacity << "/"
+                << totalCapacity << ") is carrying :" << std::endl;
+      std::cout << "  " << usedTanks << " / " << maxTanks << " tanks used" << std::endl;
+    }
+    else if (type == "Animals") {
+      std::cout << "The Animals Ship " << name << "(" << usedCapacity << "/"
+                << totalCapacity << ") is carrying :" << std::endl;
+      if (hasRoamer) {
+        std::cout << "  has a roamer" << std::endl;
+      }
+      else {
+        std::cout << "  does not have a roamer" << std::endl;
+      }
+      std::cout << "  (" << getRemainingSlots() << ") slots remain" << std::endl;
+    }
   }
 };
 
