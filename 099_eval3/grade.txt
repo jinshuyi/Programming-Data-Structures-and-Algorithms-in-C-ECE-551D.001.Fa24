@@ -1,6 +1,6 @@
-Grading at 12/05/2024:05:19:59.368283
-For commit ID f042d264a6040efd6776f71e32dd5cc9d9db7706
-Grading at Thu Dec  5 12:19:55 AM EST 2024
+Grading at 12/05/2024:05:31:44.008636
+For commit ID cf99e12ca75bd7f5e5e834491b8a6cc788a75f9d
+Grading at Thu Dec  5 12:31:39 AM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -16,37 +16,8 @@ Compiling ships-step3
 g++ -o ships-step3 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step3.cpp 
 Running our code...
 Running your code
-We both agreed this was not an error, but your output is different from ours
-Your output on the left, ours on the right
-No ships can carry toy cars from Luthadel to Midgar	      |	No ships can carry the toy cars from Luthadel to Midgar
-No ships can carry toy planes from Luthadel to Midgar	      |	No ships can carry the toy planes from Luthadel to Midgar
-No ships can carry fireworks from Luthadel to Midgar	      |	No ships can carry the fireworks from Luthadel to Midgar
-No ships can carry liquid hydrogen from Luthadel to Midgar    |	No ships can carry the liquid hydrogen from Luthadel to Midga
-No ships can carry milk from Luthadel to Midgar		      |	No ships can carry the milk from Luthadel to Midgar
-No ships can carry propane from Luthadel to Midgar	      |	No ships can carry the propane from Luthadel to Midgar
-No ships can carry liquid hydrogen from Luthadel to Midgar    |	No ships can carry the liquid hydrogen from Luthadel to Midga
-No ships can carry hot stuff from Luthadel to Midgar	      |	No ships can carry the hot stuff from Luthadel to Midgar
-No ships can carry liquid helium from Luthadel to Midgar      |	No ships can carry the liquid helium from Luthadel to Midgar
-No ships can carry lions from Luthadel to Midgar	      |	No ships can carry the lions from Luthadel to Midgar
-No ships can carry caribou from Luthadel to Midgar	      |	No ships can carry the caribou from Luthadel to Midgar
-No ships can carry cats from Luthadel to Midgar		      |	No ships can carry the cats from Luthadel to Midgar
-No ships can carry paper from Luthadel to Midgar	      |	No ships can carry the paper from Luthadel to Midgar
-No ships can carry birds from Luthadel to Midgar	      |	No ships can carry the birds from Luthadel to Midgar
-No ships can carry milk from Luthadel to Midgar		      |	No ships can carry the milk from Luthadel to Midgar
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-							      >	The Container Ship The Majestic Dreadnought(0/1550) is carryi
-							      >	  (4) slots remain
-							      >	The Container Ship The Majestic Kraken(0/650) is carrying : 
-							      >	  (9) slots remain
-							      >	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-							      >	  (3) slots remain
-							      >	The Container Ship The Night Eagle(0/1500) is carrying : 
-							      >	  (6) slots remain
-							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
-							      >	  (5) slots remain
-							      >	The Container Ship The Shining Turtle(0/500) is carrying : 
-							      >	  (3) slots remain
-Your file did not match the expected output
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four test cases for step 3 early start EC **
 -------------------------
  This test case will run 
  ships-step3 
@@ -55,33 +26,8 @@ Your file did not match the expected output
 -------------------------
 Running our code...
 Running your code
-We both agreed this was not an error, but your output is different from ours
-Your output on the left, ours on the right
-No ships can carry toy cars from Mordor to Sarth	      |	No ships can carry the toy cars from Mordor to Sarth
-No ships can carry fireworks from Mordor to Sarth	      |	No ships can carry the fireworks from Mordor to Sarth
-No ships can carry used batteries from Mordor to Luthadel     |	No ships can carry the used batteries from Mordor to Luthadel
-No ships can carry radioactive waste from Mordor to Sarth     |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive waste from Mordor to Sarth     |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive waste from Mordor to Sarth     |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive waste from Mordor to Luthadel  |	No ships can carry the radioactive waste from Mordor to Lutha
-No ships can carry cloth from Mordor to Luthadel	      |	No ships can carry the cloth from Mordor to Luthadel
-No ships can carry rat poison from Mordor to Sarth	      |	No ships can carry the rat poison from Mordor to Sarth
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-							      >	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-							      >	  (2) slots remain
-							      >	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
-							      >	  does not have a roamer
-							      >	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
-							      >	  0 / 25 tanks used
-							      >	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-							      >	  0 / 10 tanks used
-							      >	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
-							      >	  does not have a roamer
-							      >	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
-							      >	  0 / 50 tanks used
-							      >	The Animals Ship The Gleaming Shark(0/190) is carrying : 
-							      >	  does not have a roamer
-Your file did not match the expected output
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four test cases for step 3 early start EC **
 -------------------------
  This test case will run 
  ships-step3 
@@ -92,88 +38,94 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-No ships can carry toy cars from Luthadel to Midgar	      |	4 ships can carry the toy cars from Luthadel to Midgar
-No ships can carry toy planes from Luthadel to Midgar	      |	  The Dawn Clipper
-No ships can carry fireworks from Luthadel to Midgar	      |	  The Dawn Dolphin
-No ships can carry liquid hydrogen from Luthadel to Midgar    |	  The Gleaming Eagle
-No ships can carry milk from Luthadel to Midgar		      |	  The Gleaming Shark
-No ships can carry propane from Luthadel to Midgar	      |	  **Loading the cargo onto The Dawn Clipper**
-No ships can carry liquid hydrogen from Luthadel to Midgar    |	3 ships can carry the toy planes from Luthadel to Midgar
-No ships can carry hot stuff from Luthadel to Midgar	      |	  The Dawn Clipper
-No ships can carry liquid helium from Luthadel to Midgar      |	  The Dawn Dolphin
-No ships can carry lions from Luthadel to Midgar	      |	  The Gleaming Shark
-No ships can carry caribou from Luthadel to Midgar	      |	  **Loading the cargo onto The Dawn Clipper**
-No ships can carry cats from Luthadel to Midgar		      |	No ships can carry the fireworks from Luthadel to Midgar
-No ships can carry paper from Luthadel to Midgar	      |	1 ships can carry the liquid hydrogen from Luthadel to Midgar
-No ships can carry birds from Luthadel to Midgar	      |	  The Dawn Dreadnought
-No ships can carry milk from Luthadel to Midgar		      |	  **Loading the cargo onto The Dawn Dreadnought**
-							      >	3 ships can carry the milk from Luthadel to Midgar
-							      >	  The Dawn Dreadnought
-							      >	  The Gleaming Dreadnought
-							      >	  The Gleaming Narwhal
-							      >	  **Loading the cargo onto The Dawn Dreadnought**
-							      >	1 ships can carry the propane from Luthadel to Midgar
-							      >	  The Gleaming Narwhal
-							      >	  **Loading the cargo onto The Gleaming Narwhal**
-							      >	No ships can carry the liquid hydrogen from Luthadel to Midga
-							      >	1 ships can carry the hot stuff from Luthadel to Midgar
-							      >	  The Gleaming Narwhal
-							      >	  **Loading the cargo onto The Gleaming Narwhal**
-							      >	No ships can carry the liquid helium from Luthadel to Midgar
-							      >	3 ships can carry the lions from Luthadel to Midgar
-							      >	  The Dawn Dolphin
-							      >	  The Gleaming Eagle
-							      >	  The Gleaming Shark
-							      >	  **Loading the cargo onto The Dawn Dolphin**
-							      >	2 ships can carry the caribou from Luthadel to Midgar
-							      >	  The Gleaming Eagle
-							      >	  The Gleaming Shark
-							      >	  **Loading the cargo onto The Gleaming Eagle**
-							      >	3 ships can carry the cats from Luthadel to Midgar
-							      >	  The Dawn Dolphin
-							      >	  The Gleaming Eagle
-							      >	  The Gleaming Shark
-							      >	  **Loading the cargo onto The Dawn Dolphin**
-							      >	3 ships can carry the paper from Luthadel to Midgar
-							      >	  The Dawn Dolphin
-							      >	  The Gleaming Eagle
-							      >	  The Gleaming Shark
-							      >	  **Loading the cargo onto The Dawn Dolphin**
-							      >	1 ships can carry the birds from Luthadel to Midgar
-							      >	  The Gleaming Shark
-							      >	  **Loading the cargo onto The Gleaming Shark**
-							      >	3 ships can carry the milk from Luthadel to Midgar
-							      >	  The Dawn Dreadnought
-							      >	  The Gleaming Dreadnought
-							      >	  The Gleaming Narwhal
-							      >	  **Loading the cargo onto The Dawn Dreadnought**
+4 ships can carry the toy cars from Luthadel to Midgar		4 ships can carry the toy cars from Luthadel to Midgar
+  The Dawn Clipper						  The Dawn Clipper
+  The Dawn Dolphin						  The Dawn Dolphin
+  The Gleaming Eagle						  The Gleaming Eagle
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Dawn Clipper**		      |	  **Loading the cargo onto The Dawn Clipper**
+3 ships can carry the toy planes from Luthadel to Midgar	3 ships can carry the toy planes from Luthadel to Midgar
+  The Dawn Clipper						  The Dawn Clipper
+  The Dawn Dolphin						  The Dawn Dolphin
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Dawn Clipper**		      |	  **Loading the cargo onto The Dawn Clipper**
+No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
+2 ships can carry the liquid hydrogen from Luthadel to Midgar |	1 ships can carry the liquid hydrogen from Luthadel to Midgar
+  The Dawn Dreadnought						  The Dawn Dreadnought
+  The Gleaming Dreadnought				      |	  **Loading the cargo onto The Dawn Dreadnought**
+**Loading the cargo onto The Dawn Dreadnought**		      <
+3 ships can carry the milk from Luthadel to Midgar		3 ships can carry the milk from Luthadel to Midgar
+  The Dawn Dreadnought						  The Dawn Dreadnought
+  The Gleaming Dreadnought					  The Gleaming Dreadnought
+  The Gleaming Narwhal						  The Gleaming Narwhal
+**Loading the cargo onto The Dawn Dreadnought**		      |	  **Loading the cargo onto The Dawn Dreadnought**
+2 ships can carry the propane from Luthadel to Midgar	      |	1 ships can carry the propane from Luthadel to Midgar
+  The Dawn Dreadnought					      |	  The Gleaming Narwhal
+  The Gleaming Dreadnought				      |	  **Loading the cargo onto The Gleaming Narwhal**
+**Loading the cargo onto The Dawn Dreadnought**		      |	No ships can carry the liquid hydrogen from Luthadel to Midga
+1 ships can carry the liquid hydrogen from Luthadel to Midgar <
+  The Gleaming Dreadnought				      <
+**Loading the cargo onto The Gleaming Dreadnought**	      <
+1 ships can carry the hot stuff from Luthadel to Midgar		1 ships can carry the hot stuff from Luthadel to Midgar
+  The Gleaming Narwhal						  The Gleaming Narwhal
+**Loading the cargo onto The Gleaming Narwhal**		      |	  **Loading the cargo onto The Gleaming Narwhal**
+No ships can carry the liquid helium from Luthadel to Midgar	No ships can carry the liquid helium from Luthadel to Midgar
+3 ships can carry the lions from Luthadel to Midgar		3 ships can carry the lions from Luthadel to Midgar
+  The Dawn Dolphin						  The Dawn Dolphin
+  The Gleaming Eagle						  The Gleaming Eagle
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+2 ships can carry the caribou from Luthadel to Midgar		2 ships can carry the caribou from Luthadel to Midgar
+  The Gleaming Eagle						  The Gleaming Eagle
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Gleaming Eagle**		      |	  **Loading the cargo onto The Gleaming Eagle**
+3 ships can carry the cats from Luthadel to Midgar		3 ships can carry the cats from Luthadel to Midgar
+  The Dawn Dolphin						  The Dawn Dolphin
+  The Gleaming Eagle						  The Gleaming Eagle
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+3 ships can carry the paper from Luthadel to Midgar		3 ships can carry the paper from Luthadel to Midgar
+  The Dawn Dolphin						  The Dawn Dolphin
+  The Gleaming Eagle						  The Gleaming Eagle
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+1 ships can carry the birds from Luthadel to Midgar		1 ships can carry the birds from Luthadel to Midgar
+  The Gleaming Shark						  The Gleaming Shark
+**Loading the cargo onto The Gleaming Shark**		      |	  **Loading the cargo onto The Gleaming Shark**
+3 ships can carry the milk from Luthadel to Midgar		3 ships can carry the milk from Luthadel to Midgar
+  The Dawn Dreadnought						  The Dawn Dreadnought
+  The Gleaming Dreadnought					  The Gleaming Dreadnought
+  The Gleaming Narwhal						  The Gleaming Narwhal
+**Loading the cargo onto The Dawn Dreadnought**		      |	  **Loading the cargo onto The Dawn Dreadnought**
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-							      >	The Container Ship The Dawn Clipper(80/1700) is carrying : 
-							      >	  toy cars(30)
-							      >	  toy planes(50)
-							      >	  (0) slots remain
-							      >	The Animals Ship The Dawn Dolphin(110/110) is carrying : 
-							      >	  lions(50)
-							      >	  cats(30)
-							      >	  paper(30)
-							      >	  has a roamer
-							      >	The Tanker Ship The Dawn Dreadnought(673/700) is carrying : 
-							      >	  liquid hydrogen(200)
-							      >	  milk(472)
-							      >	  milk(1)
-							      >	  25 / 25 tanks used
-							      >	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-							      >	  0 / 10 tanks used
-							      >	The Animals Ship The Gleaming Eagle(50/140) is carrying : 
-							      >	  caribou(50)
-							      >	  has a roamer
-							      >	The Tanker Ship The Gleaming Narwhal(14/500) is carrying : 
-							      >	  propane(4)
-							      >	  hot stuff(10)
-							      >	  2 / 50 tanks used
-							      >	The Animals Ship The Gleaming Shark(180/190) is carrying : 
+The Container Ship The Dawn Clipper (80/1700) is carrying:    |	The Container Ship The Dawn Clipper(80/1700) is carrying : 
+  toy cars (30)						      |	  toy cars(30)
+  toy planes (50)					      |	  toy planes(50)
+  (0) slots remain						  (0) slots remain
+The Animals Ship The Dawn Dolphin (110/110) is carrying:      |	The Animals Ship The Dawn Dolphin(110/110) is carrying : 
+  lions (50)						      |	  lions(50)
+  cats (30)						      |	  cats(30)
+  paper (30)						      |	  paper(30)
+  has a roamer							  has a roamer
+The Tanker Ship The Dawn Dreadnought (677/700) is carrying:   |	The Tanker Ship The Dawn Dreadnought(673/700) is carrying : 
+  liquid hydrogen (200)					      |	  liquid hydrogen(200)
+  milk (472)						      |	  milk(472)
+  propane (4)						      |	  milk(1)
+  milk (1)						      |	  25 / 25 tanks used
+  4 / 25 tanks used					      |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
+The Tanker Ship The Gleaming Dreadnought (200/600) is carryin |	  0 / 10 tanks used
+  liquid hydrogen (200)					      |	The Animals Ship The Gleaming Eagle(50/140) is carrying : 
+  1 / 10 tanks used					      |	  caribou(50)
+The Animals Ship The Gleaming Eagle (50/140) is carrying:     <
+  caribou (50)						      <
+  has a roamer							  has a roamer
+The Tanker Ship The Gleaming Narwhal (10/500) is carrying:    |	The Tanker Ship The Gleaming Narwhal(14/500) is carrying : 
+  hot stuff (10)					      |	  propane(4)
+  1 / 50 tanks used					      |	  hot stuff(10)
+The Animals Ship The Gleaming Shark (180/190) is carrying:    |	  2 / 50 tanks used
+  birds (180)						      |	The Animals Ship The Gleaming Shark(180/190) is carrying : 
 							      >	  birds(180)
-							      >	  does not have a roamer
+  does not have a roamer					  does not have a roamer
 Your file did not match the expected output
 You have FAILED one or more of your test cases
 Keep debugging
