@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-// Cargo class
+// Class representign cargo info.
 class Cargo {
  public:
   std::string name;
@@ -15,6 +15,7 @@ class Cargo {
   unsigned int weight;
   std::vector<std::string> properties;
 
+  // Constructor to parsing  single cargo line into its attributes and properties
   Cargo(const std::string & line) {
     std::istringstream ss(line);
     std::string temp;
@@ -27,11 +28,11 @@ class Cargo {
       properties.push_back(temp);
     }
   }
-
+  // Method to check if a cargo requires a specific property
   bool requiresProperty(const std::string & property) const {
     return std::find(properties.begin(), properties.end(), property) != properties.end();
   }
-
+  // Method to extract the value of a specific property, defaulting to 0 if not found
   int getPropertyValue(const std::string & key) const {
     for (size_t i = 0; i < properties.size(); ++i) {
       if (properties[i].find(key + "=") == 0) {
@@ -39,11 +40,11 @@ class Cargo {
         return std::atoi(value.c_str());
       }
     }
-    return 0;  // Default value
+    return 0;
   }
 };
 
-// Base class: Ship
+// Base class: representing a generic ship
 class Ship {
  protected:
   std::string name;
@@ -53,6 +54,7 @@ class Ship {
   unsigned int usedCapacity;
 
  public:
+  // Constructor to initialize ship attributes
   Ship(const std::string & name,
        const std::string & source,
        const std::string & destination,
@@ -64,19 +66,16 @@ class Ship {
       usedCapacity(0) {}
 
   virtual ~Ship() {}
-
   virtual bool canCarry(const Cargo & cargo) const = 0;
   virtual void loadCargo(const Cargo & cargo) = 0;
   virtual void printDetails() const = 0;
-
   const std::string & getName() const { return name; }
-
   bool isOnRoute(const Cargo & cargo) const {
     return cargo.source == source && cargo.destination == destination;
   }
 };
 
-// Derived class: ContainerShip
+// Derived class for container ships with additional slot management
 class ContainerShip : public Ship {
   unsigned int slots;
   unsigned int usedSlots;
@@ -90,6 +89,7 @@ class ContainerShip : public Ship {
                 unsigned int slots) :
       Ship(name, source, destination, capacity), slots(slots), usedSlots(0) {}
 
+  // Method to check if the container ship can carry a specific cargo
   bool canCarry(const Cargo & cargo) const {
     if (!isOnRoute(cargo) || usedCapacity + cargo.weight > totalCapacity ||
         usedSlots >= slots) {
@@ -97,13 +97,13 @@ class ContainerShip : public Ship {
     }
     return cargo.requiresProperty("container");
   }
-
+  // Methdo to load cargo onto the container ship
   void loadCargo(const Cargo & cargo) {
     usedCapacity += cargo.weight;
     usedSlots++;
     loadedCargo.push_back(cargo);
   }
-
+  //print the value
   void printDetails() const {
     std::cout << "The Container Ship " << name << " (" << usedCapacity << "/"
               << totalCapacity << ") is carrying:\n";
@@ -214,17 +214,16 @@ class TankerShip : public Ship {
   }
 };
 
-// Comparator for sorting ships by name
+//  a omparator for sorting ships by name
 bool compareShipsByName(Ship * a, Ship * b) {
   return a->getName() < b->getName();
 }
 
-// Function to create ships dynamically
+// function to creat ships dynamicaly.
 Ship * createShip(const std::string & line) {
   std::istringstream ss(line);
   std::string name, typeInfo, source, destination, temp;
   unsigned int capacity;
-
   std::getline(ss, name, ':');
   std::getline(ss, typeInfo, ':');
   std::getline(ss, source, ':');
@@ -259,18 +258,17 @@ Ship * createShip(const std::string & line) {
     return new TankerShip(name, source, destination, capacity, minTemp, maxTemp, tanks);
   }
 
-  std::cerr << "Unknown ship type: " << temp << std::endl;
+  // Handle other ship types (AnimalsShip, TankerShip) similarly
+  std::cerr << "Unknown ship type:: " << temp << std::endl;
   return NULL;
 }
-
 // Function to read ships from file
 void readShips(const std::string & filename, std::vector<Ship *> & ships) {
   std::ifstream file(filename.c_str());
   if (!file) {
-    std::cerr << "Error opening file: " << filename << std::endl;
+    std::cerr << "Erorr opening file: " << filename << std::endl;
     exit(EXIT_FAILURE);
   }
-
   std::string line;
   while (std::getline(file, line)) {
     Ship * ship = createShip(line);
@@ -278,7 +276,7 @@ void readShips(const std::string & filename, std::vector<Ship *> & ships) {
       ships.push_back(ship);
     }
     else {
-      std::cerr << "Error: Ship creation failed for line: " << line << std::endl;
+      std::cerr << "Error of  Ship creation failed " << line << std::endl;
       exit(EXIT_FAILURE);
     }
   }
