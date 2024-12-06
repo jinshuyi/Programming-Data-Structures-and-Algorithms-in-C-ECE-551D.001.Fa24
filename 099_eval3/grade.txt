@@ -1,6 +1,6 @@
-Grading at 12/05/2024:22:48:04.797167
-For commit ID a9104096829ea90a2402d916bac56cbb69e0d222
-Grading at Thu Dec  5 05:48:00 PM EST 2024
+Grading at 12/06/2024:00:25:29.636738
+For commit ID face07cc769bbd3e841cb1ab567a65310e96b383
+Grading at Thu Dec  5 07:25:25 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -43,60 +43,60 @@ Your output on the left, ours on the right
   The Dawn Dolphin						  The Dawn Dolphin
   The Gleaming Eagle						  The Gleaming Eagle
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Dawn Clipper**		      |	  **Loading the cargo onto The Dawn Clipper**
+  **Loading the cargo onto The Dawn Clipper**			  **Loading the cargo onto The Dawn Clipper**
 3 ships can carry the toy planes from Luthadel to Midgar	3 ships can carry the toy planes from Luthadel to Midgar
   The Dawn Clipper						  The Dawn Clipper
   The Dawn Dolphin						  The Dawn Dolphin
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Dawn Clipper**		      |	  **Loading the cargo onto The Dawn Clipper**
+  **Loading the cargo onto The Dawn Clipper**			  **Loading the cargo onto The Dawn Clipper**
 No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
 2 ships can carry the liquid hydrogen from Luthadel to Midgar |	1 ships can carry the liquid hydrogen from Luthadel to Midgar
   The Dawn Dreadnought						  The Dawn Dreadnought
-  The Gleaming Dreadnought				      |	  **Loading the cargo onto The Dawn Dreadnought**
-**Loading the cargo onto The Dawn Dreadnought**		      <
+  The Gleaming Dreadnought				      <
+  **Loading the cargo onto The Dawn Dreadnought**		  **Loading the cargo onto The Dawn Dreadnought**
 3 ships can carry the milk from Luthadel to Midgar		3 ships can carry the milk from Luthadel to Midgar
   The Dawn Dreadnought						  The Dawn Dreadnought
   The Gleaming Dreadnought					  The Gleaming Dreadnought
   The Gleaming Narwhal						  The Gleaming Narwhal
-**Loading the cargo onto The Dawn Dreadnought**		      |	  **Loading the cargo onto The Dawn Dreadnought**
+  **Loading the cargo onto The Dawn Dreadnought**		  **Loading the cargo onto The Dawn Dreadnought**
 2 ships can carry the propane from Luthadel to Midgar	      |	1 ships can carry the propane from Luthadel to Midgar
   The Dawn Dreadnought					      |	  The Gleaming Narwhal
   The Gleaming Dreadnought				      |	  **Loading the cargo onto The Gleaming Narwhal**
-**Loading the cargo onto The Dawn Dreadnought**		      |	No ships can carry the liquid hydrogen from Luthadel to Midga
+  **Loading the cargo onto The Dawn Dreadnought**	      |	No ships can carry the liquid hydrogen from Luthadel to Midga
 1 ships can carry the liquid hydrogen from Luthadel to Midgar <
   The Gleaming Dreadnought				      <
-**Loading the cargo onto The Gleaming Dreadnought**	      <
+  **Loading the cargo onto The Gleaming Dreadnought**	      <
 1 ships can carry the hot stuff from Luthadel to Midgar		1 ships can carry the hot stuff from Luthadel to Midgar
   The Gleaming Narwhal						  The Gleaming Narwhal
-**Loading the cargo onto The Gleaming Narwhal**		      |	  **Loading the cargo onto The Gleaming Narwhal**
+  **Loading the cargo onto The Gleaming Narwhal**		  **Loading the cargo onto The Gleaming Narwhal**
 No ships can carry the liquid helium from Luthadel to Midgar	No ships can carry the liquid helium from Luthadel to Midgar
 3 ships can carry the lions from Luthadel to Midgar		3 ships can carry the lions from Luthadel to Midgar
   The Dawn Dolphin						  The Dawn Dolphin
   The Gleaming Eagle						  The Gleaming Eagle
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+  **Loading the cargo onto The Dawn Dolphin**			  **Loading the cargo onto The Dawn Dolphin**
 2 ships can carry the caribou from Luthadel to Midgar		2 ships can carry the caribou from Luthadel to Midgar
   The Gleaming Eagle						  The Gleaming Eagle
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Gleaming Eagle**		      |	  **Loading the cargo onto The Gleaming Eagle**
+  **Loading the cargo onto The Gleaming Eagle**			  **Loading the cargo onto The Gleaming Eagle**
 3 ships can carry the cats from Luthadel to Midgar		3 ships can carry the cats from Luthadel to Midgar
   The Dawn Dolphin						  The Dawn Dolphin
   The Gleaming Eagle						  The Gleaming Eagle
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+  **Loading the cargo onto The Dawn Dolphin**			  **Loading the cargo onto The Dawn Dolphin**
 3 ships can carry the paper from Luthadel to Midgar		3 ships can carry the paper from Luthadel to Midgar
   The Dawn Dolphin						  The Dawn Dolphin
   The Gleaming Eagle						  The Gleaming Eagle
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Dawn Dolphin**		      |	  **Loading the cargo onto The Dawn Dolphin**
+  **Loading the cargo onto The Dawn Dolphin**			  **Loading the cargo onto The Dawn Dolphin**
 1 ships can carry the birds from Luthadel to Midgar		1 ships can carry the birds from Luthadel to Midgar
   The Gleaming Shark						  The Gleaming Shark
-**Loading the cargo onto The Gleaming Shark**		      |	  **Loading the cargo onto The Gleaming Shark**
+  **Loading the cargo onto The Gleaming Shark**			  **Loading the cargo onto The Gleaming Shark**
 3 ships can carry the milk from Luthadel to Midgar		3 ships can carry the milk from Luthadel to Midgar
   The Dawn Dreadnought						  The Dawn Dreadnought
   The Gleaming Dreadnought					  The Gleaming Dreadnought
   The Gleaming Narwhal						  The Gleaming Narwhal
-**Loading the cargo onto The Dawn Dreadnought**		      |	  **Loading the cargo onto The Dawn Dreadnought**
+  **Loading the cargo onto The Dawn Dreadnought**		  **Loading the cargo onto The Dawn Dreadnought**
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
 The Container Ship The Dawn Clipper (80/1700) is carrying:    |	The Container Ship The Dawn Clipper(80/1700) is carrying : 
   toy cars (30)						      |	  toy cars(30)
