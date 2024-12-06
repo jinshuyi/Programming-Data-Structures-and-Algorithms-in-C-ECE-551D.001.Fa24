@@ -327,7 +327,7 @@ void processCargo(std::vector<Ship *> & ships, const std::vector<Cargo> & cargoL
     Ship * selectedShip = possibleShips[0];
     selectedShip->loadCargo(cargo);
 
-    std::cout << "**Loading the cargo onto " << selectedShip->getName() << "**\n";
+    std::cout << "  **Loading the cargo onto " << selectedShip->getName() << "**\n";
   }
 
   std::cout << "---Done Loading---Here are the ships---\n";
