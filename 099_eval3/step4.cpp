@@ -1,242 +1,159 @@
-#include <stdint.h>
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
 
 #include "avlmultimap03.hpp"
 
-struct Cargo {
-  std::string name, origin, destination, category;
-  uint64_t weight;
-  std::vector<std::string> properties;
-};
-
+// 定义船只的结构体
 struct Ship {
-  std::string name, type, origin, destination;
-  uint64_t capacity, used_capacity;
-  std::vector<std::string> restrictions;
-  int slots, used_slots, tanks, used_tanks;
+  std::string name;
+  std::string type;
+  int capacity;
+  int used_capacity;
+  std::string source;
+  std::string destination;
 
-  Ship() :
-      capacity(0), used_capacity(0), slots(0), used_slots(0), tanks(0), used_tanks(0) {}
+  Ship(const std::string & n,
+       const std::string & t,
+       int c,
+       const std::string & s,
+       const std::string & d) :
+      name(n), type(t), capacity(c), used_capacity(0), source(s), destination(d) {}
 
-  uint64_t remaining_capacity() const {
-    return capacity > used_capacity ? capacity - used_capacity : 0;
-  }
-
-  bool can_load(const Cargo & cargo) const {
-    if (origin != cargo.origin || destination != cargo.destination)
-      return false;
-    if (capacity < used_capacity + cargo.weight)
-      return false;
-    if (type == "Animals" && slots <= used_slots)
-      return false;
-    if (type == "Tanker" && tanks <= used_tanks)
-      return false;
-
-    for (size_t i = 0; i < cargo.properties.size(); i++) {
-      if (std::find(restrictions.begin(), restrictions.end(), cargo.properties[i]) ==
-          restrictions.end())
-        return false;
-    }
-    return true;
-  }
-
-  void load_cargo(const Cargo & cargo) {
-    used_capacity += cargo.weight;
-    if (type == "Animals") {
-      used_slots++;
-    }
-    else if (type == "Tanker") {
-      used_tanks++;
-    }
-  }
+  int remainingCapacity() const { return capacity - used_capacity; }
 };
 
-bool cargo_weight_desc(const Cargo & a, const Cargo & b) {
-  return a.weight > b.weight;
+// 定义货物的结构体
+struct Cargo {
+  std::string name;
+  std::string source;
+  std::string destination;
+  int weight;
+  std::string type;
+
+  Cargo(const std::string & n,
+        const std::string & s,
+        const std::string & d,
+        int w,
+        const std::string & t) :
+      name(n), source(s), destination(d), weight(w), type(t) {}
+};
+
+// 比较货物重量的函数，用于排序
+bool compareCargo(const Cargo & a, const Cargo & b) {
+  return a.weight > b.weight;  // 按重量降序排序
 }
 
-void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
-  std::string line;
-  while (std::getline(file, line)) {
-    Ship ship;
-    std::stringstream ss(line);
-    std::string type_details;
-
-    std::getline(ss, ship.name, ':');
-    std::getline(ss, type_details, ':');
-    std::string capacity_str;
-
-    if (type_details.find("Container") != std::string::npos) {
-      ship.type = "Container";
-      std::stringstream type_stream(type_details);
-      std::string slots_str, restrictions_str;
-
-      std::getline(type_stream, ship.type, ',');
-      std::getline(type_stream, slots_str, ',');
-      ship.slots = std::atoi(slots_str.c_str());
-
-      std::getline(type_stream, restrictions_str, ':');
-      if (!restrictions_str.empty()) {
-        std::stringstream res_stream(restrictions_str);
-        std::string restriction;
-        while (std::getline(res_stream, restriction, ',')) {
-          ship.restrictions.push_back(restriction);
-        }
-      }
-    }
-    else if (type_details.find("Animals") != std::string::npos) {
-      ship.type = "Animals";
-      std::stringstream type_stream(type_details);
-      std::string slots_str;
-
-      std::getline(type_stream, ship.type, ',');
-      std::getline(type_stream, slots_str, ',');
-      ship.slots = std::atoi(slots_str.c_str());
-    }
-    else if (type_details.find("Tanker") != std::string::npos) {
-      ship.type = "Tanker";
-      std::stringstream type_stream(type_details);
-      std::string value;
-      int count = 0;
-
-      while (std::getline(type_stream, value, ',')) {
-        count++;
-        if (count == 4) {
-          ship.tanks = std::atoi(value.c_str());
-          break;
-        }
-      }
-    }
-
-    std::getline(ss, ship.origin, ':');
-    std::getline(ss, ship.destination, ':');
-    ss >> ship.capacity;
-    ships.push_back(ship);
-  }
-}
-
-void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
-  std::string line;
-  while (std::getline(file, line)) {
-    std::stringstream ss(line);
-    Cargo cargo;
-    std::string weight_str, properties_str;
-
-    std::getline(ss, cargo.name, ',');
-    std::getline(ss, cargo.origin, ',');
-    std::getline(ss, cargo.destination, ',');
-    std::getline(ss, weight_str, ',');
-    cargo.weight = std::atoi(weight_str.c_str());
-    std::getline(ss, cargo.category, ',');
-    std::getline(ss, properties_str);
-    if (!properties_str.empty()) {
-      std::stringstream prop_ss(properties_str);
-      std::string property;
-      while (std::getline(prop_ss, property, ',')) {
-        cargo.properties.push_back(property);
-      }
-    }
-    cargoes.push_back(cargo);
-  }
-}
-
-void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
-  typedef AVLMultiMap<uint64_t, Ship *> ShipMap;
-  ShipMap ship_map;
-
-  for (size_t i = 0; i < ships.size(); i++) {
-    ship_map.add(ships[i].remaining_capacity(), &ships[i]);
-  }
-
-  for (size_t i = 0; i < cargoes.size(); i++) {
-    const Cargo & cargo = cargoes[i];
-    Ship * best_ship = NULL;
-
-    std::vector<std::pair<std::pair<uint64_t, std::set<Ship *> >, int> > ship_data =
-        ship_map.preOrderDump();
-
-    for (size_t j = 0; j < ship_data.size(); j++) {
-      const std::set<Ship *> & ship_set = ship_data[j].first.second;
-
-      for (std::set<Ship *>::iterator it = ship_set.begin(); it != ship_set.end(); ++it) {
-        Ship * ship = *it;
-        if (ship->can_load(cargo)) {
-          if (!best_ship ||
-              ship->remaining_capacity() < best_ship->remaining_capacity() ||
-              (ship->remaining_capacity() == best_ship->remaining_capacity() &&
-               ship->name < best_ship->name)) {
-            best_ship = ship;
-          }
-        }
-      }
-    }
-
-    if (best_ship) {
-      std::cout << "Loading " << cargo.name << " onto " << best_ship->name << " from "
-                << cargo.origin << " to " << cargo.destination << " "
-                << best_ship->remaining_capacity() - cargo.weight
-                << " capacity remains\n";
-      ship_map.remove(best_ship->remaining_capacity(), best_ship);
-      best_ship->load_cargo(cargo);
-      ship_map.add(best_ship->remaining_capacity(), best_ship);
-    }
-    else {
-      std::cout << "No ships can carry the " << cargo.name << " from " << cargo.origin
-                << " to " << cargo.destination << "\n";
-    }
-  }
-}
-
-void print_ships(const std::vector<Ship> & ships) {
-  std::cout << "---Done Loading---Here are the ships---\n";
-  for (size_t i = 0; i < ships.size(); i++) {
-    const Ship & ship = ships[i];
-    std::cout << "The " << ship.type << " Ship " << ship.name << "(" << ship.used_capacity
-              << "/" << ship.capacity << ") is carrying :\n";
-    if (ship.type == "Animals") {
-      if (ship.used_slots > 0) {
-        std::cout << "  has a roamer\n";
-      }
-      else {
-        std::cout << "  does not have a roamer\n";
-      }
-    }
-    else if (ship.type == "Tanker") {
-      std::cout << "  " << ship.used_tanks << " / " << ship.tanks << " tanks used\n";
-    }
-    else {
-      std::cout << "  (" << ship.slots - ship.used_slots << ") slots remain\n";
-    }
-  }
-}
-
-int main(int argc, char ** argv) {
+int main(int argc, char * argv[]) {
   if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>\n";
+    std::cerr << "Usage: " << argv[0] << " <ships file> <cargo file>" << std::endl;
     return EXIT_FAILURE;
   }
 
-  std::ifstream ships_file(argv[1]);
-  std::ifstream cargo_file(argv[2]);
-  if (!ships_file.is_open() || !cargo_file.is_open()) {
-    std::cerr << "Error: Unable to open input files.\n";
+  std::ifstream shipFile(argv[1]);
+  std::ifstream cargoFile(argv[2]);
+
+  if (!shipFile.is_open() || !cargoFile.is_open()) {
+    std::cerr << "Error opening input files!" << std::endl;
     return EXIT_FAILURE;
   }
 
   std::vector<Ship> ships;
-  std::vector<Cargo> cargoes;
-  parse_ships(ships_file, ships);
-  parse_cargo(cargo_file, cargoes);
+  std::vector<Cargo> cargos;
 
-  std::sort(cargoes.begin(), cargoes.end(), cargo_weight_desc);
-  load_cargo(cargoes, ships);
-  print_ships(ships);
+  // 读取船只文件
+  std::string line;
+  while (std::getline(shipFile, line)) {
+    std::istringstream iss(line);
+    std::string name, type, source, destination;
+    int capacity;
+    char colon;
+
+    iss >> name >> colon >> type >> colon >> capacity >> colon >> source >> colon >>
+        destination;
+    ships.push_back(Ship(name, type, capacity, source, destination));
+  }
+
+  // 读取货物文件
+  while (std::getline(cargoFile, line)) {
+    std::istringstream iss(line);
+    std::string name, source, destination, type;
+    int weight;
+    char colon;
+
+    iss >> name >> colon >> source >> colon >> destination >> colon >> weight >> colon >>
+        type;
+    cargos.push_back(Cargo(name, source, destination, weight, type));
+  }
+
+  // 按重量对货物排序
+  std::stable_sort(cargos.begin(), cargos.end(), compareCargo);
+
+  // 使用 AVLMultiMap 管理船只的剩余容量
+  AVLMultiMap<int, Ship *> shipMap;
+  for (std::vector<Ship>::iterator it = ships.begin(); it != ships.end(); ++it) {
+    shipMap.add(it->remainingCapacity(), &(*it));
+  }
+
+  // 装载货物
+  for (std::vector<Cargo>::iterator cargoIt = cargos.begin(); cargoIt != cargos.end();
+       ++cargoIt) {
+    bool loaded = false;
+
+    // 遍历 AVL 树查找合适的船只
+    std::vector<std::pair<std::pair<int, std::set<Ship *, std::less<Ship *> > >, int> >
+        preOrderDump = shipMap.preOrderDump();
+    for (std::vector<std::pair<std::pair<int, std::set<Ship *, std::less<Ship *> > >,
+                               int> >::iterator it = preOrderDump.begin();
+         it != preOrderDump.end();
+         ++it) {
+      int remainingCapacity = it->first.first;
+      if (remainingCapacity >= cargoIt->weight) {
+        for (std::set<Ship *>::iterator shipIt = it->first.second.begin();
+             shipIt != it->first.second.end();
+             ++shipIt) {
+          Ship * ship = const_cast<Ship *>(*shipIt);
+          if (ship->source == cargoIt->source &&
+              ship->destination == cargoIt->destination &&
+              ship->remainingCapacity() >= cargoIt->weight) {
+            // 装载货物
+            ship->used_capacity += cargoIt->weight;
+            std::cout << "Loading " << cargoIt->name << " onto " << ship->name << " from "
+                      << cargoIt->source << " to " << cargoIt->destination << " "
+                      << ship->remainingCapacity() << " capacity remains" << std::endl;
+
+            // 更新 AVL 树
+            shipMap.remove(ship->remainingCapacity() + cargoIt->weight, ship);
+            shipMap.add(ship->remainingCapacity(), ship);
+
+            loaded = true;
+            break;
+          }
+        }
+        if (loaded)
+          break;
+      }
+    }
+
+    if (!loaded) {
+      std::cout << "No ships can carry " << cargoIt->name << " from " << cargoIt->source
+                << " to " << cargoIt->destination << std::endl;
+    }
+  }
+
+  // 输出船只最终状态
+  std::cout << "---Done Loading---Here are the ships---" << std::endl;
+  for (std::vector<Ship>::iterator it = ships.begin(); it != ships.end(); ++it) {
+    std::cout << "The " << it->type << " Ship " << it->name << "(" << it->used_capacity
+              << "/" << it->capacity << ") is carrying : " << std::endl;
+    if (it->remainingCapacity() > 0) {
+      std::cout << it->remainingCapacity() << " slots remain" << std::endl;
+    }
+  }
 
   return EXIT_SUCCESS;
 }
