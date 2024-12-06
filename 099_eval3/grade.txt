@@ -1,6 +1,6 @@
-Grading at 12/06/2024:05:30:45.957773
-For commit ID ae528b04da80724d6cf39078b24d1457fb9ab2da
-Grading at Fri Dec  6 12:30:41 AM EST 2024
+Grading at 12/06/2024:05:40:56.618575
+For commit ID 99d493de5a1764df6b01a76981e3d1efaec8e477
+Grading at Fri Dec  6 12:40:52 AM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -16,37 +16,8 @@ Compiling ships-step4
 g++ -o ships-step4 -Wall -Werror -ggdb3 -pedantic --std=gnu++03 step4.cpp 
 Running our code...
 Running your code
-We both agreed this was not an error, but your output is different from ours
-Your output on the left, ours on the right
-No ships can carry toy from ars,Luthadel,Midgar,30,container  |	No ships can carry the milk from Luthadel to Midgar
-No ships can carry toy from lanes,Luthadel,Midgar,50,containe |	No ships can carry the liquid hydrogen from Luthadel to Midga
-Loading fireworks,Luthadel,Midgar,100,container,hazardous-exp |	No ships can carry the liquid hydrogen from Luthadel to Midga
-No ships can carry liquid from ydrogen,Luthadel,Midgar,200,li |	No ships can carry the birds from Luthadel to Midgar
-Loading milk,Luthadel,Midgar,472,liquid,mintemp=1,maxtemp=10  |	No ships can carry the fireworks from Luthadel to Midgar
-Loading propane,Luthadel,Midgar,4,gas,hazardous-flammable ont |	No ships can carry the liquid helium from Luthadel to Midgar
-No ships can carry liquid from ydrogen,Luthadel,Midgar,200,li |	No ships can carry the toy planes from Luthadel to Midgar
-No ships can carry hot from tuff,Luthadel,Midgar,10,liquid,mi |	No ships can carry the lions from Luthadel to Midgar
-No ships can carry liquid from elium,Luthadel,Midgar,100,liqu |	No ships can carry the caribou from Luthadel to Midgar
-Loading lions,Luthadel,Midgar,50,animal,roamer onto The from  |	No ships can carry the toy cars from Luthadel to Midgar
-Loading caribou,Luthadel,Midgar,50,animal,roamer onto The fro |	No ships can carry the cats from Luthadel to Midgar
-Loading cats,Luthadel,Midgar,30,animal onto The from  to  0 c |	No ships can carry the paper from Luthadel to Midgar
-Loading paper,Luthadel,Midgar,30,container onto The from  to  |	No ships can carry the hot stuff from Luthadel to Midgar
-Loading birds,Luthadel,Midgar,180,animal onto The from  to  0 |	No ships can carry the propane from Luthadel to Midgar
-Loading milk,Luthadel,Midgar,1,liquid,mintemp=1,maxtemp=10 on |	No ships can carry the milk from Luthadel to Midgar
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The ajestic Ship The(0/0) is carrying : 		      |	The Container Ship The Majestic Dreadnought(0/1550) is carryi
-The ajestic Ship The(0/0) is carrying : 		      |	  (4) slots remain
-The isty Ship The(0/0) is carrying : 			      |	The Container Ship The Majestic Kraken(0/650) is carrying : 
-The ight Ship The(0/0) is carrying : 			      |	  (9) slots remain
-The wift Ship The(0/0) is carrying : 			      |	The Container Ship The Misty Dreadnought(0/1550) is carrying 
-The hining Ship The(0/0) is carrying : 			      |	  (3) slots remain
-							      >	The Container Ship The Night Eagle(0/1500) is carrying : 
-							      >	  (6) slots remain
-							      >	The Container Ship The Swift Shark(0/2500) is carrying : 
-							      >	  (5) slots remain
-							      >	The Container Ship The Shining Turtle(0/500) is carrying : 
-							      >	  (3) slots remain
-Your file did not match the expected output
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four cases for step 4 early start EC **
 -------------------------
  This test case will run 
  ships-step4 
@@ -55,33 +26,8 @@ Your file did not match the expected output
 -------------------------
 Running our code...
 Running your code
-We both agreed this was not an error, but your output is different from ours
-Your output on the left, ours on the right
-No ships can carry toy from ars,Mordor,Sarth,20,container to  |	No ships can carry the radioactive waste from Mordor to Lutha
-Loading fireworks,Mordor,Sarth,100,container,hazardous-explos |	No ships can carry the cloth from Mordor to Luthadel
-No ships can carry used from atteries,Mordor,Luthadel,50,haza |	No ships can carry the fireworks from Mordor to Sarth
-No ships can carry radioactive from aste,Mordor,Sarth,100,con |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive from aste,Mordor,Sarth,100,con |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive from aste,Mordor,Sarth,100,con |	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry radioactive from aste,Mordor,Luthadel,500, |	No ships can carry the used batteries from Mordor to Luthadel
-Loading cloth,Mordor,Luthadel,200,container onto The from  to |	No ships can carry the toy cars from Mordor to Sarth
-No ships can carry rat from oison,Mordor,Sarth,20,container,h |	No ships can carry the rat poison from Mordor to Sarth
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The awn Ship The(0/0) is carrying : 			      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-The awn Ship The(0/0) is carrying : 			      |	  (2) slots remain
-The awn Ship The(0/0) is carrying : 			      |	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
-The leaming Ship The(0/0) is carrying : 		      |	  does not have a roamer
-The leaming Ship The(0/0) is carrying : 		      |	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
-The leaming Ship The(0/0) is carrying : 		      |	  0 / 25 tanks used
-The leaming Ship The(0/0) is carrying : 		      |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-							      >	  0 / 10 tanks used
-							      >	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
-							      >	  does not have a roamer
-							      >	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
-							      >	  0 / 50 tanks used
-							      >	The Animals Ship The Gleaming Shark(0/190) is carrying : 
-							      >	  does not have a roamer
-Your file did not match the expected output
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four cases for step 4 early start EC **
 -------------------------
  This test case will run 
  ships-step4 
@@ -92,49 +38,50 @@ Running our code...
 Running your code
 We both agreed this was not an error, but your output is different from ours
 Your output on the left, ours on the right
-No ships can carry toy from ars,Luthadel,Midgar,30,container  |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
-No ships can carry toy from lanes,Luthadel,Midgar,50,containe |	Loading liquid hydrogen onto The Dawn Dreadnought from Luthad
-Loading fireworks,Luthadel,Midgar,100,container,hazardous-exp |	Loading liquid hydrogen onto The Dawn Dreadnought from Luthad
-No ships can carry liquid from ydrogen,Luthadel,Midgar,200,li |	Loading birds onto The Gleaming Shark from Luthadel to Midgar
-Loading milk,Luthadel,Midgar,472,liquid,mintemp=1,maxtemp=10  |	No ships can carry the fireworks from Luthadel to Midgar
-Loading propane,Luthadel,Midgar,4,gas,hazardous-flammable ont |	No ships can carry the liquid helium from Luthadel to Midgar
-No ships can carry liquid from ydrogen,Luthadel,Midgar,200,li |	Loading toy planes onto The Dawn Dolphin from Luthadel to Mid
-No ships can carry hot from tuff,Luthadel,Midgar,10,liquid,mi |	Loading lions onto The Dawn Dolphin from Luthadel to Midgar 1
-No ships can carry liquid from elium,Luthadel,Midgar,100,liqu |	Loading caribou onto The Gleaming Eagle from Luthadel to Midg
-Loading lions,Luthadel,Midgar,50,animal,roamer onto The from  |	Loading toy cars onto The Gleaming Eagle from Luthadel to Mid
-Loading caribou,Luthadel,Midgar,50,animal,roamer onto The fro |	Loading cats onto The Gleaming Eagle from Luthadel to Midgar 
-Loading cats,Luthadel,Midgar,30,animal onto The from  to  0 c |	Loading paper onto The Gleaming Eagle from Luthadel to Midgar
-Loading paper,Luthadel,Midgar,30,container onto The from  to  |	Loading hot stuff onto The Gleaming Narwhal from Luthadel to 
-Loading birds,Luthadel,Midgar,180,animal onto The from  to  0 |	Loading propane onto The Gleaming Narwhal from Luthadel to Mi
-Loading milk,Luthadel,Midgar,1,liquid,mintemp=1,maxtemp=10 on |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
+No ships can carry the milk from Luthadel to Midgar	      |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
+No ships can carry the liquid hydrogen from Luthadel to Midga |	Loading liquid hydrogen onto The Dawn Dreadnought from Luthad
+No ships can carry the liquid hydrogen from Luthadel to Midga |	Loading liquid hydrogen onto The Dawn Dreadnought from Luthad
+Loading birds onto The Gleaming Shark from Luthadel to Midgar	Loading birds onto The Gleaming Shark from Luthadel to Midgar
+No ships can carry the fireworks from Luthadel to Midgar	No ships can carry the fireworks from Luthadel to Midgar
+No ships can carry the liquid helium from Luthadel to Midgar	No ships can carry the liquid helium from Luthadel to Midgar
+Loading toy planes onto The Dawn Dolphin from Luthadel to Mid	Loading toy planes onto The Dawn Dolphin from Luthadel to Mid
+No ships can carry the lions from Luthadel to Midgar	      |	Loading lions onto The Dawn Dolphin from Luthadel to Midgar 1
+No ships can carry the caribou from Luthadel to Midgar	      |	Loading caribou onto The Gleaming Eagle from Luthadel to Midg
+Loading toy cars onto The Dawn Dolphin from Luthadel to Midga |	Loading toy cars onto The Gleaming Eagle from Luthadel to Mid
+Loading cats onto The Dawn Dolphin from Luthadel to Midgar 0  |	Loading cats onto The Gleaming Eagle from Luthadel to Midgar 
+Loading paper onto The Gleaming Eagle from Luthadel to Midgar |	Loading paper onto The Gleaming Eagle from Luthadel to Midgar
+No ships can carry the hot stuff from Luthadel to Midgar      |	Loading hot stuff onto The Gleaming Narwhal from Luthadel to 
+No ships can carry the propane from Luthadel to Midgar	      |	Loading propane onto The Gleaming Narwhal from Luthadel to Mi
+No ships can carry the milk from Luthadel to Midgar	      |	Loading milk onto The Gleaming Narwhal from Luthadel to Midga
 ---Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The awn Ship The(0/0) is carrying : 			      |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-The awn Ship The(0/0) is carrying : 			      |	  (2) slots remain
-The awn Ship The(0/0) is carrying : 			      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
-The leaming Ship The(0/0) is carrying : 		      |	  toy planes(50)
-The leaming Ship The(0/0) is carrying : 		      |	  lions(50)
-The leaming Ship The(0/0) is carrying : 		      |	  has a roamer
-The leaming Ship The(0/0) is carrying : 		      |	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
-							      >	  liquid hydrogen(200)
-							      >	  liquid hydrogen(200)
+The Container Ship The Dawn Clipper(0/1700) is carrying :     |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
+  (2) slots remain						  (2) slots remain
+The Animals Ship The Dawn Dolphin(110/110) is carrying :      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
+  toy planes(50)						  toy planes(50)
+  toy cars(30)						      |	  lions(50)
+  cats(30)						      <
+  has a roamer							  has a roamer
+The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
+  0 / 25 tanks used					      |	  liquid hydrogen(200)
+The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	  liquid hydrogen(200)
 							      >	  15 / 25 tanks used
 							      >	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-							      >	  0 / 10 tanks used
-							      >	The Animals Ship The Gleaming Eagle(140/140) is carrying : 
+  0 / 10 tanks used						  0 / 10 tanks used
+The Animals Ship The Gleaming Eagle(30/140) is carrying :     |	The Animals Ship The Gleaming Eagle(140/140) is carrying : 
 							      >	  caribou(50)
 							      >	  toy cars(30)
 							      >	  cats(30)
-							      >	  paper(30)
-							      >	  has a roamer
-							      >	The Tanker Ship The Gleaming Narwhal(487/500) is carrying : 
-							      >	  milk(472)
-							      >	  hot stuff(10)
+  paper(30)							  paper(30)
+  has a roamer							  has a roamer
+The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	The Tanker Ship The Gleaming Narwhal(487/500) is carrying : 
+  0 / 50 tanks used					      |	  milk(472)
+The Animals Ship The Gleaming Shark(180/190) is carrying :    |	  hot stuff(10)
 							      >	  propane(4)
 							      >	  milk(1)
 							      >	  50 / 50 tanks used
 							      >	The Animals Ship The Gleaming Shark(180/190) is carrying : 
-							      >	  birds(180)
-							      >	  does not have a roamer
+  birds(180)							  birds(180)
+  has a roamer						      |	  does not have a roamer
 Your file did not match the expected output
 You have FAILED one or more of your test cases
 Keep debugging
