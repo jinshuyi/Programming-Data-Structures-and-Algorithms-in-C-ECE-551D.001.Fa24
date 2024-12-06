@@ -68,8 +68,8 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
     std::stringstream ss(line);
     std::string type_details;
 
-    std::getline(ss, ship.name, ':');     // 船名
-    std::getline(ss, type_details, ':');  // 类型和附加信息
+    std::getline(ss, ship.name, ':');
+    std::getline(ss, type_details, ':');
     std::string capacity_str;
 
     if (type_details.find("Container") != std::string::npos) {
@@ -77,11 +77,11 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       std::stringstream type_stream(type_details);
       std::string slots_str, restrictions_str;
 
-      std::getline(type_stream, ship.type, ',');  // 类型
-      std::getline(type_stream, slots_str, ',');  // 槽数
+      std::getline(type_stream, ship.type, ',');
+      std::getline(type_stream, slots_str, ',');
       ship.slots = std::atoi(slots_str.c_str());
 
-      std::getline(type_stream, restrictions_str, ':');  // 限制条件
+      std::getline(type_stream, restrictions_str, ':');
       if (!restrictions_str.empty()) {
         std::stringstream res_stream(restrictions_str);
         std::string restriction;
@@ -95,8 +95,8 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       std::stringstream type_stream(type_details);
       std::string slots_str;
 
-      std::getline(type_stream, ship.type, ',');  // 类型
-      std::getline(type_stream, slots_str, ',');  // 槽数
+      std::getline(type_stream, ship.type, ',');
+      std::getline(type_stream, slots_str, ',');
       ship.slots = std::atoi(slots_str.c_str());
     }
     else if (type_details.find("Tanker") != std::string::npos) {
@@ -105,7 +105,6 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       std::string value;
       int count = 0;
 
-      // 读取逗号分隔的值，找到第三个值并赋值给 tanks
       while (std::getline(type_stream, value, ',')) {
         count++;
         if (count == 4) {
@@ -115,9 +114,9 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       }
     }
 
-    std::getline(ss, ship.origin, ':');       // 起点
-    std::getline(ss, ship.destination, ':');  // 终点
-    ss >> ship.capacity;                      // 容量
+    std::getline(ss, ship.origin, ':');
+    std::getline(ss, ship.destination, ':');
+    ss >> ship.capacity;
     ships.push_back(ship);
   }
 }
