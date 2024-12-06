@@ -9,12 +9,14 @@
 
 #include "avlmultimap03.hpp"
 
+// 货物结构体
 struct Cargo {
   std::string name, origin, destination, category;
   uint64_t weight;
   std::vector<std::string> properties;
 };
 
+// 船只结构体
 struct Ship {
   std::string name, type, origin, destination;
   uint64_t capacity, used_capacity;
@@ -25,10 +27,12 @@ struct Ship {
   Ship() :
       capacity(0), used_capacity(0), slots(0), used_slots(0), tanks(0), used_tanks(0) {}
 
+  // 计算剩余容量
   uint64_t remaining_capacity() const {
     return capacity > used_capacity ? capacity - used_capacity : 0;
   }
 
+  // 判断是否可以装载货物
   bool can_load(const Cargo & cargo) const {
     if (origin != cargo.origin || destination != cargo.destination)
       return false;
@@ -47,6 +51,7 @@ struct Ship {
     return true;
   }
 
+  // 装载货物
   void load_cargo(const Cargo & cargo) {
     used_capacity += cargo.weight;
     loaded_cargo.push_back(cargo.name + "(" + to_string(cargo.weight) + ")");
@@ -58,7 +63,7 @@ struct Ship {
     }
   }
 
-  // Helper function to convert integer to string (C++03 compatible)
+  // C++03 自定义整数转字符串
   std::string to_string(uint64_t num) const {
     std::ostringstream oss;
     oss << num;
@@ -66,10 +71,12 @@ struct Ship {
   }
 };
 
+// 比较货物重量降序
 bool cargo_weight_desc(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
 
+// 解析船只文件
 void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
   std::string line;
   while (std::getline(file, line)) {
@@ -130,6 +137,7 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
   }
 }
 
+// 解析货物文件
 void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
   std::string line;
   while (std::getline(file, line)) {
@@ -155,6 +163,7 @@ void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
   }
 }
 
+// 装载货物
 void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   typedef AVLMultiMap<uint64_t, Ship *> ShipMap;
   ShipMap ship_map;
@@ -202,6 +211,7 @@ void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   }
 }
 
+// 打印船只信息
 void print_ships(const std::vector<Ship> & ships) {
   std::cout << "---Done Loading---Here are the ships---\n";
   for (size_t i = 0; i < ships.size(); i++) {
