@@ -37,6 +37,7 @@ struct Ship {
       return false;
     if (type == "Tanker" && tanks <= used_tanks)
       return false;
+
     for (size_t i = 0; i < cargo.properties.size(); i++) {
       if (std::find(restrictions.begin(), restrictions.end(), cargo.properties[i]) ==
           restrictions.end())
@@ -200,7 +201,10 @@ void print_ships(const std::vector<Ship> & ships) {
     std::cout << "The " << ship.type << " Ship " << ship.name << "(" << ship.used_capacity
               << "/" << ship.capacity << ") is carrying :\n";
     if (ship.type == "Animals") {
-      if (ship.used_slots == 0) {
+      if (ship.used_slots > 0) {
+        std::cout << "  has a roamer\n";
+      }
+      else {
         std::cout << "  does not have a roamer\n";
       }
     }
