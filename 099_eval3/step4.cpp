@@ -1,14 +1,14 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <map>
+#include <set>
 #include <sstream>
 #include <string>
 #include <vector>
 
 #include "avlmultimap03.hpp"
 
-// 定义船只的结构体
+// 船只结构体
 struct Ship {
   std::string name;
   std::string type;
@@ -27,7 +27,7 @@ struct Ship {
   int remainingCapacity() const { return capacity - used_capacity; }
 };
 
-// 定义货物的结构体
+// 货物结构体
 struct Cargo {
   std::string name;
   std::string source;
@@ -43,9 +43,9 @@ struct Cargo {
       name(n), source(s), destination(d), weight(w), type(t) {}
 };
 
-// 比较货物重量的函数，用于排序
+// 按重量降序排序货物
 bool compareCargo(const Cargo & a, const Cargo & b) {
-  return a.weight > b.weight;  // 按重量降序排序
+  return a.weight > b.weight;
 }
 
 int main(int argc, char * argv[]) {
@@ -65,7 +65,7 @@ int main(int argc, char * argv[]) {
   std::vector<Ship> ships;
   std::vector<Cargo> cargos;
 
-  // 读取船只文件
+  // 读取船只数据
   std::string line;
   while (std::getline(shipFile, line)) {
     std::istringstream iss(line);
@@ -78,7 +78,7 @@ int main(int argc, char * argv[]) {
     ships.push_back(Ship(name, type, capacity, source, destination));
   }
 
-  // 读取货物文件
+  // 读取货物数据
   while (std::getline(cargoFile, line)) {
     std::istringstream iss(line);
     std::string name, source, destination, type;
@@ -90,21 +90,21 @@ int main(int argc, char * argv[]) {
     cargos.push_back(Cargo(name, source, destination, weight, type));
   }
 
-  // 按重量对货物排序
+  // 按重量排序货物
   std::stable_sort(cargos.begin(), cargos.end(), compareCargo);
 
-  // 使用 AVLMultiMap 管理船只的剩余容量
+  // 使用 AVL 树管理船只
   AVLMultiMap<int, Ship *> shipMap;
   for (std::vector<Ship>::iterator it = ships.begin(); it != ships.end(); ++it) {
     shipMap.add(it->remainingCapacity(), &(*it));
   }
 
-  // 装载货物
+  // 开始装载货物
   for (std::vector<Cargo>::iterator cargoIt = cargos.begin(); cargoIt != cargos.end();
        ++cargoIt) {
     bool loaded = false;
 
-    // 遍历 AVL 树查找合适的船只
+    // 遍历 AVL 树寻找最佳船只
     std::vector<std::pair<std::pair<int, std::set<Ship *, std::less<Ship *> > >, int> >
         preOrderDump = shipMap.preOrderDump();
     for (std::vector<std::pair<std::pair<int, std::set<Ship *, std::less<Ship *> > >,
