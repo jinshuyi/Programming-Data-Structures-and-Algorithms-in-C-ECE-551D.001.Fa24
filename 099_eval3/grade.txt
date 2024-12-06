@@ -1,6 +1,6 @@
-Grading at 12/06/2024:04:46:24.565506
-For commit ID fa9be72979a66a6147ecb562da0159ce40fd56f5
-Grading at Thu Dec  5 11:46:20 PM EST 2024
+Grading at 12/06/2024:04:58:59.362417
+For commit ID 51522f8089408be8abac7fdb88896c49898c6ea6
+Grading at Thu Dec  5 11:58:54 PM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -57,21 +57,21 @@ No ships can carry the milk from Luthadel to Midgar	      |	Loading milk onto Th
 The Container Ship The Dawn Clipper(0/1700) is carrying :     |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
   (2) slots remain						  (2) slots remain
 The Animals Ship The Dawn Dolphin(110/110) is carrying :      |	The Animals Ship The Dawn Dolphin(100/110) is carrying : 
-The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	  toy planes(50)
-  0 / 25 tanks used					      |	  lions(50)
-The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	  has a roamer
-							      >	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
-							      >	  liquid hydrogen(200)
-							      >	  liquid hydrogen(200)
+							      >	  toy planes(50)
+							      >	  lions(50)
+  has a roamer							  has a roamer
+The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	The Tanker Ship The Dawn Dreadnought(400/700) is carrying : 
+  0 / 25 tanks used					      |	  liquid hydrogen(200)
+The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	  liquid hydrogen(200)
 							      >	  15 / 25 tanks used
 							      >	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
   0 / 10 tanks used						  0 / 10 tanks used
 The Animals Ship The Gleaming Eagle(30/140) is carrying :     |	The Animals Ship The Gleaming Eagle(140/140) is carrying : 
-The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	  caribou(50)
-  0 / 50 tanks used					      |	  toy cars(30)
-The Animals Ship The Gleaming Shark(180/190) is carrying :    |	  cats(30)
-							      >	  paper(30)
-							      >	  has a roamer
+  has a roamer						      |	  caribou(50)
+The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	  toy cars(30)
+  0 / 50 tanks used					      |	  cats(30)
+The Animals Ship The Gleaming Shark(180/190) is carrying :    |	  paper(30)
+  has a roamer							  has a roamer
 							      >	The Tanker Ship The Gleaming Narwhal(487/500) is carrying : 
 							      >	  milk(472)
 							      >	  hot stuff(10)
