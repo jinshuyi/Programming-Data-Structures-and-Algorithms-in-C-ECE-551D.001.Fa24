@@ -1,6 +1,6 @@
-Grading at 12/06/2024:06:14:51.892972
-For commit ID ca2393c0f1ad072a16873052ba2eb73bfb4d5374
-Grading at Fri Dec  6 01:14:48 AM EST 2024
+Grading at 12/06/2024:06:16:45.669519
+For commit ID 7b34d43f1459c82c9de3693f106ed3cb6ac7e652
+Grading at Fri Dec  6 01:16:42 AM EST 2024
 Doing make clean
 rm -rf *.o *~ ships-step1 ships-step2 ships-step3 ships-step4
 Running your test cases
@@ -26,34 +26,9 @@ We agreed on this testcase and valgrind was clean
 -------------------------
 Running our code...
 Running your code
-We both agreed this was not an error, but your output is different from ours
-Your output on the left, ours on the right
-No ships can carry the radioactive waste from Mordor to Lutha	No ships can carry the radioactive waste from Mordor to Lutha
-No ships can carry the cloth from Mordor to Luthadel		No ships can carry the cloth from Mordor to Luthadel
-No ships can carry the fireworks from Mordor to Sarth		No ships can carry the fireworks from Mordor to Sarth
-No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry the radioactive waste from Mordor to Sarth	No ships can carry the radioactive waste from Mordor to Sarth
-No ships can carry the used batteries from Mordor to Luthadel	No ships can carry the used batteries from Mordor to Luthadel
-No ships can carry the toy cars from Mordor to Sarth		No ships can carry the toy cars from Mordor to Sarth
-No ships can carry the rat poison from Mordor to Sarth		No ships can carry the rat poison from Mordor to Sarth
----Done Loading---Here are the ships---				---Done Loading---Here are the ships---
-The Container Ship The Dawn Clipper(0/1700) is carrying :     |	The Container Ship The Dawn Clipper(0/1700) is carrying : 
-  (2) slots remain						  (2) slots remain
-The Animals Ship The Dawn Dolphin(0/110) is carrying :	      |	The Animals Ship The Dawn Dolphin(0/110) is carrying : 
-  does not have a roamer					  does not have a roamer
-The Tanker Ship The Dawn Dreadnought(0/700) is carrying :     |	The Tanker Ship The Dawn Dreadnought(0/700) is carrying : 
-  0 / 50 tanks used					      |	  0 / 25 tanks used
-The Tanker Ship The Gleaming Dreadnought(0/600) is carrying : |	The Tanker Ship The Gleaming Dreadnought(0/600) is carrying :
-  0 / 50 tanks used					      |	  0 / 10 tanks used
-The Animals Ship The Gleaming Eagle(0/140) is carrying :      |	The Animals Ship The Gleaming Eagle(0/140) is carrying : 
-  does not have a roamer					  does not have a roamer
-The Tanker Ship The Gleaming Narwhal(0/500) is carrying :     |	The Tanker Ship The Gleaming Narwhal(0/500) is carrying : 
-  0 / 90 tanks used					      |	  0 / 50 tanks used
-The Animals Ship The Gleaming Shark(0/190) is carrying :      |	The Animals Ship The Gleaming Shark(0/190) is carrying : 
-  does not have a roamer					  does not have a roamer
-Your file did not match the expected output
-You have FAILED one or more of your test cases
-Keep debugging
+We agreed on this testcase and valgrind was clean
+ *** This is one of the four cases for step 4 early start EC **
+You have PASSED all of your test cases
+Keep adding test cases until you are satisfied your program is correct
 
 Overall Grade: NO GRADE YET
