@@ -9,21 +9,20 @@
 
 #include "avlmultimap03.hpp"
 
-// Define the structure for Cargo with properties like name, origin, weight, etc.
+// Define the structure for Cargo with properties
 struct Cargo {
   std::string name, origin, destination, category;
   uint64_t weight;
   std::vector<std::string> properties;
 };
-
-// Define the structure for Ship with its attributes and utility functions
+// define the structure for Ship with its attributes and utility functions
 struct Ship {
   std::string name, type, origin, destination;
   uint64_t capacity, used_capacity;
   std::vector<std::string> restrictions;
   int slots, used_slots, tanks, used_tanks;
 
-  // Constructor to initialize default values for the ship
+  // the constructor to initialize default values for the ship
   Ship() :
       capacity(0), used_capacity(0), slots(0), used_slots(0), tanks(0), used_tanks(0) {}
 
@@ -49,8 +48,7 @@ struct Ship {
     }
     return true;
   }
-
-  // Update ship status after loading cargo
+  // function toUpdate ship stats after loading cargo.
   void load_cargo(const Cargo & cargo) {
     used_capacity += cargo.weight;
     if (type == "Animals") {
@@ -62,7 +60,7 @@ struct Ship {
   }
 };
 
-// Helper function to sort cargo by weight in descending order
+// Add the helper function to sort cargo by weight in descending order
 bool cargo_weight_desc(const Cargo & a, const Cargo & b) {
   return a.weight > b.weight;
 }
@@ -74,12 +72,9 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
     Ship ship;
     std::stringstream ss(line);
     std::string type_details;
-
-    // Extract ship details: name, type, origin, destination, capacity
     std::getline(ss, ship.name, ':');
     std::getline(ss, type_details, ':');
     std::string capacity_str;
-
     if (type_details.find("Container") != std::string::npos) {
       ship.type = "Container";
       std::stringstream type_stream(type_details);
@@ -115,13 +110,12 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
       int count = 0;
       while (std::getline(type_stream, value, ',')) {
         count++;
-        if (count == 3) {
+        if (count == 4) {
           ship.tanks = std::atoi(value.c_str());
           break;
         }
       }
     }
-
     std::getline(ss, ship.origin, ':');       // Origin port
     std::getline(ss, ship.destination, ':');  // Destination port
     ss >> ship.capacity;                      // Capacity of the ship
@@ -129,7 +123,7 @@ void parse_ships(std::ifstream & file, std::vector<Ship> & ships) {
   }
 }
 
-// Parse input data to populate the cargo list with details about each cargo
+// Parsing teh input data to populate the cargo list with details about each cargo
 void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
   std::string line;
   while (std::getline(file, line)) {
@@ -155,17 +149,14 @@ void parse_cargo(std::ifstream & file, std::vector<Cargo> & cargoes) {
     cargoes.push_back(cargo);
   }
 }
-
 // Match cargoes to ships and load them based on constraints
 void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
   typedef AVLMultiMap<uint64_t, Ship *> ShipMap;
   ShipMap ship_map;
-
   // Map ships by their remaining capacity
   for (size_t i = 0; i < ships.size(); i++) {
     ship_map.add(ships[i].remaining_capacity(), &ships[i]);
   }
-
   // Iterate over each cargo and find the best ship to load
   for (size_t i = 0; i < cargoes.size(); i++) {
     const Cargo & cargo = cargoes[i];
@@ -176,7 +167,6 @@ void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
 
     for (size_t j = 0; j < ship_data.size(); j++) {
       const std::set<Ship *> & ship_set = ship_data[j].first.second;
-
       // Check each ship's ability to load the cargo
       for (std::set<Ship *>::iterator it = ship_set.begin(); it != ship_set.end(); ++it) {
         Ship * ship = *it;
@@ -190,7 +180,6 @@ void load_cargo(const std::vector<Cargo> & cargoes, std::vector<Ship> & ships) {
         }
       }
     }
-
     // Load the cargo onto the selected ship, or print an error if no ship is suitable
     if (best_ship) {
       std::cout << "Loading " << cargo.name << " onto " << best_ship->name << " from "
@@ -229,7 +218,7 @@ void print_ships(const std::vector<Ship> & ships) {
   }
 }
 
-// Main function to process input files and execute loading logic
+// Main function to process input files and execute loading logic...
 int main(int argc, char ** argv) {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " <ships_file> <cargo_file>\n";
@@ -239,18 +228,19 @@ int main(int argc, char ** argv) {
   std::ifstream ships_file(argv[1]);
   std::ifstream cargo_file(argv[2]);
   if (!ships_file.is_open() || !cargo_file.is_open()) {
-    std::cerr << "Error: Unable to open input files.\n";
+    std::cerr << "Erorr: Unable open input files.";
     return EXIT_FAILURE;
   }
-
   std::vector<Ship> ships;
   std::vector<Cargo> cargoes;
-  parse_ships(ships_file, ships);    // Parse ship data from file
-  parse_cargo(cargo_file, cargoes);  // Parse cargo data from file
+  parse_ships(ships_file, ships);    // Parse ship.data from file
+  parse_cargo(cargo_file, cargoes);  // Parse cargo.data from file
 
-  std::sort(cargoes.begin(), cargoes.end(), cargo_weight_desc);  // Sort cargo by weight
-  load_cargo(cargoes, ships);                                    // Load cargo onto ships
-  print_ships(ships);  // Display the status of ships
-
+  // Sort cargo by weight
+  std::sort(cargoes.begin(), cargoes.end(), cargo_weight_desc);
+  // Load cargo onto ships
+  load_cargo(cargoes, ships);
+  // Display the status of ships
+  print_ships(ships);
   return EXIT_SUCCESS;
 }
